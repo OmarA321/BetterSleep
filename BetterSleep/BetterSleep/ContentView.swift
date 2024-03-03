@@ -113,7 +113,8 @@ struct ContentView: View {
                 
                 Image(systemName: "moon.zzz.fill")
                     .resizable()
-                    .frame(width: 150, height: 150)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: 150)
                     .foregroundColor(.white)
                     .padding()
                 
@@ -138,7 +139,6 @@ struct ContentView: View {
                         .padding(.vertical, 10)
                         .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .red : .purple, antiBlueLightMode ? .yellow : .blue]), startPoint: .leading, endPoint: .trailing))
                         .cornerRadius(20)
-                        .shadow(color: .gray, radius: 10, x: 0, y: 5)
                         .padding(.horizontal, 30)
                 }
 
@@ -151,7 +151,6 @@ struct ContentView: View {
                         .padding(.vertical, 10)
                         .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .yellow : .blue, antiBlueLightMode ? .orange : .green]), startPoint: .leading, endPoint: .trailing))
                         .cornerRadius(20)
-                        .shadow(color: .gray, radius: 10, x: 0, y: 5)
                         .padding(.horizontal, 30)
                 }
 
@@ -164,7 +163,6 @@ struct ContentView: View {
                         .padding(.vertical, 10)
                         .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .orange : .green, antiBlueLightMode ? .red : .purple]), startPoint: .leading, endPoint: .trailing))
                         .cornerRadius(20)
-                        .shadow(color: .gray, radius: 10, x: 0, y: 5)
                         .padding(.horizontal, 30)
                 }
                 

@@ -4,10 +4,11 @@ struct SleepAnalysisView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Image(systemName: "moon.stars.fill")
+                Image(systemName: "bed.double.fill")
                     .resizable()
-                    .frame(width: 100, height: 100)
-                    .foregroundColor(.indigo) // Soft indigo color
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: 100)
+                    .foregroundColor(.green)
                     .padding()
                 
                 Text("Sleep Tracker")
@@ -16,34 +17,33 @@ struct SleepAnalysisView: View {
                 
                 NavigationLink(destination: AddSingleDaySleepDataView()) {
                     Text("Record Sleep")
-                        .foregroundColor(.indigo) // Soft indigo color
+                        .foregroundColor(.green)
                         .padding()
                 }
                 
                 NavigationLink(destination: ViewPersonalSleepHistoryView()) {
                     Text("Sleep History")
-                        .foregroundColor(.indigo) // Soft indigo color
+                        .foregroundColor(.green)
                         .padding()
                 }
                 
                 NavigationLink(destination: ViewOverallSleepDataView()) {
                     Text("Overall Sleep Stats")
-                        .foregroundColor(.indigo) // Soft indigo color
+                        .foregroundColor(.green)
                         .padding()
                 }
                 
                 NavigationLink(destination: ViewHealthcarePatientSleepHistoryView()) {
                     Text("Patient's Sleep")
-                        .foregroundColor(.indigo) // Soft indigo color
+                        .foregroundColor(.green)
                         .padding()
                 }
                 
                 Spacer()
             }
             .navigationBarHidden(true)
-            .background(Color.black.edgesIgnoringSafeArea(.all)) // Dark background
         }
-        .accentColor(.indigo) // Accent color for buttons and links
+        .accentColor(.green)
     }
 }
 
@@ -59,7 +59,7 @@ struct AddSingleDaySleepDataView: View {
             
             TextField("Sleep Duration (hours)", text: $hoursSlept)
                 .padding()
-                .background(Color.indigo) // Soft indigo color
+                .background(Color.green)
                 .cornerRadius(8)
                 .padding()
             
@@ -74,7 +74,7 @@ struct AddSingleDaySleepDataView: View {
                 Text("Save")
                     .foregroundColor(.white)
                     .padding()
-                    .background(Color.indigo) // Soft indigo color
+                    .background(Color.green)
                     .cornerRadius(8)
             }
             .padding()
@@ -82,7 +82,6 @@ struct AddSingleDaySleepDataView: View {
             Spacer()
         }
         .padding()
-        .background(Color.black.edgesIgnoringSafeArea(.all)) // Dark background
     }
 }
 
@@ -118,7 +117,7 @@ struct SleepRecordView: View {
             .padding(.vertical, 4)
         }
         .padding(.horizontal)
-        .background(Color.indigo) // Soft indigo color
+        .background(Color.green)
         .cornerRadius(8)
         .padding(.vertical, 4)
     }
@@ -150,7 +149,7 @@ struct SleepSummaryView: View {
             Text("Average Sleep Rating: \(averageQualityRating)")
         }
         .padding()
-        .background(Color.indigo) // Soft indigo color
+        .background(Color.green)
         .cornerRadius(8)
         .padding()
     }

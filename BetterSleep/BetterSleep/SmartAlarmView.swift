@@ -11,10 +11,12 @@ struct SmartAlarmView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: "alarm")
+            Image(systemName: "alarm.fill")
                 .resizable()
-                .frame(width: 100, height: 100)
-                .foregroundColor(.orange)
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 100)
+                .foregroundColor(.blue)
+                .padding()
             
             Text("Smart Alarm")
                 .font(.title)

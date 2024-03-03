@@ -4,12 +4,12 @@ struct SleepRecommendationView: View {
     var body: some View {
         ScrollView {
             VStack {
-                
-                
-                Image(systemName: "moon.stars")
+                Image(systemName: "moon.haze.fill")
                     .resizable()
-                    .frame(width: 100, height: 100)
-                    .foregroundColor(.blue)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: 100)
+                    .foregroundColor(.purple)
+                    .padding()
                 
                 Text("Sleep Recommendation")
                     .font(.title)
