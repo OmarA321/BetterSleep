@@ -1,22 +1,57 @@
+//
+//  ContentView.swift
+//  BetterSleep
+//
+//  Created by Elias Alissandratos
+//
+
 import SwiftUI
+
+struct Star {
+    @Binding var antiBlueLightMode: Bool
+    var offset: CGSize = CGSize(width: CGFloat.random(in: 0...500), height: CGFloat.random(in: -500...500))
+    var delay: Double = Double.random(in: 0...5)
+    var speed: Double = Double.random(in: 5...15)
+    var color: Color {
+        if antiBlueLightMode {
+            let colors: [Color] = [.yellow, .orange, .red]
+            return colors.randomElement() ?? .white
+        }
+        else {
+            let colors: [Color] = [.blue, .green, .purple]
+            return colors.randomElement() ?? .white
+        }
+    }
+    init(antiBlueLightMode: Binding<Bool>) {
+        self._antiBlueLightMode = antiBlueLightMode
+    }
+}
 
 struct ShootingStarsAnimation: View {
     @Binding var stars: [Star]
-    @State private var currentIndex = 0
+    @Binding var disableStars: Bool
+    @Binding var antiBlueLightMode: Bool
     
     var body: some View {
         ZStack {
             ForEach(stars.indices, id: \.self) { index in
-                Image(systemName: "star.fill")
-                    .foregroundColor(.purple)
-                    .offset(stars[index].offset)
-                    .onAppear {
-                        animateStar(index: index)
-                    }
+                if !disableStars {
+                    Image(systemName: "star.fill")
+                        .foregroundColor(stars[index].color)
+                        .offset(stars[index].offset)
+                        .onAppear {
+                            animateStar(index: index)
+                        }
+                }
+            }
+        }
+        .onChange(of: disableStars) { newValue in
+            if !newValue {
+                regenerateStars()
             }
         }
     }
-    
+
     private func animateStar(index: Int) {
         DispatchQueue.main.asyncAfter(deadline: .now() + stars[index].delay) {
             withAnimation(.easeInOut(duration: stars[index].speed)) {
@@ -27,24 +62,25 @@ struct ShootingStarsAnimation: View {
             }
         }
     }
-    
+
     private func resetStar(index: Int) {
-        withAnimation {
-            stars[index].offset = CGSize(width: CGFloat.random(in: 0...500), height: CGFloat.random(in: -500...500))
-            animateStar(index: index)
+        stars[index].offset = CGSize(width: CGFloat.random(in: 0...500), height: CGFloat.random(in: -500...500))
+        animateStar(index: index)
+    }
+    
+    private func regenerateStars() {
+        stars.removeAll()
+        for _ in 0..<25 {
+            stars.append(Star(antiBlueLightMode: $antiBlueLightMode))
         }
     }
-}
-
-struct Star {
-    var offset: CGSize = CGSize(width: CGFloat.random(in: 0...500), height: CGFloat.random(in: -500...500))
-    var delay: Double = Double.random(in: 0...5)
-    var speed: Double = Double.random(in: 5...10)
 }
 
 struct ContentView: View {
     @State private var stars: [Star] = []
     @State private var currentTime = Date()
+    @State private var disableStars = false
+    @State private var antiBlueLightMode = false
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     private var dateFormatter: DateFormatter {
@@ -56,14 +92,29 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
+                ShootingStarsAnimation(stars: $stars, disableStars: $disableStars, antiBlueLightMode: $antiBlueLightMode)
+                ZStack {
+                    Text("BetterSleep")
+                        .font(Font.custom("Snell Roundhand", size: 40))
+                        .fontWeight(.heavy)
+                    
+                    HStack {
+                        Spacer()
+                        NavigationLink(destination: SettingsView(disableStars: $disableStars, antiBlueLightMode: $antiBlueLightMode)) {
+                            Image(systemName: "gear")
+                                .foregroundColor(.white)
+                                .font(.title)
+                                .padding()
+                        }
+                    }
+                }
+                        
                 Spacer()
-                
-                ShootingStarsAnimation(stars: $stars) // Pass stars state
                 
                 Image(systemName: "moon.zzz.fill")
                     .resizable()
                     .frame(width: 150, height: 150)
-                    .foregroundColor(.indigo)
+                    .foregroundColor(.white)
                     .padding()
                 
                 Spacer()
@@ -75,7 +126,6 @@ struct ContentView: View {
                 
                 Text("\(currentTime, formatter: dateFormatter)")
                     .font(.largeTitle)
-                    .fontWeight(.bold)
                 
                 Spacer()
                 
@@ -86,12 +136,12 @@ struct ContentView: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 10)
-                        .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                        .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .red : .purple, antiBlueLightMode ? .yellow : .blue]), startPoint: .leading, endPoint: .trailing))
                         .cornerRadius(20)
                         .shadow(color: .gray, radius: 10, x: 0, y: 5)
                         .padding(.horizontal, 30)
                 }
-                
+
                 NavigationLink(destination: SmartAlarmView()) {
                     Text("Smart Alarm")
                         .padding()
@@ -99,20 +149,20 @@ struct ContentView: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 10)
-                        .background(LinearGradient(gradient: Gradient(colors: [Color.orange, Color.red]), startPoint: .leading, endPoint: .trailing))
+                        .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .yellow : .blue, antiBlueLightMode ? .orange : .green]), startPoint: .leading, endPoint: .trailing))
                         .cornerRadius(20)
                         .shadow(color: .gray, radius: 10, x: 0, y: 5)
                         .padding(.horizontal, 30)
                 }
-                
+
                 NavigationLink(destination: SleepAnalysisView()) {
-                    Text("View Sleep Analysis")
+                    Text("Sleep History & Analysis")
                         .padding()
                         .foregroundColor(.white)
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 10)
-                        .background(LinearGradient(gradient: Gradient(colors: [Color.green, Color.blue]), startPoint: .leading, endPoint: .trailing))
+                        .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .orange : .green, antiBlueLightMode ? .red : .purple]), startPoint: .leading, endPoint: .trailing))
                         .cornerRadius(20)
                         .shadow(color: .gray, radius: 10, x: 0, y: 5)
                         .padding(.horizontal, 30)
@@ -120,7 +170,6 @@ struct ContentView: View {
                 
                 Spacer()
             }
-            .navigationTitle("BetterSleep")
             .onAppear {
                 if stars.isEmpty {
                     // Generate stars when view appears if stars array is empty
@@ -130,19 +179,29 @@ struct ContentView: View {
             .onReceive(timer) { _ in
                 self.currentTime = Date()
             }
+            .onChange(of: antiBlueLightMode) { _ in
+                // Regenerate stars when antiBlueLightMode changes
+                regenerateStars()
+            }
         }
         .navigationViewStyle(StackNavigationViewStyle())
     }
     
     private func generateStars() {
         // Generate stars
-        for _ in 0..<20 {
-            stars.append(Star())
+        for _ in 0..<25 {
+            stars.append(Star(antiBlueLightMode: $antiBlueLightMode))
+        }
+    }
+    
+    private func regenerateStars() {
+        // Regenerate stars with updated antiBlueLightMode
+        stars.removeAll()
+        for _ in 0..<25 {
+            stars.append(Star(antiBlueLightMode: $antiBlueLightMode))
         }
     }
 }
-
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

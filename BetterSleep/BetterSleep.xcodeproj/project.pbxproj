@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		64D21F8B2B9445AF00A063B4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D21F8A2B9445AF00A063B4 /* SettingsView.swift */; };
 		DC269B7C2B93CA580014F526 /* BetterSleepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC269B7B2B93CA580014F526 /* BetterSleepApp.swift */; };
 		DC269B7E2B93CA580014F526 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC269B7D2B93CA580014F526 /* ContentView.swift */; };
 		DC269B802B93CA5B0014F526 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC269B7F2B93CA5B0014F526 /* Assets.xcassets */; };
@@ -49,6 +50,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		64D21F8A2B9445AF00A063B4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC269B782B93CA580014F526 /* BetterSleep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterSleep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC269B7B2B93CA580014F526 /* BetterSleepApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSleepApp.swift; sourceTree = "<group>"; };
 		DC269B7D2B93CA580014F526 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				DC269BA22B93DB3E0014F526 /* SleepRecommendationView.swift */,
 				DC269BA52B93DB550014F526 /* SmartAlarmView.swift */,
 				DC269BA82B93DB650014F526 /* SleepAnalysisView.swift */,
+				64D21F8A2B9445AF00A063B4 /* SettingsView.swift */,
 			);
 			path = BetterSleep;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 				DC269BA92B93DB650014F526 /* SleepAnalysisView.swift in Sources */,
 				DC269BA32B93DB3E0014F526 /* SleepRecommendationView.swift in Sources */,
 				DC269B7E2B93CA580014F526 /* ContentView.swift in Sources */,
+				64D21F8B2B9445AF00A063B4 /* SettingsView.swift in Sources */,
 				DC269BA62B93DB550014F526 /* SmartAlarmView.swift in Sources */,
 				DC269B7C2B93CA580014F526 /* BetterSleepApp.swift in Sources */,
 			);
