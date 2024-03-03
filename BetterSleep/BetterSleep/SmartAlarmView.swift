@@ -11,14 +11,15 @@ struct SmartAlarmView: View {
     
     var body: some View {
         VStack {
-            Spacer()
-            
             Image(systemName: "alarm")
                 .resizable()
                 .frame(width: 100, height: 100)
                 .foregroundColor(.orange)
             
             Text("Smart Alarm")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.top, 20)
             
             Spacer()
             
@@ -58,7 +59,6 @@ struct SmartAlarmView: View {
             
             Spacer()
         }
-        .navigationTitle("Smart Alarm")
     }
 }
 
@@ -68,74 +68,67 @@ struct DynamicAlarmView: View {
     
     var body: some View {
         VStack {
+            Text("Please Enter Wake Up Time:")
             DatePicker("Select wake up time", selection: $selectedWakeUpTime, displayedComponents: .hourAndMinute)
                 .labelsHidden()
                 .datePickerStyle(WheelDatePickerStyle())
             
             Button("Set Dynamic Alarm") {
-                let selectedTime = Calendar.current.dateComponents([.hour, .minute], from: selectedWakeUpTime)
-                guard let hour = selectedTime.hour, let minute = selectedTime.minute else {
-                    // Handle invalid date
-                    return
-                }
-                
-                // Calculate the number of sleep cycles until the selected wake up time
-                let currentTime = Date()
-                let components = Calendar.current.dateComponents([.hour, .minute], from: currentTime)
-                guard let currentHour = components.hour, let currentMinute = components.minute else {
-                    // Handle invalid date
-                    return
-                }
-                
-                let currentTotalMinutes = currentHour * 60 + currentMinute
-                let selectedTotalMinutes = hour * 60 + minute
-                let minutesUntilWakeUp = selectedTotalMinutes - currentTotalMinutes
-                
-                // Calculate the optimal alarm time based on sleep cycles (assuming 90 minutes per cycle)
-                let optimalAlarmMinutes = selectedTotalMinutes - (Int((Double(minutesUntilWakeUp) / 90.0).rounded(.awayFromZero)) * 90)
-                
-                // Convert the optimal alarm time back to a Date object
-                let optimalAlarmHour = optimalAlarmMinutes / 60
-                let optimalAlarmMinute = optimalAlarmMinutes % 60
-                
-                var alarmComponents = DateComponents()
-                alarmComponents.hour = optimalAlarmHour
-                alarmComponents.minute = optimalAlarmMinute
-                
-                if let optimalAlarmDate = Calendar.current.date(from: alarmComponents) {
-                    // Set the alarm using optimalAlarmDate
-                    self.optimalAlarmDate = optimalAlarmDate
-                    print("Optimal Alarm Time: \(optimalAlarmDate)")
-                    
-                    // Here, you would typically use a notification or some other mechanism to set the alarm
-                }
             }
             .padding()
             .foregroundColor(.white)
             .background(Color.blue)
             .cornerRadius(8)
-            
-            if let optimalAlarmDate = optimalAlarmDate {
-                Text("Optimal Alarm Time: \(optimalAlarmDate, formatter: DateFormatter.timeOnly)")
-                    .padding()
-            }
         }
         .padding()
     }
 }
 
 struct ManualAlarmView: View {
-    @Binding var selectedTimeToWakeUp: Date // Use binding here
+    @Binding var selectedTimeToWakeUp: Date
+    @State private var selectedTimeToSleep: Date = Date()
+    @State private var isSelectingSleepTime = false
     
     @State private var recommendedWakeUpTimes: [Date] = []
     @State private var wakeUpTimeInput: Date = Date()
     
     var body: some View {
         VStack {
-            DatePicker("Select Wake Up Time", selection: $wakeUpTimeInput, displayedComponents: .hourAndMinute)
-                .labelsHidden()
-                .datePickerStyle(WheelDatePickerStyle())
-                .padding()
+            HStack {
+                Button(action: {
+                    isSelectingSleepTime = false
+                }) {
+                    Text("Select Wake Up Time")
+                        .padding()
+                        .background(isSelectingSleepTime ? Color.gray : Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+                Button(action: {
+                    isSelectingSleepTime = true
+                }) {
+                    Text("Select Sleep Time")
+                        .padding()
+                        .background(isSelectingSleepTime ? Color.blue : Color.gray)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+            }
+            
+            if isSelectingSleepTime {
+                Text("Select Sleep Time:")
+                DatePicker("Select Sleep Time", selection: $selectedTimeToSleep, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .datePickerStyle(WheelDatePickerStyle())
+                    .padding()
+            } else {
+                Text("Select Wake Up Time:")
+                DatePicker("Select Wake Up Time", selection: $wakeUpTimeInput, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .datePickerStyle(WheelDatePickerStyle())
+                    .padding()
+            }
             
             Button("Calculate Optimal Wake Up Times") {
                 calculateOptimalWakeUpTimes()
@@ -154,13 +147,18 @@ struct ManualAlarmView: View {
     private func calculateOptimalWakeUpTimes() {
         let calendar = Calendar.current
         let currentTime = Date()
+        var sleepTime = selectedTimeToSleep
+        
+        if !isSelectingSleepTime {
+            sleepTime = calendar.date(byAdding: .hour, value: -8, to: wakeUpTimeInput)!
+        }
         
         // Clear previous recommended wake up times
         recommendedWakeUpTimes.removeAll()
         
         // Calculate the optimal wake up times
-        var wakeUpTime = currentTime
-        while wakeUpTime <= wakeUpTimeInput {
+        var wakeUpTime = sleepTime
+        while wakeUpTime <= selectedTimeToWakeUp {
             if wakeUpTime > currentTime {
                 recommendedWakeUpTimes.append(wakeUpTime)
             }

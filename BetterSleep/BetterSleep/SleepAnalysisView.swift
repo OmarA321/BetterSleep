@@ -4,47 +4,46 @@ struct SleepAnalysisView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Spacer()
-                
-                Image(systemName: "moon.zzz.fill")
+                Image(systemName: "moon.stars.fill")
                     .resizable()
                     .frame(width: 100, height: 100)
-                    .foregroundColor(.blue) // Changed color to blue
+                    .foregroundColor(.indigo) // Soft indigo color
                     .padding()
                 
-                Text("Dream Tracker")
+                Text("Sleep Tracker")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                    .padding()
                 
                 NavigationLink(destination: AddSingleDaySleepDataView()) {
-                    Text("Record Dream")
-                        .foregroundColor(.blue) // Changed color to blue
+                    Text("Record Sleep")
+                        .foregroundColor(.indigo) // Soft indigo color
                         .padding()
                 }
                 
                 NavigationLink(destination: ViewPersonalSleepHistoryView()) {
-                    Text("Dream History")
-                        .foregroundColor(.blue) // Changed color to blue
+                    Text("Sleep History")
+                        .foregroundColor(.indigo) // Soft indigo color
                         .padding()
                 }
                 
                 NavigationLink(destination: ViewOverallSleepDataView()) {
-                    Text("Overall Dream Stats")
-                        .foregroundColor(.blue) // Changed color to blue
+                    Text("Overall Sleep Stats")
+                        .foregroundColor(.indigo) // Soft indigo color
                         .padding()
                 }
                 
                 NavigationLink(destination: ViewHealthcarePatientSleepHistoryView()) {
-                    Text("Patient's Dream")
-                        .foregroundColor(.blue) // Changed color to blue
+                    Text("Patient's Sleep")
+                        .foregroundColor(.indigo) // Soft indigo color
                         .padding()
                 }
                 
                 Spacer()
             }
-            .navigationBarTitle("Dream Tracker")
+            .navigationBarHidden(true)
+            .background(Color.black.edgesIgnoringSafeArea(.all)) // Dark background
         }
+        .accentColor(.indigo) // Accent color for buttons and links
     }
 }
 
@@ -54,28 +53,28 @@ struct AddSingleDaySleepDataView: View {
     
     var body: some View {
         VStack {
-            Text("Record Dream")
+            Text("Record Sleep")
                 .font(.title)
                 .padding()
             
-            TextField("Dream Duration (hours)", text: $hoursSlept)
+            TextField("Sleep Duration (hours)", text: $hoursSlept)
                 .padding()
-                .background(Color.blue) // Changed color to blue
+                .background(Color.indigo) // Soft indigo color
                 .cornerRadius(8)
                 .padding()
             
             Stepper(value: $qualityRating, in: 0...10) {
-                Text("Dream Rating: \(qualityRating)")
+                Text("Sleep Rating: \(qualityRating)")
                     .padding()
             }
             
             Button(action: {
-                // Save dream data
+                // Save Sleep data
             }) {
                 Text("Save")
                     .foregroundColor(.white)
                     .padding()
-                    .background(Color.blue) // Changed color to blue
+                    .background(Color.indigo) // Soft indigo color
                     .cornerRadius(8)
             }
             .padding()
@@ -83,13 +82,14 @@ struct AddSingleDaySleepDataView: View {
             Spacer()
         }
         .padding()
+        .background(Color.black.edgesIgnoringSafeArea(.all)) // Dark background
     }
 }
 
 struct ViewPersonalSleepHistoryView: View {
     var body: some View {
         VStack {
-            Text("Your Dream History")
+            Text("Your Sleep History")
                 .font(.title)
                 .padding()
             
@@ -111,14 +111,14 @@ struct SleepRecordView: View {
                 .font(.headline)
             
             HStack {
-                Text("Dream Duration: \(String(format: "%.1f", hoursSlept)) hours")
+                Text("Sleep Duration: \(String(format: "%.1f", hoursSlept)) hours")
                 Spacer()
-                Text("Dream Rating: \(qualityRating)")
+                Text("Sleep Rating: \(qualityRating)")
             }
             .padding(.vertical, 4)
         }
         .padding(.horizontal)
-        .background(Color.blue) // Changed color to blue
+        .background(Color.indigo) // Soft indigo color
         .cornerRadius(8)
         .padding(.vertical, 4)
     }
@@ -127,7 +127,7 @@ struct SleepRecordView: View {
 struct ViewOverallSleepDataView: View {
     var body: some View {
         VStack {
-            Text("Overall Dream Stats")
+            Text("Overall Sleep Stats")
                 .font(.title)
                 .padding()
             
@@ -143,14 +143,14 @@ struct SleepSummaryView: View {
     
     var body: some View {
         VStack {
-            Text("Total Dreams Recorded: \(totalNights)")
+            Text("Total Sleep Recorded: \(totalNights)")
                 .padding(.bottom, 4)
-            Text("Average Dream Duration: \(String(format: "%.1f", averageHoursSlept)) hours")
+            Text("Average Sleep Duration: \(String(format: "%.1f", averageHoursSlept)) hours")
                 .padding(.bottom, 4)
-            Text("Average Dream Rating: \(averageQualityRating)")
+            Text("Average Sleep Rating: \(averageQualityRating)")
         }
         .padding()
-        .background(Color.blue) // Changed color to blue
+        .background(Color.indigo) // Soft indigo color
         .cornerRadius(8)
         .padding()
     }
@@ -159,7 +159,7 @@ struct SleepSummaryView: View {
 struct ViewHealthcarePatientSleepHistoryView: View {
     var body: some View {
         VStack {
-            Text("Patient's Dream History")
+            Text("Patient's Sleep History")
                 .font(.title)
                 .padding()
             

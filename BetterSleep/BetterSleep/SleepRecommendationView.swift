@@ -4,7 +4,7 @@ struct SleepRecommendationView: View {
     var body: some View {
         ScrollView {
             VStack {
-                Spacer()
+                
                 
                 Image(systemName: "moon.stars")
                     .resizable()
