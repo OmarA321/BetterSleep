@@ -13,7 +13,7 @@ struct SleepAnalysisView: View {
                     .foregroundColor(.green)
                     .padding()
                 
-                Text("Sleep Tracker")
+                Text("Sleep History & Analysis")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 

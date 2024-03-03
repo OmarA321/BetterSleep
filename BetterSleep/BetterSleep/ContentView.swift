@@ -176,7 +176,6 @@ struct ContentView: View {
             }
             .onAppear {
                 if stars.isEmpty {
-                    // Generate stars when view appears if stars array is empty
                     generateStars()
                 }
             }
@@ -184,7 +183,6 @@ struct ContentView: View {
                 self.currentTime = Date()
             }
             .onChange(of: antiBlueLightMode) { _ in
-                // Regenerate stars when antiBlueLightMode changes
                 regenerateStars()
             }
         }
@@ -192,14 +190,12 @@ struct ContentView: View {
     }
     
     private func generateStars() {
-        // Generate stars
         for _ in 0..<25 {
             stars.append(Star(antiBlueLightMode: $antiBlueLightMode))
         }
     }
     
     private func regenerateStars() {
-        // Regenerate stars with updated antiBlueLightMode
         stars.removeAll()
         for _ in 0..<25 {
             stars.append(Star(antiBlueLightMode: $antiBlueLightMode))
