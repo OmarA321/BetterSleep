@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SleepAnalysisView: View {
+    @Binding var antiBlueLightMode: Bool
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -166,11 +168,5 @@ struct ViewHealthcarePatientSleepHistoryView: View {
             SleepRecordView(date: "February 27, 2024", hoursSlept: 5.5, qualityRating: 6)
             SleepRecordView(date: "February 26, 2024", hoursSlept: 7.5, qualityRating: 8)
         }
-    }
-}
-
-struct SleepAnalysisView_Previews: PreviewProvider {
-    static var previews: some View {
-        SleepAnalysisView()
     }
 }

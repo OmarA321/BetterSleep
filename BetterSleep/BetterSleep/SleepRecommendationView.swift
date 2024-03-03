@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SleepRecommendationView: View {
+    @Binding var antiBlueLightMode: Bool
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -8,17 +10,21 @@ struct SleepRecommendationView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxHeight: 100)
-                    .foregroundColor(.purple)
+                    .foregroundColor(
+                        antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple
+                    )
                     .padding()
                 
-                Text("Sleep Recommendation")
+                Text("Sleep Recommendations")
                     .font(.title)
                     .fontWeight(.bold)
-                    .padding(.top, 20)
+                    .padding(.bottom, 10)
+                    .padding(.top, -10)
                 
                 Text("Based on your sleep patterns, we recommend the following:")
                     .font(.body)
                     .padding(.horizontal, 20)
+                    .padding(.bottom, 10)
                     .multilineTextAlignment(.center)
                 
                 Spacer()
@@ -27,20 +33,30 @@ struct SleepRecommendationView: View {
                     VStack {
                         Text("Time to Sleep")
                             .font(.headline)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.white)
                         Text("10:00 PM")
                             .font(.title)
                             .fontWeight(.bold)
                     }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple)
+                    )
                     Spacer()
                     VStack {
                         Text("Time to Wake Up")
                             .font(.headline)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.white)
                         Text("6:00 AM")
                             .font(.title)
                             .fontWeight(.bold)
                     }
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple)
+                    )
                 }
                 .padding(.horizontal, 20)
                 
@@ -49,15 +65,19 @@ struct SleepRecommendationView: View {
                 Text("Additional Recommendations:")
                     .font(.headline)
                     .padding(.top, 20)
+                    .padding(.bottom, 10)
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    RecommendationRow(title: "Avoid Caffeine", description: "Try to avoid caffeine intake at least 6 hours before your recommended sleep time.")
-                    RecommendationRow(title: "Create a Bedtime Routine", description: "Establish a relaxing bedtime routine to signal to your body that it's time to wind down.")
-                    RecommendationRow(title: "Limit Screen Time", description: "Reduce exposure to screens and bright lights at least an hour before bedtime to promote better sleep.")
+                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Avoid Caffeine", description: "Try to avoid caffeine intake at least 6 hours before your recommended sleep time.")
+                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Create a Bedtime Routine", description: "Establish a relaxing bedtime routine to signal to your body that it's time to wind down.")
+                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Limit Screen Time", description: "Reduce exposure to screens and bright lights at least an hour before bedtime to promote better sleep.")
                 }
                 .padding(.horizontal, 20)
+                .padding(.bottom, 20)
                 
                 Spacer()
+                
+                Divider().padding(.horizontal, 20)
                 
                 Text("These recommendations are based on your individual sleep patterns and aim to optimize your sleep quality and overall well-being.")
                     .font(.body)
@@ -65,12 +85,14 @@ struct SleepRecommendationView: View {
                     .padding(.horizontal, 20)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 20)
+                    .padding(.top, 20)
             }
         }
     }
 }
 
 struct RecommendationRow: View {
+    @Binding var antiBlueLightMode: Bool
     var title: String
     var description: String
     
@@ -78,17 +100,13 @@ struct RecommendationRow: View {
         VStack(alignment: .leading) {
             Text(title)
                 .font(.headline)
-                .foregroundColor(.gray)
+                .foregroundColor(
+                    antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple
+                )
             Text(description)
                 .font(.body)
-                .foregroundColor(.black)
+                .foregroundColor(.gray)
                 .multilineTextAlignment(.leading)
         }
-    }
-}
-
-struct SleepRecommendationView_Previews: PreviewProvider {
-    static var previews: some View {
-        SleepRecommendationView()
     }
 }

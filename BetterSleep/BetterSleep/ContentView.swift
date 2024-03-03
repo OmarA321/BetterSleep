@@ -130,41 +130,47 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: SleepRecommendationView()) {
-                    Text("Get Sleep Recommendations")
+                NavigationLink(destination: SleepRecommendationView(antiBlueLightMode: $antiBlueLightMode)) {
+                    Text("Sleep Recommendations")
                         .padding()
                         .foregroundColor(.white)
                         .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .red : .purple, antiBlueLightMode ? .yellow : .blue]), startPoint: .leading, endPoint: .trailing))
-                        .cornerRadius(20)
-                        .padding(.horizontal, 30)
+                    Image(systemName: "moon.haze.fill")
+                        .foregroundColor(.white)
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+                .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .red : .purple, antiBlueLightMode ? .yellow : .blue]), startPoint: .leading, endPoint: .trailing))
+                .cornerRadius(20)
+                .padding(.horizontal, 30)
 
-                NavigationLink(destination: SmartAlarmView()) {
+                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $antiBlueLightMode)) {
                     Text("Smart Alarm")
                         .padding()
                         .foregroundColor(.white)
                         .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .yellow : .blue, antiBlueLightMode ? .orange : .green]), startPoint: .leading, endPoint: .trailing))
-                        .cornerRadius(20)
-                        .padding(.horizontal, 30)
+                    Image(systemName: "alarm.fill")
+                        .foregroundColor(.white)
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+                .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .yellow : .blue, antiBlueLightMode ? .orange : .green]), startPoint: .leading, endPoint: .trailing))
+                .cornerRadius(20)
+                .padding(.horizontal, 30)
 
-                NavigationLink(destination: SleepAnalysisView()) {
+                NavigationLink(destination: SleepAnalysisView(antiBlueLightMode: $antiBlueLightMode)) {
                     Text("Sleep History & Analysis")
                         .padding()
                         .foregroundColor(.white)
                         .font(.headline)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
-                        .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .orange : .green, antiBlueLightMode ? .red : .purple]), startPoint: .leading, endPoint: .trailing))
-                        .cornerRadius(20)
-                        .padding(.horizontal, 30)
+                    Image(systemName: "bed.double.fill")
+                        .foregroundColor(.white)
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 10)
+                .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .orange : .green, antiBlueLightMode ? .red : .purple]), startPoint: .leading, endPoint: .trailing))
+                .cornerRadius(20)
+                .padding(.horizontal, 30)
                 
                 Spacer()
             }

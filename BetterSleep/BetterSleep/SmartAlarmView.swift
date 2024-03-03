@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct SmartAlarmView: View {
+    @Binding var antiBlueLightMode: Bool
     @State private var isDynamicAlarmSelected = false
     @State private var isManualAlarmSelected = false
     @State private var isSetTimeToWakeUp = false
@@ -178,12 +179,6 @@ struct ManualAlarmView: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mm a"
         return formatter.string(from: time)
-    }
-}
-
-struct SmartAlarmView_Previews: PreviewProvider {
-    static var previews: some View {
-        SmartAlarmView()
     }
 }
 
