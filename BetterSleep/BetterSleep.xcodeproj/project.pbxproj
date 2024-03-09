@@ -107,12 +107,12 @@
 			children = (
 				DC269B7B2B93CA580014F526 /* BetterSleepApp.swift */,
 				DC269B7D2B93CA580014F526 /* ContentView.swift */,
-				DC269B7F2B93CA5B0014F526 /* Assets.xcassets */,
-				DC269B812B93CA5B0014F526 /* Preview Content */,
 				DC269BA22B93DB3E0014F526 /* SleepRecommendationView.swift */,
 				DC269BA52B93DB550014F526 /* SmartAlarmView.swift */,
 				DC269BA82B93DB650014F526 /* SleepAnalysisView.swift */,
 				64D21F8A2B9445AF00A063B4 /* SettingsView.swift */,
+				DC269B7F2B93CA5B0014F526 /* Assets.xcassets */,
+				DC269B812B93CA5B0014F526 /* Preview Content */,
 			);
 			path = BetterSleep;
 			sourceTree = "<group>";
