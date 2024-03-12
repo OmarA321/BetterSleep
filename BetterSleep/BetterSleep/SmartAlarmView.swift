@@ -22,14 +22,12 @@ struct SmartAlarmView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: "alarm.fill")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxHeight: 100)
-                .foregroundColor(
-                    antiBlueLightMode ? Color(hue: 0.15, saturation: 1.0, brightness: 0.7) : Color.blue
-                )
-                .padding()
+                Image(systemName: "alarm.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: 100)
+                    .foregroundColor(antiBlueLightMode ? Color.yellow : Color.blue)
+            .padding()
             
             Text("Smart Alarm")
                 .font(.title)
@@ -48,7 +46,25 @@ struct SmartAlarmView: View {
                     }) {
                         Text("Dynamic Alarm")
                             .padding()
-                            .background(isDynamicAlarmSelected ? (antiBlueLightMode ? Color(hue: 0.15, saturation: 1.0, brightness: 0.7) : Color.blue) : Color.clear)
+                            .background(
+                                Group {
+                                    if isDynamicAlarmSelected {
+                                        if antiBlueLightMode {
+                                            LinearGradient(gradient: Gradient(colors: [
+                                                Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                                Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                            ]), startPoint: .top, endPoint: .bottom)
+                                        } else {
+                                            LinearGradient(gradient: Gradient(colors: [
+                                                Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                                Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                            ]), startPoint: .top, endPoint: .bottom)
+                                        }
+                                    } else {
+                                        Color.clear
+                                    }
+                                }
+                            )
                             .foregroundColor(Color.white)
                             .cornerRadius(8)
                     }
@@ -59,7 +75,25 @@ struct SmartAlarmView: View {
                     }) {
                         Text("Manual Alarm")
                             .padding()
-                            .background(isManualAlarmSelected ? (antiBlueLightMode ? Color(hue: 0.15, saturation: 1.0, brightness: 0.7) : Color.blue) : Color.clear)
+                            .background(
+                                Group {
+                                    if isManualAlarmSelected {
+                                        if antiBlueLightMode {
+                                            LinearGradient(gradient: Gradient(colors: [
+                                                Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                                Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                            ]), startPoint: .top, endPoint: .bottom)
+                                        } else {
+                                            LinearGradient(gradient: Gradient(colors: [
+                                                Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                                Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                            ]), startPoint: .top, endPoint: .bottom)
+                                        }
+                                    } else {
+                                        Color.clear
+                                    }
+                                }
+                            )
                             .foregroundColor(Color.white)
                             .cornerRadius(8)
                     }
@@ -96,7 +130,21 @@ struct DynamicAlarmView: View {
             }
             .padding()
             .foregroundColor(Color.white)
-            .background(antiBlueLightMode ? Color(hue: 0.15, saturation: 1.0, brightness: 0.7) : Color.blue)
+            .background(
+                Group {
+                    if antiBlueLightMode {
+                        LinearGradient(gradient: Gradient(colors: [
+                            Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                            Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                        ]), startPoint: .top, endPoint: .bottom)
+                    } else {
+                        LinearGradient(gradient: Gradient(colors: [
+                            Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                            Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                        ]), startPoint: .top, endPoint: .bottom)
+                    }
+                }
+            )
             .cornerRadius(8)
             .alert(isPresented: $showingPopup) {
                 let formatter = DateFormatter()
@@ -133,7 +181,23 @@ struct ManualAlarmView: View {
                 }) {
                     Text("Wake Up Time")
                         .padding()
-                        .background(isSelectingSleepTime ? Color.clear : (antiBlueLightMode ? Color(hue: 0.15, saturation: 1.0, brightness: 0.7) : Color.blue))
+                        .background(
+                            Group {
+                                if isSelectingSleepTime {
+                                    Color.clear
+                                } else if antiBlueLightMode {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                        Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                } else {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                        Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                }
+                            }
+                        )
                         .foregroundColor(.white)
                         .cornerRadius(15)
                 }
@@ -143,7 +207,23 @@ struct ManualAlarmView: View {
                 }) {
                     Text("Sleep Time")
                         .padding()
-                        .background(isSelectingSleepTime ? (antiBlueLightMode ? Color(hue: 0.15, saturation: 1.0, brightness: 0.7) : Color.blue) : Color.clear)
+                        .background(
+                            Group {
+                                if !isSelectingSleepTime {
+                                    Color.clear
+                                } else if antiBlueLightMode {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                        Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                } else {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                        Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                }
+                            }
+                        )
                         .foregroundColor(.white)
                         .cornerRadius(15)
                 }
@@ -164,7 +244,21 @@ struct ManualAlarmView: View {
                 }
                 .padding()
                 .foregroundColor(Color.white)
-                .background(antiBlueLightMode ? Color(hue: 0.15, saturation: 1.0, brightness: 0.7) : Color.blue)
+                .background(
+                    Group {
+                        if antiBlueLightMode {
+                            LinearGradient(gradient: Gradient(colors: [
+                                Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                            ]), startPoint: .top, endPoint: .bottom)
+                        } else {
+                            LinearGradient(gradient: Gradient(colors: [
+                                Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                            ]), startPoint: .top, endPoint: .bottom)
+                        }
+                    }
+                )
                 .cornerRadius(8)
             } else {
                 Text("Please Select Wake Up Time:")
@@ -179,7 +273,21 @@ struct ManualAlarmView: View {
                 }
                 .padding()
                 .foregroundColor(Color.white)
-                .background(antiBlueLightMode ? Color(hue: 0.15, saturation: 1.0, brightness: 0.7) : Color.blue)
+                .background(
+                    Group {
+                        if antiBlueLightMode {
+                            LinearGradient(gradient: Gradient(colors: [
+                                Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                            ]), startPoint: .top, endPoint: .bottom)
+                        } else {
+                            LinearGradient(gradient: Gradient(colors: [
+                                Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                            ]), startPoint: .top, endPoint: .bottom)
+                        }
+                    }
+                )
                 .cornerRadius(8)
             }
         }
