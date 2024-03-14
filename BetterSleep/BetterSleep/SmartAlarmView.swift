@@ -26,6 +26,8 @@ struct SmartAlarmView: View {
     @State private var isCalculatingOptimalWakeTimes = false
     @State private var suggestedWakeTimes: [Date] = []
     
+    @State private var showingPopup = false
+    
     var body: some View {
         ZStack {
             VStack {
@@ -116,7 +118,7 @@ struct SmartAlarmView: View {
                 Spacer()
             }
             
-            if isCalculatingOptimalSleepTimes {
+            if isCalculatingOptimalWakeTimes {
                 Color.black.opacity(0.8).ignoresSafeArea()
                 VStack(spacing: 20) {
                     VStack {
@@ -125,66 +127,6 @@ struct SmartAlarmView: View {
                             .bold()
                         
                         Text("You are Sleeping at \(selectedTimeToSleep, formatter: DateFormatter.timeOnly)")
-                            .font(.subheadline)
-                    }
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(Color.black)
-                    .cornerRadius(10)
-                    
-                    HStack(spacing: 20) {
-                        ForEach(suggestedSleepTimes.prefix(2), id: \.self) { time in
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(
-                                    LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
-                                )
-                                .frame(width: 150, height: 150)
-                                .overlay(
-                                    VStack {
-                                        Text("\(time, formatter: DateFormatter.timeOnly)")
-                                            .foregroundColor(.white)
-                                            .font(.title)
-                                            .bold()
-                                        Text(time == suggestedSleepTimes[0] ? "6 hours of sleep" : "7.5 hours of sleep")
-                                            .foregroundColor(.white)
-                                            .font(.headline)
-                                    }
-                                )
-                        }
-                    }
-                    
-                    if suggestedSleepTimes.count >= 3 {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(
-                                LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
-                            )
-                            .frame(width: 150, height: 150)
-                            .overlay(
-                                VStack {
-                                    Text("\(suggestedSleepTimes[2], formatter: DateFormatter.timeOnly)")
-                                        .foregroundColor(.white)
-                                        .font(.title)
-                                        .bold()
-                                    Text("9 hours of sleep")
-                                        .foregroundColor(.white)
-                                        .font(.headline)
-                                }
-                            )
-                    }
-                }
-                .onTapGesture {
-                    isCalculatingOptimalSleepTimes = false
-                    presentationMode.wrappedValue.dismiss()
-                }
-            } else if isCalculatingOptimalWakeTimes {
-                Color.black.opacity(0.8).ignoresSafeArea()
-                VStack(spacing: 20) {
-                    VStack {
-                        Text("Please Select Sleep Time:")
-                            .font(.headline)
-                            .bold()
-                        
-                        Text("You are waking at \(selectedTimeToWake, formatter: DateFormatter.timeOnly)")
                             .font(.subheadline)
                     }
                     .foregroundColor(.white)
@@ -233,8 +175,97 @@ struct SmartAlarmView: View {
                     }
                 }
                 .onTapGesture {
-                    isCalculatingOptimalWakeTimes = false
-                    presentationMode.wrappedValue.dismiss()
+                    showingPopup = true
+                }
+                .alert(isPresented: $showingPopup) {
+                    let formatter = DateFormatter()
+                    formatter.timeStyle = .short
+                    return Alert(title: Text("Manual Alarm Set"),
+                         message: Text("""
+                                      Sleep Time - \(formatter.string(from: selectedTimeToSleep))
+                                      Wake Time - ___
+                                      
+                                      Have a goodnight!
+                                      """),
+                         dismissButton: .default(Text("OK")) {
+                            isCalculatingOptimalSleepTimes = false
+                            presentationMode.wrappedValue.dismiss()
+                         })
+                }
+
+            } else if isCalculatingOptimalSleepTimes {
+                Color.black.opacity(0.8).ignoresSafeArea()
+                VStack(spacing: 20) {
+                    VStack {
+                        Text("Please Select Sleep Time:")
+                            .font(.headline)
+                            .bold()
+                        
+                        Text("You are waking at \(selectedTimeToWake, formatter: DateFormatter.timeOnly)")
+                            .font(.subheadline)
+                    }
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(10)
+                    
+                    HStack(spacing: 20) {
+                        ForEach(suggestedSleepTimes.prefix(2), id: \.self) { time in
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(
+                                    LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
+                                )
+                                .frame(width: 150, height: 150)
+                                .overlay(
+                                    VStack {
+                                        Text("\(time, formatter: DateFormatter.timeOnly)")
+                                            .foregroundColor(.white)
+                                            .font(.title)
+                                            .bold()
+                                        Text(time == suggestedSleepTimes[0] ? "6 hours of sleep" : "7.5 hours of sleep")
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                    }
+                                )
+                        }
+                    }
+                    
+                    if suggestedSleepTimes.count >= 3 {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(
+                                LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
+                            )
+                            .frame(width: 150, height: 150)
+                            .overlay(
+                                VStack {
+                                    Text("\(suggestedSleepTimes[2], formatter: DateFormatter.timeOnly)")
+                                        .foregroundColor(.white)
+                                        .font(.title)
+                                        .bold()
+                                    Text("9 hours of sleep")
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                }
+                            )
+                    }
+                }
+                .onTapGesture {
+                    showingPopup = true
+                }
+                .alert(isPresented: $showingPopup) {
+                    let formatter = DateFormatter()
+                    formatter.timeStyle = .short
+                    return Alert(title: Text("Manual Alarm Set"),
+                         message: Text("""
+                                      Sleep Time - ___
+                                      Wake Time - \(formatter.string(from: selectedTimeToWake))
+                                      
+                                      Have a goodnight!
+                                      """),
+                         dismissButton: .default(Text("OK")) {
+                            isCalculatingOptimalSleepTimes = false
+                            presentationMode.wrappedValue.dismiss()
+                         })
                 }
             }
         }
@@ -280,9 +311,10 @@ struct DynamicAlarmView: View {
                 let formatter = DateFormatter()
                 formatter.timeStyle = .short
                 let selectedTime = formatter.string(from: selectedWakeUpTime)
-                return Alert(title: Text("Dynamic Alarm Set for \(selectedTime)"),
+                return Alert(title: Text("Dynamic Alarm - \(selectedTime)"),
                      message: Text("""
-                                    We'll wake you up as close to your time as possible, while accounting for your sleep cycles.
+                                    We'll wake you up as close to \(selectedTime) as possible, while accounting for your sleep cycles.
+                                  
                                     Have a goodnight!
                                   """),
                      dismissButton: .default(Text("OK")) {
@@ -378,8 +410,8 @@ struct ManualAlarmView: View {
                     .datePickerStyle(WheelDatePickerStyle())
                     .padding()
                 Button("Calculate Optimal Times To Wake Up") {
-                    isCalculatingOptimalSleepTimes = true
-                    suggestedSleepTimes = calculateOptimalSleepTimes()
+                    isCalculatingOptimalWakeTimes = true
+                    suggestedWakeTimes = calculateOptimalWakeTimes()
                 }
                 .padding()
                 .foregroundColor(Color.white)
@@ -408,8 +440,8 @@ struct ManualAlarmView: View {
                    .datePickerStyle(WheelDatePickerStyle())
                    .padding()
                Button("Calculate Optimal Times To Sleep") {
-                   isCalculatingOptimalWakeTimes = true
-                   suggestedWakeTimes = calculateOptimalWakeTimes()
+                   isCalculatingOptimalSleepTimes = true
+                   suggestedSleepTimes = calculateOptimalSleepTimes()
                }
                .padding()
                .foregroundColor(Color.white)
@@ -435,10 +467,10 @@ struct ManualAlarmView: View {
    }
     private func calculateOptimalWakeTimes() -> [Date] {
         var suggestedTimes: [Date] = []
-        let selectedTime = selectedTimeToWakeUp
+        let selectedTime = selectedTimeToSleep
         
         let calendar = Calendar.current
-        let decrements: [TimeInterval] = [-6 * 3600, -7.5 * 3600, -9 * 3600]
+        let decrements: [TimeInterval] = [6 * 3600, 7.5 * 3600, 9 * 3600]
         
         for decrement in decrements {
             let suggestedTime = calendar.date(byAdding: .second, value: Int(decrement), to: selectedTime)!
@@ -450,10 +482,10 @@ struct ManualAlarmView: View {
     
     private func calculateOptimalSleepTimes() -> [Date] {
         var suggestedTimes: [Date] = []
-        let selectedTime = selectedTimeToSleep
+        let selectedTime = selectedTimeToWakeUp
         
         let calendar = Calendar.current
-        let increments: [TimeInterval] = [6 * 3600, 7.5 * 3600, 9 * 3600]
+        let increments: [TimeInterval] = [-6 * 3600, -7.5 * 3600, -9 * 3600]
         
         for increment in increments {
             let suggestedTime = calendar.date(byAdding: .second, value: Int(increment), to: selectedTime)!
