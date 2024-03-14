@@ -17,96 +17,226 @@ struct SmartAlarmView: View {
     @State private var isSetTimeToWakeUp = false
     @State private var isSetTimeToSleep = false
     
-    @State private var selectedTimeToWakeUp = Date()
-    @State private var selectedTimeToSleep = Date()
+    @Binding var selectedTimeToWake: Date
+    @Binding var selectedTimeToSleep: Date
+    
+    @State private var isCalculatingOptimalSleepTimes = false
+    @State private var suggestedSleepTimes: [Date] = []
+    
+    @State private var isCalculatingOptimalWakeTimes = false
+    @State private var suggestedWakeTimes: [Date] = []
     
     var body: some View {
-        VStack {
+        ZStack {
+            VStack {
                 Image(systemName: "alarm.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxHeight: 100)
                     .foregroundColor(antiBlueLightMode ? Color.yellow : Color.blue)
-            .padding()
-            
-            Text("Smart Alarm")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding(.top, 20)
-            
-            Spacer()
-            
-            VStack {
-                Text("Select alarm type:")
+                    .padding()
                 
-                HStack {
-                    Button(action: {
-                        isDynamicAlarmSelected = true
-                        isManualAlarmSelected = false
-                    }) {
-                        Text("Dynamic Alarm")
-                            .padding()
-                            .background(
-                                Group {
-                                    if isDynamicAlarmSelected {
-                                        if antiBlueLightMode {
-                                            LinearGradient(gradient: Gradient(colors: [
-                                                Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
-                                                Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
-                                            ]), startPoint: .top, endPoint: .bottom)
-                                        } else {
-                                            LinearGradient(gradient: Gradient(colors: [
-                                                Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
-                                                Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
-                                            ]), startPoint: .top, endPoint: .bottom)
-                                        }
-                                    } else {
-                                        Color.clear
-                                    }
-                                }
-                            )
-                            .foregroundColor(Color.white)
-                            .cornerRadius(8)
-                    }
+                Text("Smart Alarm")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .padding(.top, 20)
+                
+                Spacer()
+                
+                VStack {
+                    Text("Select alarm type:")
                     
-                    Button(action: {
-                        isDynamicAlarmSelected = false
-                        isManualAlarmSelected = true
-                    }) {
-                        Text("Manual Alarm")
-                            .padding()
-                            .background(
-                                Group {
-                                    if isManualAlarmSelected {
-                                        if antiBlueLightMode {
-                                            LinearGradient(gradient: Gradient(colors: [
-                                                Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
-                                                Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
-                                            ]), startPoint: .top, endPoint: .bottom)
+                    HStack {
+                        Button(action: {
+                            isDynamicAlarmSelected = true
+                            isManualAlarmSelected = false
+                        }) {
+                            Text("Dynamic Alarm")
+                                .padding()
+                                .background(
+                                    Group {
+                                        if isDynamicAlarmSelected {
+                                            if antiBlueLightMode {
+                                                LinearGradient(gradient: Gradient(colors: [
+                                                    Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                                    Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                                ]), startPoint: .top, endPoint: .bottom)
+                                            } else {
+                                                LinearGradient(gradient: Gradient(colors: [
+                                                    Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                                    Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                                ]), startPoint: .top, endPoint: .bottom)
+                                            }
                                         } else {
-                                            LinearGradient(gradient: Gradient(colors: [
-                                                Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
-                                                Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
-                                            ]), startPoint: .top, endPoint: .bottom)
+                                            Color.clear
                                         }
-                                    } else {
-                                        Color.clear
                                     }
-                                }
-                            )
-                            .foregroundColor(Color.white)
-                            .cornerRadius(8)
+                                )
+                                .foregroundColor(Color.white)
+                                .cornerRadius(8)
+                        }
+                        
+                        Button(action: {
+                            isDynamicAlarmSelected = false
+                            isManualAlarmSelected = true
+                        }) {
+                            Text("Manual Alarm")
+                                .padding()
+                                .background(
+                                    Group {
+                                        if isManualAlarmSelected {
+                                            if antiBlueLightMode {
+                                                LinearGradient(gradient: Gradient(colors: [
+                                                    Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                                    Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                                ]), startPoint: .top, endPoint: .bottom)
+                                            } else {
+                                                LinearGradient(gradient: Gradient(colors: [
+                                                    Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                                    Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                                ]), startPoint: .top, endPoint: .bottom)
+                                            }
+                                        } else {
+                                            Color.clear
+                                        }
+                                    }
+                                )
+                                .foregroundColor(Color.white)
+                                .cornerRadius(8)
+                        }
                     }
                 }
+                
+                if isDynamicAlarmSelected {
+                    DynamicAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedWakeUpTime: $selectedTimeToWake)
+                } else if isManualAlarmSelected {
+                    ManualAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedTimeToWakeUp: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep, isCalculatingOptimalSleepTimes: $isCalculatingOptimalSleepTimes, isCalculatingOptimalWakeTimes: $isCalculatingOptimalWakeTimes, suggestedSleepTimes: $suggestedSleepTimes, suggestedWakeTimes: $suggestedWakeTimes)
+                }
+                
+                Spacer()
             }
             
-            if isDynamicAlarmSelected {
-                DynamicAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedWakeUpTime: $selectedTimeToWakeUp)
-            } else if isManualAlarmSelected {
-                ManualAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedTimeToWakeUp: $selectedTimeToWakeUp)
+            if isCalculatingOptimalSleepTimes {
+                Color.black.opacity(0.8).ignoresSafeArea()
+                VStack(spacing: 20) {
+                    VStack {
+                        Text("Please Select Wake Up Time:")
+                            .font(.headline)
+                            .bold()
+                        
+                        Text("You are Sleeping at \(selectedTimeToSleep, formatter: DateFormatter.timeOnly)")
+                            .font(.subheadline)
+                    }
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(10)
+                    
+                    HStack(spacing: 20) {
+                        ForEach(suggestedSleepTimes.prefix(2), id: \.self) { time in
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(
+                                    LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
+                                )
+                                .frame(width: 150, height: 150)
+                                .overlay(
+                                    VStack {
+                                        Text("\(time, formatter: DateFormatter.timeOnly)")
+                                            .foregroundColor(.white)
+                                            .font(.title)
+                                            .bold()
+                                        Text(time == suggestedSleepTimes[0] ? "6 hours of sleep" : "7.5 hours of sleep")
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                    }
+                                )
+                        }
+                    }
+                    
+                    if suggestedSleepTimes.count >= 3 {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(
+                                LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
+                            )
+                            .frame(width: 150, height: 150)
+                            .overlay(
+                                VStack {
+                                    Text("\(suggestedSleepTimes[2], formatter: DateFormatter.timeOnly)")
+                                        .foregroundColor(.white)
+                                        .font(.title)
+                                        .bold()
+                                    Text("9 hours of sleep")
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                }
+                            )
+                    }
+                }
+                .onTapGesture {
+                    isCalculatingOptimalSleepTimes = false
+                    presentationMode.wrappedValue.dismiss()
+                }
+            } else if isCalculatingOptimalWakeTimes {
+                Color.black.opacity(0.8).ignoresSafeArea()
+                VStack(spacing: 20) {
+                    VStack {
+                        Text("Please Select Sleep Time:")
+                            .font(.headline)
+                            .bold()
+                        
+                        Text("You are waking at \(selectedTimeToWake, formatter: DateFormatter.timeOnly)")
+                            .font(.subheadline)
+                    }
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(Color.black)
+                    .cornerRadius(10)
+                    
+                    HStack(spacing: 20) {
+                        ForEach(suggestedWakeTimes.prefix(2), id: \.self) { time in
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(
+                                    LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
+                                )
+                                .frame(width: 150, height: 150)
+                                .overlay(
+                                    VStack {
+                                        Text("\(time, formatter: DateFormatter.timeOnly)")
+                                            .foregroundColor(.white)
+                                            .font(.title)
+                                            .bold()
+                                        Text(time == suggestedWakeTimes[0] ? "6 hours of sleep" : "7.5 hours of sleep")
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                    }
+                                )
+                        }
+                    }
+                    
+                    if suggestedWakeTimes.count >= 3 {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(
+                                LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
+                            )
+                            .frame(width: 150, height: 150)
+                            .overlay(
+                                VStack {
+                                    Text("\(suggestedWakeTimes[2], formatter: DateFormatter.timeOnly)")
+                                        .foregroundColor(.white)
+                                        .font(.title)
+                                        .bold()
+                                    Text("9 hours of sleep")
+                                        .foregroundColor(.white)
+                                        .font(.headline)
+                                }
+                            )
+                    }
+                }
+                .onTapGesture {
+                    isCalculatingOptimalWakeTimes = false
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
-            
-            Spacer()
         }
     }
 }
@@ -120,7 +250,7 @@ struct DynamicAlarmView: View {
     
     var body: some View {
         VStack {
-            Text("Please Select Wake Up Time:")
+            Text("Select The Time You Wish To Wake Up:")
             DatePicker("Wake up time", selection: $selectedWakeUpTime, displayedComponents: .hourAndMinute)
                 .labelsHidden()
                 .datePickerStyle(WheelDatePickerStyle())
@@ -166,12 +296,20 @@ struct DynamicAlarmView: View {
 
 struct ManualAlarmView: View {
     @Binding var antiBlueLightMode: Bool
-    @Binding var selectedTimeToWakeUp: Date
-    @State private var selectedTimeToSleep: Date = Date()
-    @State private var isSelectingSleepTime = false
     
-    @State private var recommendedWakeUpTimes: [Date] = []
-    @State private var wakeUpTimeInput: Date = Date()
+    @Binding var selectedTimeToWakeUp: Date
+    @Binding var selectedTimeToSleep: Date
+    
+    @Binding var isCalculatingOptimalSleepTimes: Bool
+    @Binding var isCalculatingOptimalWakeTimes: Bool
+    
+    @Binding var suggestedSleepTimes: [Date]
+    @Binding var suggestedWakeTimes: [Date]
+    
+    @State private var isSelectingSleepTime = false
+    @State private var isSelectingWakeTime = false
+    
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
@@ -232,15 +370,16 @@ struct ManualAlarmView: View {
             .cornerRadius(15)
             
             if isSelectingSleepTime {
-                Text("Please Select Sleep Time:")
+                Text("Select The Time You Wish To Sleep:")
                     .padding(.top, 10)
                     .padding(.bottom, -10)
                 DatePicker("Select Sleep Time", selection: $selectedTimeToSleep, displayedComponents: .hourAndMinute)
                     .labelsHidden()
                     .datePickerStyle(WheelDatePickerStyle())
                     .padding()
-                Button("Calculate Optimal Wake Up Times") {
-                    //Calculate
+                Button("Calculate Optimal Times To Wake Up") {
+                    isCalculatingOptimalSleepTimes = true
+                    suggestedSleepTimes = calculateOptimalSleepTimes()
                 }
                 .padding()
                 .foregroundColor(Color.white)
@@ -261,43 +400,67 @@ struct ManualAlarmView: View {
                 )
                 .cornerRadius(8)
             } else {
-                Text("Please Select Wake Up Time:")
-                    .padding(.top, 10)
-                    .padding(.bottom, -10)
-                DatePicker("Select Wake Up Time", selection: $wakeUpTimeInput, displayedComponents: .hourAndMinute)
-                    .labelsHidden()
-                    .datePickerStyle(WheelDatePickerStyle())
-                    .padding()
-                Button("Calculate Optimal Sleep Times") {
-                    //Calculate
-                }
-                .padding()
-                .foregroundColor(Color.white)
-                .background(
-                    Group {
-                        if antiBlueLightMode {
-                            LinearGradient(gradient: Gradient(colors: [
-                                Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
-                                Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
-                            ]), startPoint: .top, endPoint: .bottom)
-                        } else {
-                            LinearGradient(gradient: Gradient(colors: [
-                                Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
-                                Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
-                            ]), startPoint: .top, endPoint: .bottom)
-                        }
-                    }
-                )
-                .cornerRadius(8)
-            }
-        }
-        .padding()
-    }
+               Text("Select The Time You Wish To Wake Up:")
+                   .padding(.top, 10)
+                   .padding(.bottom, -10)
+               DatePicker("Select Wake Up Time", selection: $selectedTimeToWakeUp, displayedComponents: .hourAndMinute)
+                   .labelsHidden()
+                   .datePickerStyle(WheelDatePickerStyle())
+                   .padding()
+               Button("Calculate Optimal Times To Sleep") {
+                   isCalculatingOptimalWakeTimes = true
+                   suggestedWakeTimes = calculateOptimalWakeTimes()
+               }
+               .padding()
+               .foregroundColor(Color.white)
+               .background(
+                   Group {
+                       if antiBlueLightMode {
+                           LinearGradient(gradient: Gradient(colors: [
+                               Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                               Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                           ]), startPoint: .top, endPoint: .bottom)
+                       } else {
+                           LinearGradient(gradient: Gradient(colors: [
+                               Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                               Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                           ]), startPoint: .top, endPoint: .bottom)
+                       }
+                   }
+               )
+               .cornerRadius(8)
+           }
+       }
+       .padding()
+   }
+    private func calculateOptimalWakeTimes() -> [Date] {
+        var suggestedTimes: [Date] = []
+        let selectedTime = selectedTimeToWakeUp
         
-    private func formatTime(_ time: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
-        return formatter.string(from: time)
+        let calendar = Calendar.current
+        let decrements: [TimeInterval] = [-6 * 3600, -7.5 * 3600, -9 * 3600]
+        
+        for decrement in decrements {
+            let suggestedTime = calendar.date(byAdding: .second, value: Int(decrement), to: selectedTime)!
+            suggestedTimes.append(suggestedTime)
+        }
+        
+        return suggestedTimes
+    }
+    
+    private func calculateOptimalSleepTimes() -> [Date] {
+        var suggestedTimes: [Date] = []
+        let selectedTime = selectedTimeToSleep
+        
+        let calendar = Calendar.current
+        let increments: [TimeInterval] = [6 * 3600, 7.5 * 3600, 9 * 3600]
+        
+        for increment in increments {
+            let suggestedTime = calendar.date(byAdding: .second, value: Int(increment), to: selectedTime)!
+            suggestedTimes.append(suggestedTime)
+        }
+        
+        return suggestedTimes
     }
 }
 

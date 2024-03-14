@@ -81,6 +81,10 @@ struct ContentView: View {
     @State private var currentTime = Date()
     @State private var disableStars = false
     @State private var antiBlueLightMode = false
+    
+    @State private var selectedTimeToSleep = Date()
+    @State private var selectedTimeToWake = Date()
+    
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     private var dateFormatter: DateFormatter {
@@ -144,7 +148,7 @@ struct ContentView: View {
                 .cornerRadius(20)
                 .padding(.horizontal, 30)
 
-                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $antiBlueLightMode)) {
+                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedTimeToWake: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep)) {
                     Text("Smart Alarm")
                         .padding()
                         .foregroundColor(.white)
