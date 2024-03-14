@@ -84,6 +84,7 @@ struct ContentView: View {
     
     @State private var selectedTimeToSleep = Date()
     @State private var selectedTimeToWake = Date()
+    @State private var alarmSet = false
     
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
@@ -148,7 +149,7 @@ struct ContentView: View {
                 .cornerRadius(20)
                 .padding(.horizontal, 30)
 
-                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedTimeToWake: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep)) {
+                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedTimeToWake: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep, alarmSet: $alarmSet)) {
                     Text("Smart Alarm")
                         .padding()
                         .foregroundColor(.white)
