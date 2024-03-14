@@ -98,7 +98,6 @@ struct SmartAlarmView: View {
                         Button(action: {
                             selectedTimeToWake = Date()
                             selectedTimeToSleep = Date()
-                            settingAlarm = true
                             alarmSet = false
                         }) {
                             ZStack {
