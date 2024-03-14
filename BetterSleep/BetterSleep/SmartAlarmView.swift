@@ -55,7 +55,9 @@ struct SmartAlarmView: View {
                             .padding()
                         
                         Button(action: {
-                            settingAlarm = true
+                            withAnimation{
+                                settingAlarm = true
+                            }
                         }) {
                             ZStack {
                                 Rectangle()
@@ -96,9 +98,11 @@ struct SmartAlarmView: View {
                             .padding()
                         
                         Button(action: {
-                            selectedTimeToWake = Date()
-                            selectedTimeToSleep = Date()
-                            alarmSet = false
+                            withAnimation {
+                                selectedTimeToWake = Date()
+                                selectedTimeToSleep = Date()
+                                alarmSet = false
+                            }
                         }) {
                             ZStack {
                                 Rectangle()
