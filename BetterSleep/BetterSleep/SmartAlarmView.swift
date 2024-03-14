@@ -28,7 +28,7 @@ struct SmartAlarmView: View {
     @State private var suggestedWakeTimes: [Date] = []
     
     @State private var showingPopup = false
-    @State private var selectionIndex = 0
+    @State private var settingAlarm = false
     
     var body: some View {
         ZStack {
@@ -47,77 +47,164 @@ struct SmartAlarmView: View {
                 
                 Spacer()
                 
-                VStack {
-                    Text("Select alarm type:")
-                    
-                    HStack {
-                        Button(action: {
-                            isDynamicAlarmSelected = true
-                            isManualAlarmSelected = false
-                        }) {
-                            Text("Dynamic Alarm")
-                                .padding()
-                                .background(
-                                    Group {
-                                        if isDynamicAlarmSelected {
-                                            if antiBlueLightMode {
-                                                LinearGradient(gradient: Gradient(colors: [
-                                                    Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
-                                                    Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
-                                                ]), startPoint: .top, endPoint: .bottom)
-                                            } else {
-                                                LinearGradient(gradient: Gradient(colors: [
-                                                    Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
-                                                    Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
-                                                ]), startPoint: .top, endPoint: .bottom)
-                                            }
-                                        } else {
-                                            Color.clear
-                                        }
-                                    }
-                                )
-                                .foregroundColor(Color.white)
-                                .cornerRadius(8)
-                        }
+                if !alarmSet && settingAlarm == false {
+                    VStack {
+                        Text("No Alarm Set")
+                            .foregroundColor(Color.white)
+                            .font(.title3)
+                            .padding()
                         
                         Button(action: {
-                            isDynamicAlarmSelected = false
-                            isManualAlarmSelected = true
+                            settingAlarm = true
                         }) {
-                            Text("Manual Alarm")
-                                .padding()
-                                .background(
-                                    Group {
-                                        if isManualAlarmSelected {
-                                            if antiBlueLightMode {
-                                                LinearGradient(gradient: Gradient(colors: [
-                                                    Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
-                                                    Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
-                                                ]), startPoint: .top, endPoint: .bottom)
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .frame(width: 150, height: 150)
+                                
+                                Text("Set Alarm")
+                                    .foregroundColor(.white)
+                                    .bold()
+                            }
+                        }
+                        .foregroundColor(.white)
+                        .background(
+                            Group {
+                                if antiBlueLightMode {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                        Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                } else {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                        Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                }
+                            }
+                        )
+                        .cornerRadius(8)
+                        
+                        Spacer()
+                    }
+                    
+                } else if alarmSet && settingAlarm == false{
+                    VStack {
+                        Text("Alarm Set For \(selectedTimeToWake, formatter: DateFormatter.timeOnly)")
+                            .foregroundColor(Color.white)
+                            .font(.title3)
+                            .padding()
+                        
+                        Button(action: {
+                            selectedTimeToWake = Date()
+                            selectedTimeToSleep = Date()
+                            settingAlarm = true
+                            alarmSet = false
+                        }) {
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .frame(width: 150, height: 150)
+                                
+                                Text("Delete Alarm")
+                                    .foregroundColor(.white)
+                                    .bold()
+                            }
+                        }
+                        .foregroundColor(.white)
+                        .background(
+                            Group {
+                                if antiBlueLightMode {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                        Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                } else {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                        Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                }
+                            }
+                        )
+                        .cornerRadius(8)
+                        
+                        Spacer()
+                    }
+                    
+                } else if settingAlarm == true{
+                    VStack {
+                        Text("Select alarm type:")
+                        
+                        HStack {
+                            Button(action: {
+                                isDynamicAlarmSelected = true
+                                isManualAlarmSelected = false
+                            }) {
+                                Text("Dynamic Alarm")
+                                    .padding()
+                                    .background(
+                                        Group {
+                                            if isDynamicAlarmSelected {
+                                                if antiBlueLightMode {
+                                                    LinearGradient(gradient: Gradient(colors: [
+                                                        Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                                        Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                                    ]), startPoint: .top, endPoint: .bottom)
+                                                } else {
+                                                    LinearGradient(gradient: Gradient(colors: [
+                                                        Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                                        Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                                    ]), startPoint: .top, endPoint: .bottom)
+                                                }
                                             } else {
-                                                LinearGradient(gradient: Gradient(colors: [
-                                                    Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
-                                                    Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
-                                                ]), startPoint: .top, endPoint: .bottom)
+                                                Color.clear
                                             }
-                                        } else {
-                                            Color.clear
                                         }
-                                    }
-                                )
-                                .foregroundColor(Color.white)
-                                .cornerRadius(8)
+                                    )
+                                    .foregroundColor(Color.white)
+                                    .cornerRadius(8)
+                            }
+                            
+                            Button(action: {
+                                isDynamicAlarmSelected = false
+                                isManualAlarmSelected = true
+                            }) {
+                                Text("Manual Alarm")
+                                    .padding()
+                                    .background(
+                                        Group {
+                                            if isManualAlarmSelected {
+                                                if antiBlueLightMode {
+                                                    LinearGradient(gradient: Gradient(colors: [
+                                                        Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                                        Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                                    ]), startPoint: .top, endPoint: .bottom)
+                                                } else {
+                                                    LinearGradient(gradient: Gradient(colors: [
+                                                        Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                                        Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                                    ]), startPoint: .top, endPoint: .bottom)
+                                                }
+                                            } else {
+                                                Color.clear
+                                            }
+                                        }
+                                    )
+                                    .foregroundColor(Color.white)
+                                    .cornerRadius(8)
+                            }
                         }
                     }
+                    
+                    if isDynamicAlarmSelected {
+                        DynamicAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedWakeUpTime: $selectedTimeToWake)
+                    } else if isManualAlarmSelected {
+                        ManualAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedTimeToWakeUp: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep, isCalculatingOptimalSleepTimes: $isCalculatingOptimalSleepTimes, isCalculatingOptimalWakeTimes: $isCalculatingOptimalWakeTimes, suggestedSleepTimes: $suggestedSleepTimes, suggestedWakeTimes: $suggestedWakeTimes)
+                    }
+                    
+                    Spacer()
                 }
-                
-                if isDynamicAlarmSelected {
-                    DynamicAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedWakeUpTime: $selectedTimeToWake)
-                } else if isManualAlarmSelected {
-                    ManualAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedTimeToWakeUp: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep, isCalculatingOptimalSleepTimes: $isCalculatingOptimalSleepTimes, isCalculatingOptimalWakeTimes: $isCalculatingOptimalWakeTimes, suggestedSleepTimes: $suggestedSleepTimes, suggestedWakeTimes: $suggestedWakeTimes)
-                }
-                
-                Spacer()
             }
             
             if isCalculatingOptimalWakeTimes {
@@ -372,6 +459,7 @@ struct DynamicAlarmView: View {
                         presentationMode.wrappedValue.dismiss()
                      })
             }
+            Spacer()
         }
         .padding()
     }
