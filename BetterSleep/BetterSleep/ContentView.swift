@@ -16,8 +16,7 @@ struct Star {
         if antiBlueLightMode {
             let colors: [Color] = [.yellow, .orange, .red]
             return colors.randomElement() ?? .white
-        }
-        else {
+        } else {
             let colors: [Color] = [.blue, .green, .purple]
             return colors.randomElement() ?? .white
         }
@@ -95,102 +94,100 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationView {
-            VStack {
-                ShootingStarsAnimation(stars: $stars, disableStars: $disableStars, antiBlueLightMode: $antiBlueLightMode)
-                ZStack {
-                    Text("BetterSleep")
-                        .font(Font.custom("Snell Roundhand", size: 40))
-                        .fontWeight(.heavy)
-                    
-                    HStack {
-                        Spacer()
-                        NavigationLink(destination: SettingsView(disableStars: $disableStars, antiBlueLightMode: $antiBlueLightMode)) {
-                            Image(systemName: "gear")
-                                .foregroundColor(.white)
-                                .font(.title)
-                                .padding()
-                        }
+        VStack {
+            ShootingStarsAnimation(stars: $stars, disableStars: $disableStars, antiBlueLightMode: $antiBlueLightMode)
+            ZStack {
+                Text("BetterSleep")
+                    .font(Font.custom("Snell Roundhand", size: 40))
+                    .fontWeight(.heavy)
+                
+                HStack {
+                    Spacer()
+                    NavigationLink(destination: SettingsView(disableStars: $disableStars, antiBlueLightMode: $antiBlueLightMode)) {
+                        Image(systemName: "gear")
+                            .foregroundColor(.white)
+                            .font(.title)
+                            .padding()
                     }
                 }
-                        
-                Spacer()
-                
-                Image(systemName: "moon.zzz.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxHeight: 150)
-                    .foregroundColor(.white)
+            }
+            
+            Spacer()
+            
+            Image(systemName: "moon.zzz.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 150)
+                .foregroundColor(.white)
+                .padding()
+            
+            Spacer()
+            
+            Text("Current Time:")
+                .font(.headline)
+                .foregroundColor(.gray)
+                .padding(.bottom, 5)
+            
+            Text("\(currentTime, formatter: dateFormatter)")
+                .font(.largeTitle)
+            
+            Spacer()
+            
+            NavigationLink(destination: SleepRecommendationView(antiBlueLightMode: $antiBlueLightMode)) {
+                Text("SleepRecommendations")
                     .padding()
-                
-                Spacer()
-                
-                Text("Current Time:")
+                    .foregroundColor(.white)
                     .font(.headline)
-                    .foregroundColor(.gray)
-                    .padding(.bottom, 5)
-                
-                Text("\(currentTime, formatter: dateFormatter)")
-                    .font(.largeTitle)
-                
-                Spacer()
-                
-                NavigationLink(destination: SleepRecommendationView(antiBlueLightMode: $antiBlueLightMode)) {
-                    Text("Sleep Recommendations")
-                        .padding()
-                        .foregroundColor(.white)
-                        .font(.headline)
-                    Image(systemName: "moon.haze.fill")
-                        .foregroundColor(.white)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .red : .purple, antiBlueLightMode ? .yellow : .blue]), startPoint: .leading, endPoint: .trailing))
-                .cornerRadius(20)
-                .padding(.horizontal, 30)
-
-                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedTimeToWake: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep, alarmSet: $alarmSet)) {
-                    Text("Smart Alarm")
-                        .padding()
-                        .foregroundColor(.white)
-                        .font(.headline)
-                    Image(systemName: "alarm.fill")
-                        .foregroundColor(.white)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .yellow : .blue, antiBlueLightMode ? .orange : .green]), startPoint: .leading, endPoint: .trailing))
-                .cornerRadius(20)
-                .padding(.horizontal, 30)
-
-                NavigationLink(destination: SleepAnalysisView(antiBlueLightMode: $antiBlueLightMode)) {
-                    Text("Sleep History & Analysis")
-                        .padding()
-                        .foregroundColor(.white)
-                        .font(.headline)
-                    Image(systemName: "bed.double.fill")
-                        .foregroundColor(.white)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 10)
-                .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .orange : .green, antiBlueLightMode ? .red : .purple]), startPoint: .leading, endPoint: .trailing))
-                .cornerRadius(20)
-                .padding(.horizontal, 30)
-                
-                Spacer()
+                Image(systemName: "moon.haze.fill")
+                    .foregroundColor(.white)
             }
-            .onAppear {
-                if stars.isEmpty {
-                    generateStars()
-                }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .red : .purple, antiBlueLightMode ? .yellow : .blue]), startPoint: .leading, endPoint: .trailing))
+            .cornerRadius(20)
+            .padding(.horizontal, 30)
+            NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedTimeToWake: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep, alarmSet: $alarmSet)) {
+                Text("Smart Alarm")
+                    .padding()
+                    .foregroundColor(.white)
+                    .font(.headline)
+                Image(systemName: "alarm.fill")
+                    .foregroundColor(.white)
             }
-            .onReceive(timer) { _ in
-                self.currentTime = Date()
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .yellow : .blue, antiBlueLightMode ? .orange : .green]), startPoint: .leading, endPoint: .trailing))
+            .cornerRadius(20)
+            .padding(.horizontal, 30)
+            
+            NavigationLink(destination: SleepAnalysisView(antiBlueLightMode: $antiBlueLightMode)) {
+                Text("Sleep History & Analysis")
+                    .padding()
+                    .foregroundColor(.white)
+                    .font(.headline)
+                Image(systemName: "bed.double.fill")
+                    .foregroundColor(.white)
             }
-            .onChange(of: antiBlueLightMode) { _ in
-                regenerateStars()
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .orange : .green, antiBlueLightMode ? .red : .purple]), startPoint: .leading, endPoint: .trailing))
+            .cornerRadius(20)
+            .padding(.horizontal, 30)
+            
+            Spacer()
+        }
+        .onAppear {
+            if stars.isEmpty {
+                generateStars()
             }
         }
+        .onReceive(timer) { _ in
+            self.currentTime = Date()
+        }
+        .onChange(of: antiBlueLightMode) { _ in
+            regenerateStars()
+        }
+        // Removed NavigationView wrapper from here
         .navigationViewStyle(StackNavigationViewStyle())
     }
     
@@ -205,11 +202,5 @@ struct ContentView: View {
         for _ in 0..<25 {
             stars.append(Star(antiBlueLightMode: $antiBlueLightMode))
         }
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
