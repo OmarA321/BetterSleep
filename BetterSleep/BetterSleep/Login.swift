@@ -3,13 +3,11 @@ import SwiftUI
 struct Login: View {
     @State private var username: String = ""
     @State private var password: String = ""
-    @State private var shouldNavigateToContentView = false // State for navigation control
+    @State private var shouldNavigateToContentView = false
 
     var body: some View {
-        NavigationView { // Navigation support
+        NavigationView {
             ZStack {
-                Color.blue.opacity(0.1).edgesIgnoringSafeArea(.all)
-                
                 VStack(spacing: 20) {
                     Spacer()
                     Text("BetterSleep")
@@ -22,21 +20,26 @@ struct Login: View {
                         .font(.headline)
                     
                     TextField("Username", text: $username)
-                        .foregroundColor(.black)
                         .padding()
-                        .background(Color.white.opacity(0.7))
-                        .cornerRadius(10)
+                        .foregroundColor(.white)
                         .padding(.horizontal, 40)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray, lineWidth: 1)
+                                .padding(.horizontal, 40)
+                        )
                     
                     SecureField("Password", text: $password)
-                        .foregroundColor(.black)
                         .padding()
-                        .background(Color.white.opacity(0.7))
-                        .cornerRadius(10)
+                        .foregroundColor(.white)
                         .padding(.horizontal, 40)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.gray, lineWidth: 1)
+                                .padding(.horizontal, 40)
+                        )
                     
                     Button(action: {
-                        // Trigger navigation
                         self.shouldNavigateToContentView = true
                     }) {
                         Text("Login")
@@ -49,12 +52,11 @@ struct Login: View {
                             .padding(.horizontal, 40)
                     }
                     
-                    // NavigationLink to trigger programmatic navigation
                     NavigationLink(destination: ContentView()
                         .preferredColorScheme(.dark)
                         .navigationBarBackButtonHidden(true)
                         .navigationBarTitle("", displayMode: .inline)
-                        .navigationBarHidden(true), // Additional attempt to remove space
+                        .navigationBarHidden(true),
                         isActive: $shouldNavigateToContentView) {
                         EmptyView()
                     }
