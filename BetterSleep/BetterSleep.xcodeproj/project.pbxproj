@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6445AE3B2BAB743A00B423C6 /* LogInOrSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6445AE3A2BAB743A00B423C6 /* LogInOrSignUpView.swift */; };
 		64D21F8B2B9445AF00A063B4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D21F8A2B9445AF00A063B4 /* SettingsView.swift */; };
 		DC08FFF22BA8A8B000DD5E0D /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08FFF12BA8A8B000DD5E0D /* SignUp.swift */; };
 		DC08FFF42BA8A8C000DD5E0D /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08FFF32BA8A8C000DD5E0D /* Login.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6445AE3A2BAB743A00B423C6 /* LogInOrSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInOrSignUpView.swift; sourceTree = "<group>"; };
 		64D21F8A2B9445AF00A063B4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC08FFF12BA8A8B000DD5E0D /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		DC08FFF32BA8A8C000DD5E0D /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				DC08FFF32BA8A8C000DD5E0D /* Login.swift */,
 				DC269B7F2B93CA5B0014F526 /* Assets.xcassets */,
 				DC269B812B93CA5B0014F526 /* Preview Content */,
+				6445AE3A2BAB743A00B423C6 /* LogInOrSignUpView.swift */,
 			);
 			path = BetterSleep;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6445AE3B2BAB743A00B423C6 /* LogInOrSignUpView.swift in Sources */,
 				DC08FFF22BA8A8B000DD5E0D /* SignUp.swift in Sources */,
 				DC269BA92B93DB650014F526 /* SleepAnalysisView.swift in Sources */,
 				DC269BA32B93DB3E0014F526 /* SleepRecommendationView.swift in Sources */,

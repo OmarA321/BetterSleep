@@ -11,9 +11,7 @@ import SwiftUI
 struct BetterSleepApp: App {
     var body: some Scene {
         WindowGroup {
-           // ContentView()
-          //.preferredColorScheme(.dark)
-            Login()
+            LogInOrSignUpView()
                 .preferredColorScheme(.dark)
         }
     }

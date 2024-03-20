@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct Login: View {
+    @Binding var showingLogin: Bool
+    
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var shouldNavigateToContentView = false
@@ -11,8 +13,8 @@ struct Login: View {
                 VStack(spacing: 20) {
                     Spacer()
                     Text("BetterSleep")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+                        .font(Font.custom("Snell Roundhand", size: 40))
+                        .fontWeight(.heavy)
                         .foregroundColor(Color.purple)
                     
                     Text("Improve your sleep cycle")
@@ -61,27 +63,21 @@ struct Login: View {
                         EmptyView()
                     }
 
-
                     Spacer()
                     
                     HStack {
                         Text("Don't have an account?")
                             .foregroundColor(Color.gray)
-                        
-                        NavigationLink(destination: SignUp().preferredColorScheme(.dark)) {
-                            Text("Sign Up")
-                                .fontWeight(.bold)
-                                .foregroundColor(Color.purple)
+                        Button("Sign Up") {
+                            withAnimation {
+                                showingLogin = false
+                            }
                         }
+                        .fontWeight(.bold)
+                        .foregroundColor(Color.purple)
                     }
                 }
             }
         }
-    }
-}
-
-struct Login_Previews: PreviewProvider {
-    static var previews: some View {
-        Login()
     }
 }
