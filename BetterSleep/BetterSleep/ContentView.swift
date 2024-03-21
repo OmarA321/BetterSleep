@@ -193,7 +193,6 @@ struct ContentView: View {
             .onChange(of: antiBlueLightMode) { _ in
                 regenerateStars()
             }
-            // Removed NavigationView wrapper from here
             .navigationViewStyle(StackNavigationViewStyle())
         }
     }

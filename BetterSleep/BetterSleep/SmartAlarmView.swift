@@ -31,7 +31,7 @@ struct SmartAlarmView: View {
     @State private var settingAlarm = false
     
     var body: some View {
-        ZStack {
+        ZStack {            
             VStack {
                 Image(systemName: "alarm.fill")
                     .resizable()

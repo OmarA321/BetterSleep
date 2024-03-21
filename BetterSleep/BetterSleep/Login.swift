@@ -93,7 +93,7 @@ struct Login: View {
                             }
                         }
                         .fontWeight(.bold)
-                        .foregroundColor(Color.purple)
+                        .foregroundColor(Color.green)
                         .shadow(color: Color.black, radius: 3, x: 2, y: 2)
                     }
                 }

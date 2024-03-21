@@ -108,7 +108,7 @@ struct SignUp: View {
                             }
                         }
                         .fontWeight(.bold)
-                        .foregroundColor(Color.green)
+                        .foregroundColor(Color.purple)
                     }
                 }
             }

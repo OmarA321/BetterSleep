@@ -17,31 +17,36 @@ struct SettingsView: View {
     }
     
     var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "gearshape.fill")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(maxHeight: 100)
-                .foregroundColor(.white)
-                .padding()
-                .background(
-                    antiBlueLightMode ? LinearGradient(gradient: Gradient(colors: [.red, .yellow, .orange]), startPoint: .topLeading, endPoint: .bottomTrailing) : LinearGradient(gradient: Gradient(colors: [.purple, .blue, .green]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                )
-                .clipShape(Circle())
-            
-            Text("Settings")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-            
-            Toggle("Disable Home Page Stars", isOn: $disableStars)
-                .padding()
-            
-            Toggle("Anti Blue Light Mode", isOn: $antiBlueLightMode)
-                .padding()
-            
-            Spacer()
+        ZStack{
+            ForEach(0..<30) { _ in
+                BlueStar()
+            }
+            VStack(spacing: 20) {
+                Image(systemName: "gearshape.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxHeight: 100)
+                    .foregroundColor(.white)
+                    .padding()
+                    .background(
+                        antiBlueLightMode ? LinearGradient(gradient: Gradient(colors: [.red, .yellow, .orange]), startPoint: .topLeading, endPoint: .bottomTrailing) : LinearGradient(gradient: Gradient(colors: [.purple, .blue, .green]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    )
+                    .clipShape(Circle())
+                
+                Text("Settings")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                
+                Toggle("Disable Home Page Stars", isOn: $disableStars)
+                    .padding()
+                
+                Toggle("Anti Blue Light Mode", isOn: $antiBlueLightMode)
+                    .padding()
+                
+                Spacer()
+            }
+            .padding()
         }
-        .padding()
     }
 }
 
