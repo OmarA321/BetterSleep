@@ -13,12 +13,17 @@ struct SignUp: View {
     var body: some View {
         NavigationView {
             ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.6), Color.blue.opacity(0.3)]), startPoint: .top, endPoint: .bottom)
+                    .mask(WavyHills())
+                    .frame(height: 150)
+                    .offset(y: UIScreen.main.bounds.height * 0.4)
+                
                 VStack(spacing: 20) {
                     Spacer()
                     Text("Join BetterSleep")
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(Color.blue)
+                        .foregroundColor(Color.green)
                     
                     Group {
                         TextField("Username", text: $username)
@@ -70,7 +75,7 @@ struct SignUp: View {
                             .foregroundColor(Color.white)
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .padding()
-                            .background(Color.blue)
+                            .background(Color.green)
                             .cornerRadius(10)
                             .padding(.horizontal, 40)
                     }
@@ -94,7 +99,7 @@ struct SignUp: View {
                             }
                         }
                         .fontWeight(.bold)
-                        .foregroundColor(Color.blue)
+                        .foregroundColor(Color.green)
                     }
                 }
             }
