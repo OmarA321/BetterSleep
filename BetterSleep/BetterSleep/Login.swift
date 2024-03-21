@@ -2,7 +2,8 @@ import SwiftUI
 
 struct Login: View {
     @Binding var showingLogin: Bool
-    
+    @Binding var animate: Bool // Add this line
+
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var shouldNavigateToContentView = false
@@ -86,6 +87,11 @@ struct Login: View {
                                 showingLogin = false
                             }
                         }
+                        .onChange(of: showingLogin) { newValue in
+                                  if newValue {
+                                      animate = true // Re-enable animation when coming back to login
+                                  }
+                              }
                         .fontWeight(.bold)
                         .foregroundColor(Color.purple)
                         .shadow(color: Color.black, radius: 3, x: 2, y: 2)
@@ -119,7 +125,7 @@ struct SunView: View {
                         .offset(x: self.originalOffsets.isEmpty ? xOffset : self.originalOffsets[index].0, y: self.originalOffsets.isEmpty ? yOffset : self.originalOffsets[index].1)
                         .opacity(self.opacityValues[index])
                         .animation(
-                            Animation.easeInOut(duration: 2.5)
+                            Animation.easeInOut(duration: 1)
                                 .repeatForever(autoreverses: true)
                                 .delay(Double(index) * 0.2)
                         )
