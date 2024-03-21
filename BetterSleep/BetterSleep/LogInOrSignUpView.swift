@@ -6,14 +6,11 @@ struct LogInOrSignUpView: View {
 
     var body: some View {
         if showingLogin {
-            Login(showingLogin: $showingLogin, animate: $animate)
-                .transition(animate ? .slide : .identity)
+            Login(showingLogin: $showingLogin)
+                .transition(.slide)
         } else {
             SignUp(showingLogin: $showingLogin)
                 .transition(.slide)
-                .onAppear {
-                    animate = false
-                }
         }
     }
 }

@@ -2,8 +2,7 @@ import SwiftUI
 
 struct Login: View {
     @Binding var showingLogin: Bool
-    @Binding var animate: Bool // Add this line
-
+    
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var shouldNavigateToContentView = false
@@ -11,13 +10,19 @@ struct Login: View {
     var body: some View {
         NavigationView {
             ZStack {
-                SunView()
+                ForEach(0..<30) { _ in
+                    GreenStar()
+                }
                 
-                LinearGradient(gradient: Gradient(colors: [Color.green.opacity(0.6), Color.green.opacity(0.3)]), startPoint: .top, endPoint: .bottom)
+                SunView()
+
+                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.black]), startPoint: .top, endPoint: .bottom)
                     .mask(WavyHills())
                     .frame(height: 150)
                     .offset(y: UIScreen.main.bounds.height * 0.4)
-                
+
+
+
                 VStack(spacing: 20) {
                     Spacer()
                     Text("BetterSleep")
@@ -87,11 +92,6 @@ struct Login: View {
                                 showingLogin = false
                             }
                         }
-                        .onChange(of: showingLogin) { newValue in
-                                  if newValue {
-                                      animate = true // Re-enable animation when coming back to login
-                                  }
-                              }
                         .fontWeight(.bold)
                         .foregroundColor(Color.purple)
                         .shadow(color: Color.black, radius: 3, x: 2, y: 2)
@@ -104,8 +104,8 @@ struct Login: View {
 
 struct SunView: View {
     @State private var opacityValues: [Double] = [0.1, 0.1, 0.25, 0.5, 0.75]
-    @State private var originalOffsets: [(CGFloat, CGFloat)] = []
-
+    let animationDuration: TimeInterval = 1.5
+    
     var body: some View {
         GeometryReader { geometry in
             let xOffset = (geometry.size.width / 2) - 550
@@ -116,31 +116,39 @@ struct SunView: View {
                     Circle()
                         .fill(
                             LinearGradient(
-                                gradient: Gradient(colors: [Color.yellow, Color.orange]),
+                                gradient: Gradient(colors: [Color.blue, Color.black]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             )
                         )
                         .frame(width: self.circleSizes(index), height: self.circleSizes(index))
-                        .offset(x: self.originalOffsets.isEmpty ? xOffset : self.originalOffsets[index].0, y: self.originalOffsets.isEmpty ? yOffset : self.originalOffsets[index].1)
+                        .offset(x: xOffset, y: yOffset)
                         .opacity(self.opacityValues[index])
-                        .animation(
-                            Animation.easeInOut(duration: 1)
-                                .repeatForever(autoreverses: true)
-                                .delay(Double(index) * 0.2)
-                        )
-               }
-           }
-       }
-   }
+                }
+            }
+        }
+        .onAppear {
+            self.startOpacityAnimation()
+        }
+    }
 
-   private func circleSizes(_ index: Int) -> CGFloat {
-       let sizes: [CGFloat] = [760, 440, 280, 200, 140]
-       return sizes[index]
-   }
+    private func circleSizes(_ index: Int) -> CGFloat {
+        let sizes: [CGFloat] = [760, 440, 280, 200, 140]
+        return sizes[index]
+    }
+    
+    private func startOpacityAnimation() {
+        Timer.scheduledTimer(withTimeInterval: animationDuration, repeats: true) { _ in
+            withAnimation(.linear(duration: animationDuration)) {
+                if self.opacityValues == [0.6, 0.4, 0.2, 0.8, 0.9] {
+                    self.opacityValues = [0.1, 0.1, 0.25, 0.5, 0.75]
+                } else {
+                    self.opacityValues = [0.6, 0.4, 0.2, 0.8, 0.9]
+                }
+            }
+        }
+    }
 }
-
-
 
 struct WavyHills: Shape {
     func path(in rect: CGRect) -> Path {
@@ -160,5 +168,44 @@ struct WavyHills: Shape {
         path.closeSubpath()
 
         return path
+    }
+}
+
+struct BlueStar: View {
+    var body: some View {
+        let size = CGFloat.random(in: 1...3)
+        let x = CGFloat.random(in: 0...UIScreen.main.bounds.width)
+        let y = CGFloat.random(in: 0...UIScreen.main.bounds.height)
+        
+        return Circle()
+            .foregroundColor(.blue)
+            .frame(width: size, height: size)
+            .position(x: x, y: y)
+    }
+}
+
+struct GreenStar: View {
+    var body: some View {
+        let size = CGFloat.random(in: 1...3)
+        let x = CGFloat.random(in: 0...UIScreen.main.bounds.width)
+        let y = CGFloat.random(in: 0...UIScreen.main.bounds.height)
+        
+        return Circle()
+            .foregroundColor(.green)
+            .frame(width: size, height: size)
+            .position(x: x, y: y)
+    }
+}
+
+struct PurpleStar: View {
+    var body: some View {
+        let size = CGFloat.random(in: 1...3)
+        let x = CGFloat.random(in: 0...UIScreen.main.bounds.width)
+        let y = CGFloat.random(in: 0...UIScreen.main.bounds.height)
+        
+        return Circle()
+            .foregroundColor(.purple)
+            .frame(width: size, height: size)
+            .position(x: x, y: y)
     }
 }
