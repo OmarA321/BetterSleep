@@ -11,4 +11,11 @@ struct SleepRecord: Codable {
     var date: Date
     var hoursSlept: Double
     var qualityRating: String
+    
+    enum UserKeys: String, CodingKey {
+        case date
+        case hoursSlept
+        case qualityRating
+        
+    }
 }

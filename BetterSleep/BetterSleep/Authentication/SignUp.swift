@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct SignUp: View {
+    
+    @StateObject var viewModel = SignUpViewModel()
+    
     @Binding var showingLogin: Bool
     
     @State private var username: String = ""
@@ -35,7 +38,7 @@ struct SignUp: View {
                         .foregroundColor(Color.green)
                     
                     Group {
-                        TextField("Username", text: $username)
+                        TextField("Username", text: $viewModel.username)
                             .padding()
                             .foregroundColor(.white)
                             .padding(.horizontal, 40)
@@ -45,7 +48,7 @@ struct SignUp: View {
                                     .padding(.horizontal, 40)
                             )
                         
-                        TextField("Email", text: $email)
+                        TextField("Email", text: $viewModel.email)
                             .padding()
                             .foregroundColor(.white)
                             .padding(.horizontal, 40)
@@ -55,7 +58,7 @@ struct SignUp: View {
                                     .padding(.horizontal, 40)
                             )
                         
-                        SecureField("Password", text: $password)
+                        SecureField("Password", text: $viewModel.password)
                             .padding()
                             .foregroundColor(.white)
                             .padding(.horizontal, 40)
@@ -77,7 +80,8 @@ struct SignUp: View {
                     }
                     
                     Button(action: {
-                        self.shouldNavigateToContentView = true
+                        //self.shouldNavigateToContentView = true
+                        viewModel.register()
                     }) {
                         Text("Sign Up")
                             .fontWeight(.bold)
@@ -88,7 +92,7 @@ struct SignUp: View {
                             .cornerRadius(10)
                             .padding(.horizontal, 40)
                     }
-                    NavigationLink(destination: ContentView()
+                    NavigationLink(destination: MainMenuView()
                         .preferredColorScheme(.dark)
                         .navigationBarBackButtonHidden(true)
                         .navigationBarTitle("", displayMode: .inline)

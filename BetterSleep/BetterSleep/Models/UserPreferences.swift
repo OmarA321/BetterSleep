@@ -10,4 +10,10 @@ import Foundation
 struct UserPreferences: Codable {
     var antiBlueLightMode: Bool
     var disableStars: Bool
+    
+    enum UserPreferencesKeys: String, CodingKey {
+        case antiBlueLightMode
+        case disableStars
+        
+    }
 }

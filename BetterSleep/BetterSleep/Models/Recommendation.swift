@@ -9,4 +9,9 @@ import Foundation
 
 struct Recommendation: Codable {
     var description: String
+    
+    enum UserKeys: String, CodingKey {
+        case description
+        
+    }
 }

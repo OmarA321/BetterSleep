@@ -8,11 +8,24 @@
 import Foundation
 
 struct User: Codable, Identifiable {
-    var id: String = UUID().uuidString
+    var id: String? = UUID().uuidString
     var username: String
+    var email: String
     var sleepHistory: [SleepRecord]
     var recommendations: [Recommendation]
     var preferences: UserPreferences
-    var timeToSleep: Date
-    var timetoWake: Date
+    var timeToSleep: Date?
+    var timetoWake: Date?
+    
+    enum UserKeys: String, CodingKey {
+        case username
+        case email
+        case sleepHistory
+        case recommendations
+        case preferences
+        case timeToSleep
+        case timeToWake
+        
+    }
+
 }

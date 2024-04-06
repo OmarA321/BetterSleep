@@ -1,9 +1,12 @@
 import SwiftUI
 
 struct Login: View {
+    
+    @StateObject var viewModel = LoginViewModel()
+    
     @Binding var showingLogin: Bool
     
-    @State private var username: String = ""
+    @State private var email: String = ""
     @State private var password: String = ""
     @State private var shouldNavigateToContentView = false
 
@@ -36,7 +39,7 @@ struct Login: View {
                         .font(.headline)
                         .shadow(color: Color.black, radius: 3, x: 2, y: 2)
                     
-                    TextField("Username", text: $username)
+                    TextField("Email", text: $viewModel.email)
                         .padding()
                         .foregroundColor(.white)
                         .padding(.horizontal, 40)
@@ -47,7 +50,7 @@ struct Login: View {
                         )
                         .shadow(color: Color.black, radius: 3, x: 2, y: 2)
                     
-                    SecureField("Password", text: $password)
+                    SecureField("Password", text: $viewModel.password)
                         .padding()
                         .foregroundColor(.white)
                         .padding(.horizontal, 40)
@@ -72,7 +75,7 @@ struct Login: View {
                             .shadow(color: Color.black, radius: 3, x: 2, y: 2)
                     }
                     
-                    NavigationLink(destination: ContentView()
+                    NavigationLink(destination: MainMenuView()
                         .preferredColorScheme(.dark)
                         .navigationBarBackButtonHidden(true)
                         .navigationBarTitle("", displayMode: .inline)
