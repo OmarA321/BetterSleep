@@ -11,4 +11,8 @@ struct User: Codable, Identifiable {
     var id: String = UUID().uuidString
     var username: String
     var sleepHistory: [SleepRecord]
+    var recommendations: [Recommendation]
+    var preferences: UserPreferences
+    var timeToSleep: Date
+    var timetoWake: Date
 }
