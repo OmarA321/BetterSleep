@@ -8,18 +8,11 @@
 import SwiftUI
 import FirebaseCore
 
-extension BetterSleepApp {
-  private func initFirebase() {
-    FirebaseApp.configure()
-  }
-}
-
-
 @main
 struct BetterSleepApp: App {
     
     init() {
-        initFirebase()
+        FirebaseApp.configure()
     }
     
     var body: some Scene {
