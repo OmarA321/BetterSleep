@@ -76,6 +76,9 @@ struct ShootingStarsAnimation: View {
 }
 
 struct MainMenuView: View {
+    
+    @StateObject var viewModel = MainMenuViewModel()
+    
     @State private var stars: [Star] = []
     @State private var currentTime = Date()
     @State private var disableStars = false
