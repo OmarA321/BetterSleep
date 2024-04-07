@@ -365,17 +365,25 @@ struct SmartAlarmView: View {
                             .frame(width: 150, height: 150)
                             .overlay(
                                 VStack {
-                                    Text("\(suggestedSleepTimes[0], formatter: DateFormatter.timeOnly)")
+                                    Text("\(showLeftSleepTimes ? suggestedSleepTimes[0].addingTimeInterval(4.5 * 3600) : suggestedSleepTimes[0], formatter: DateFormatter.timeOnly)")
                                         .foregroundColor(.white)
                                         .font(.title)
                                         .bold()
-                                    Text("6 hours of sleep")
+                                    Text("\(showLeftSleepTimes ? "1.5" : "6") hours of sleep")
                                         .foregroundColor(.white)
                                         .font(.headline)
                                 }
                             )
                             .onTapGesture {
-                                selectedTimeToSleep = suggestedSleepTimes[0]
+                                if showLeftSleepTimes == true{
+                                    selectedTimeToSleep = suggestedSleepTimes[0].addingTimeInterval(4.5 * 3600)
+                                }
+                                else if showRightSleepTimes == true{
+                                    selectedTimeToSleep = suggestedSleepTimes[0].addingTimeInterval(-4.5 * 3600)
+                                }
+                                else {
+                                    selectedTimeToSleep = suggestedSleepTimes[0]
+                                }
                                 showingPopup = true
                             }
                         
@@ -386,17 +394,25 @@ struct SmartAlarmView: View {
                             .frame(width: 150, height: 150)
                             .overlay(
                                 VStack {
-                                    Text("\(suggestedSleepTimes[1], formatter: DateFormatter.timeOnly)")
+                                    Text("\(showLeftSleepTimes ? suggestedSleepTimes[1].addingTimeInterval(4.5 * 3600) : suggestedSleepTimes[1], formatter: DateFormatter.timeOnly)")
                                         .foregroundColor(.white)
                                         .font(.title)
                                         .bold()
-                                    Text("7.5 hours of sleep")
+                                    Text("\(showLeftSleepTimes ? "3" : "7.5") hours of sleep")
                                         .foregroundColor(.white)
                                         .font(.headline)
                                 }
                             )
                             .onTapGesture {
-                                selectedTimeToSleep = suggestedSleepTimes[1]
+                                if showLeftSleepTimes == true{
+                                    selectedTimeToSleep = suggestedSleepTimes[1].addingTimeInterval(4.5 * 3600)
+                                }
+                                else if showRightSleepTimes == true{
+                                    selectedTimeToSleep = suggestedSleepTimes[1].addingTimeInterval(-4.5 * 3600)
+                                }
+                                else {
+                                    selectedTimeToSleep = suggestedSleepTimes[1]
+                                }
                                 showingPopup = true
                             }
                     }
@@ -423,17 +439,25 @@ struct SmartAlarmView: View {
                                 .frame(width: 150, height: 150)
                                 .overlay(
                                     VStack {
-                                        Text("\(suggestedSleepTimes[2], formatter: DateFormatter.timeOnly)")
+                                        Text("\(showLeftSleepTimes ? suggestedSleepTimes[2].addingTimeInterval(4.5 * 3600) : suggestedSleepTimes[2], formatter: DateFormatter.timeOnly)")
                                             .foregroundColor(.white)
                                             .font(.title)
                                             .bold()
-                                        Text("9 hours of sleep")
+                                        Text("\(showLeftSleepTimes ? "4.5" : "9") hours of sleep")
                                             .foregroundColor(.white)
                                             .font(.headline)
                                     }
                                 )
                                 .onTapGesture {
-                                    selectedTimeToSleep = suggestedSleepTimes[2]
+                                    if showLeftSleepTimes == true{
+                                        selectedTimeToSleep = suggestedSleepTimes[2].addingTimeInterval(4.5 * 3600)
+                                    }
+                                    else if showRightSleepTimes == true{
+                                        selectedTimeToSleep = suggestedSleepTimes[2].addingTimeInterval(-4.5 * 3600)
+                                    }
+                                    else {
+                                        selectedTimeToSleep = suggestedSleepTimes[2]
+                                    }
                                     showingPopup = true
                                 }
                             
