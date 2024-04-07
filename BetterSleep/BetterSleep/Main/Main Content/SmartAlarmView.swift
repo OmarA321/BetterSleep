@@ -30,8 +30,13 @@ struct SmartAlarmView: View {
     @State private var showingPopup = false
     @State private var settingAlarm = false
     
+    @State private var showLeftWakeTimes = false
+    @State private var showRightWakeTimes = false
+    @State private var showLeftSleepTimes = false
+    @State private var showRightSleepTimes = false
+    
     var body: some View {
-        ZStack {            
+        ZStack {
             VStack {
                 Image(systemName: "alarm.fill")
                     .resizable()
@@ -271,26 +276,53 @@ struct SmartAlarmView: View {
                     }
                     
                     if suggestedWakeTimes.count >= 3 {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(
-                                LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
-                            )
-                            .frame(width: 150, height: 150)
-                            .overlay(
-                                VStack {
-                                    Text("\(suggestedWakeTimes[2], formatter: DateFormatter.timeOnly)")
-                                        .foregroundColor(.white)
-                                        .font(.title)
-                                        .bold()
-                                    Text("9 hours of sleep")
-                                        .foregroundColor(.white)
-                                        .font(.headline)
+                        HStack(spacing: 20) {
+                            Image(systemName: "arrow.left")
+                                .foregroundColor(showLeftWakeTimes ? Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 0)) : (antiBlueLightMode ? Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)) : Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1))))
+                                .font(Font.system(size: 50))
+                                .bold()
+                                .onTapGesture {
+                                    if showLeftWakeTimes == false && showRightWakeTimes == false{
+                                        showLeftWakeTimes = true
+                                    }
+                                    else if showLeftWakeTimes == false && showRightWakeTimes == true{
+                                        showRightWakeTimes = false
+                                    }
                                 }
-                            )
-                            .onTapGesture {
-                                selectedTimeToWake = suggestedWakeTimes[2]
-                                showingPopup = true
-                            }
+                            
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(
+                                    LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
+                                )
+                                .frame(width: 150, height: 150)
+                                .overlay(
+                                    VStack {
+                                        Text("\(suggestedWakeTimes[2], formatter: DateFormatter.timeOnly)")
+                                            .foregroundColor(.white)
+                                            .font(.title)
+                                            .bold()
+                                        Text("9 hours of sleep")
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                    }
+                                )
+                                .onTapGesture {
+                                    selectedTimeToWake = suggestedWakeTimes[2]
+                                    showingPopup = true
+                                }
+                            Image(systemName: "arrow.right")
+                                .foregroundColor(showRightWakeTimes ? Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 0)) : (antiBlueLightMode ? Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)) : Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1))))
+                                .font(Font.system(size: 50))
+                                .bold()
+                                .onTapGesture {
+                                    if showLeftWakeTimes == false && showRightWakeTimes == false{
+                                        showRightWakeTimes = true
+                                    }
+                                    else if showLeftWakeTimes == true && showRightWakeTimes == false{
+                                        showLeftWakeTimes = false
+                                    }
+                                }
+                        }
                     }
                 }
                 .alert(isPresented: $showingPopup) {
@@ -370,26 +402,54 @@ struct SmartAlarmView: View {
                     }
                     
                     if suggestedSleepTimes.count >= 3 {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(
-                                LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
-                            )
-                            .frame(width: 150, height: 150)
-                            .overlay(
-                                VStack {
-                                    Text("\(suggestedSleepTimes[2], formatter: DateFormatter.timeOnly)")
-                                        .foregroundColor(.white)
-                                        .font(.title)
-                                        .bold()
-                                    Text("9 hours of sleep")
-                                        .foregroundColor(.white)
-                                        .font(.headline)
+                        HStack(spacing: 20) {
+                            Image(systemName: "arrow.left")
+                                .foregroundColor(showLeftSleepTimes ? Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 0)) : (antiBlueLightMode ? Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)) : Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1))))
+                                .font(Font.system(size: 50))
+                                .bold()
+                                .onTapGesture {
+                                    if showLeftSleepTimes == false && showRightSleepTimes == false{
+                                        showLeftSleepTimes = true
+                                    }
+                                    else if showLeftSleepTimes == false && showRightSleepTimes == true{
+                                        showRightSleepTimes = false
+                                    }
                                 }
-                            )
-                            .onTapGesture {
-                                selectedTimeToSleep = suggestedSleepTimes[2]
-                                showingPopup = true
-                            }
+                            
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(
+                                    LinearGradient(gradient: Gradient(colors: antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
+                                )
+                                .frame(width: 150, height: 150)
+                                .overlay(
+                                    VStack {
+                                        Text("\(suggestedSleepTimes[2], formatter: DateFormatter.timeOnly)")
+                                            .foregroundColor(.white)
+                                            .font(.title)
+                                            .bold()
+                                        Text("9 hours of sleep")
+                                            .foregroundColor(.white)
+                                            .font(.headline)
+                                    }
+                                )
+                                .onTapGesture {
+                                    selectedTimeToSleep = suggestedSleepTimes[2]
+                                    showingPopup = true
+                                }
+                            
+                            Image(systemName: "arrow.right")
+                                .foregroundColor(showRightSleepTimes ? Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 0)) : (antiBlueLightMode ? Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)) : Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1))))
+                                .font(Font.system(size: 50))
+                                .bold()
+                                .onTapGesture {
+                                    if showLeftSleepTimes == false && showRightSleepTimes == false{
+                                        showRightSleepTimes = true
+                                    }
+                                    else if showLeftSleepTimes == true && showRightSleepTimes == false{
+                                        showLeftSleepTimes = false
+                                    }
+                                }
+                        }
                     }
                 }
                 .alert(isPresented: $showingPopup) {
