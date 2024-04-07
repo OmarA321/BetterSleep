@@ -15,12 +15,21 @@
 		292DDDCD2BB0AEDF00E61452 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292DDDCB2BB0AEDF00E61452 /* User.swift */; };
 		292DDDCF2BB0AF6E00E61452 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292DDDCE2BB0AF6E00E61452 /* SleepRecord.swift */; };
 		292DDDD02BB0AF6E00E61452 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292DDDCE2BB0AF6E00E61452 /* SleepRecord.swift */; };
+		642F17332BC248D700B50342 /* MainMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17312BC248D700B50342 /* MainMenuViewModel.swift */; };
+		642F17342BC248D700B50342 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17322BC248D700B50342 /* MainMenuView.swift */; };
+		642F17362BC2490C00B50342 /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17352BC2490C00B50342 /* Recommendation.swift */; };
+		642F17382BC2491D00B50342 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17372BC2491D00B50342 /* UserPreferences.swift */; };
+		642F173A2BC2493600B50342 /* FireDBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17392BC2493600B50342 /* FireDBHelper.swift */; };
+		642F173C2BC2494C00B50342 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F173B2BC2494C00B50342 /* LoginViewModel.swift */; };
+		642F173E2BC2496100B50342 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F173D2BC2496100B50342 /* SignUpViewModel.swift */; };
+		642F17412BC2499B00B50342 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 642F17402BC2499B00B50342 /* FirebaseAuth */; };
+		642F17422BC24A0000B50342 /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17352BC2490C00B50342 /* Recommendation.swift */; };
+		642F17432BC24A0400B50342 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17372BC2491D00B50342 /* UserPreferences.swift */; };
 		6445AE3B2BAB743A00B423C6 /* LogInOrSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6445AE3A2BAB743A00B423C6 /* LogInOrSignUpView.swift */; };
 		64D21F8B2B9445AF00A063B4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D21F8A2B9445AF00A063B4 /* SettingsView.swift */; };
 		DC08FFF22BA8A8B000DD5E0D /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08FFF12BA8A8B000DD5E0D /* SignUp.swift */; };
 		DC08FFF42BA8A8C000DD5E0D /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08FFF32BA8A8C000DD5E0D /* Login.swift */; };
 		DC269B7C2B93CA580014F526 /* BetterSleepApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC269B7B2B93CA580014F526 /* BetterSleepApp.swift */; };
-		DC269B7E2B93CA580014F526 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC269B7D2B93CA580014F526 /* ContentView.swift */; };
 		DC269B802B93CA5B0014F526 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC269B7F2B93CA5B0014F526 /* Assets.xcassets */; };
 		DC269B832B93CA5B0014F526 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC269B822B93CA5B0014F526 /* Preview Assets.xcassets */; };
 		DC269B892B93CA5B0014F526 /* BetterSleep Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = DC269B882B93CA5B0014F526 /* BetterSleep Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -64,13 +73,19 @@
 		292DDDC22BB0A96A00E61452 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		292DDDCB2BB0AEDF00E61452 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		292DDDCE2BB0AF6E00E61452 /* SleepRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecord.swift; sourceTree = "<group>"; };
+		642F17312BC248D700B50342 /* MainMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewModel.swift; sourceTree = "<group>"; };
+		642F17322BC248D700B50342 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
+		642F17352BC2490C00B50342 /* Recommendation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendation.swift; sourceTree = "<group>"; };
+		642F17372BC2491D00B50342 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
+		642F17392BC2493600B50342 /* FireDBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireDBHelper.swift; sourceTree = "<group>"; };
+		642F173B2BC2494C00B50342 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		642F173D2BC2496100B50342 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		6445AE3A2BAB743A00B423C6 /* LogInOrSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInOrSignUpView.swift; sourceTree = "<group>"; };
 		64D21F8A2B9445AF00A063B4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC08FFF12BA8A8B000DD5E0D /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		DC08FFF32BA8A8C000DD5E0D /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		DC269B782B93CA580014F526 /* BetterSleep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BetterSleep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC269B7B2B93CA580014F526 /* BetterSleepApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSleepApp.swift; sourceTree = "<group>"; };
-		DC269B7D2B93CA580014F526 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DC269B7F2B93CA5B0014F526 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DC269B822B93CA5B0014F526 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DC269B882B93CA5B0014F526 /* BetterSleep Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BetterSleep Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +104,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				292DDDC72BB0AA3E00E61452 /* FirebaseAnalytics in Frameworks */,
+				642F17412BC2499B00B50342 /* FirebaseAuth in Frameworks */,
 				292DDDC92BB0AC2E00E61452 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,10 +128,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		642F173F2BC2499B00B50342 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		64D2F8342BAE0AFB005B8CED /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				DC269B7D2B93CA580014F526 /* ContentView.swift */,
 				64D2F8362BAE0C22005B8CED /* Main Content */,
 				64D21F8A2B9445AF00A063B4 /* SettingsView.swift */,
 			);
@@ -148,6 +170,7 @@
 				DC269B7A2B93CA580014F526 /* BetterSleep */,
 				DC269B8C2B93CA5B0014F526 /* BetterSleep Watch App */,
 				DC269B792B93CA580014F526 /* Products */,
+				642F173F2BC2499B00B50342 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -163,6 +186,13 @@
 		DC269B7A2B93CA580014F526 /* BetterSleep */ = {
 			isa = PBXGroup;
 			children = (
+				642F173D2BC2496100B50342 /* SignUpViewModel.swift */,
+				642F173B2BC2494C00B50342 /* LoginViewModel.swift */,
+				642F17392BC2493600B50342 /* FireDBHelper.swift */,
+				642F17372BC2491D00B50342 /* UserPreferences.swift */,
+				642F17352BC2490C00B50342 /* Recommendation.swift */,
+				642F17322BC248D700B50342 /* MainMenuView.swift */,
+				642F17312BC248D700B50342 /* MainMenuViewModel.swift */,
 				292DDDCA2BB0AEB600E61452 /* Models */,
 				292DDDC22BB0A96A00E61452 /* GoogleService-Info.plist */,
 				DC269B7B2B93CA580014F526 /* BetterSleepApp.swift */,
@@ -222,6 +252,7 @@
 			packageProductDependencies = (
 				292DDDC62BB0AA3E00E61452 /* FirebaseAnalytics */,
 				292DDDC82BB0AC2E00E61452 /* FirebaseFirestore */,
+				642F17402BC2499B00B50342 /* FirebaseAuth */,
 			);
 			productName = BetterSleep;
 			productReference = DC269B782B93CA580014F526 /* BetterSleep.app */;
@@ -252,7 +283,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					DC269B772B93CA580014F526 = {
 						CreatedOnToolsVersion = 15.2;
@@ -312,12 +343,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				642F173E2BC2496100B50342 /* SignUpViewModel.swift in Sources */,
+				642F173C2BC2494C00B50342 /* LoginViewModel.swift in Sources */,
+				642F173A2BC2493600B50342 /* FireDBHelper.swift in Sources */,
+				642F17382BC2491D00B50342 /* UserPreferences.swift in Sources */,
+				642F17362BC2490C00B50342 /* Recommendation.swift in Sources */,
+				642F17332BC248D700B50342 /* MainMenuViewModel.swift in Sources */,
+				642F17342BC248D700B50342 /* MainMenuView.swift in Sources */,
 				6445AE3B2BAB743A00B423C6 /* LogInOrSignUpView.swift in Sources */,
 				DC08FFF22BA8A8B000DD5E0D /* SignUp.swift in Sources */,
 				DC269BA92B93DB650014F526 /* SleepAnalysisView.swift in Sources */,
 				DC269BA32B93DB3E0014F526 /* SleepRecommendationView.swift in Sources */,
 				292DDDCF2BB0AF6E00E61452 /* SleepRecord.swift in Sources */,
-				DC269B7E2B93CA580014F526 /* ContentView.swift in Sources */,
 				64D21F8B2B9445AF00A063B4 /* SettingsView.swift in Sources */,
 				DC269BA62B93DB550014F526 /* SmartAlarmView.swift in Sources */,
 				DC269B7C2B93CA580014F526 /* BetterSleepApp.swift in Sources */,
@@ -334,6 +371,8 @@
 				292DDDD02BB0AF6E00E61452 /* SleepRecord.swift in Sources */,
 				DC269BA42B93DB3F0014F526 /* SleepRecommendationView.swift in Sources */,
 				292DDDCD2BB0AEDF00E61452 /* User.swift in Sources */,
+				642F17432BC24A0400B50342 /* UserPreferences.swift in Sources */,
+				642F17422BC24A0000B50342 /* Recommendation.swift in Sources */,
 				DC269B902B93CA5B0014F526 /* ContentView.swift in Sources */,
 				DC269BA72B93DB550014F526 /* SmartAlarmView.swift in Sources */,
 				DC269B8E2B93CA5B0014F526 /* BetterSleepApp.swift in Sources */,
@@ -385,6 +424,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -446,6 +486,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -646,6 +687,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 292DDDC52BB0AA3D00E61452 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		642F17402BC2499B00B50342 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 292DDDC52BB0AA3D00E61452 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
