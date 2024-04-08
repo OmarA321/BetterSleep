@@ -6,6 +6,7 @@ struct SignUp: View {
     
     @Binding var showingLogin: Bool
     
+    //TODO: move all logic to viewmodel
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
@@ -120,6 +121,8 @@ struct SignUp: View {
     }
 }
 
+
+//TODO: move all star and animation structs+views to their own files to separate from main views
 struct SunView2: View {
     @State private var opacityValues: [Double] = [0.1, 0.1, 0.25, 0.5, 0.75]
     let animationDuration: TimeInterval = 1.5
