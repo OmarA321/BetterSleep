@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SleepAnalysisView: View {
-    @Binding var antiBlueLightMode: Bool
+    @StateObject var viewModel = SleepAnalysisViewModel()
     
     var body: some View {
         NavigationView {
@@ -10,7 +10,7 @@ struct SleepAnalysisView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxHeight: 100)
-                    .foregroundColor(Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
+                    .foregroundColor(Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
                     .padding()
                 
                 Text("Sleep History & Analysis")
@@ -23,7 +23,7 @@ struct SleepAnalysisView: View {
                         .font(.headline)
                 }
                 .frame(maxWidth: .infinity, maxHeight: 300)
-                .background(antiBlueLightMode ? Color.orange : Color(#colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
+                .background(viewModel.preferences.antiBlueLightMode ? Color.orange : Color(#colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
                 .cornerRadius(20)
                 .padding(.vertical, 20)
                 .padding(.horizontal, 35)
@@ -31,7 +31,7 @@ struct SleepAnalysisView: View {
                 
                 VStack {
                     HStack {
-                        NavigationLink(destination: AddSingleDaySleepDataView(antiBlueLightMode: $antiBlueLightMode)) {
+                        NavigationLink(destination: AddSingleDaySleepDataView()) {
                             VStack {
                                 Text("Record Sleep")
                                     .foregroundColor(.white)
@@ -46,12 +46,12 @@ struct SleepAnalysisView: View {
                                     .foregroundColor(.white)
                             }
                             .frame(maxWidth: .infinity, maxHeight: 100)
-                            .background(LinearGradient(gradient: Gradient(colors: [Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.1004742309, green: 0.2931964099, blue: 0.1928038299, alpha: 1)), Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.4234874403, blue: 0.1089703062, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .background(LinearGradient(gradient: Gradient(colors: [Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.1004742309, green: 0.2931964099, blue: 0.1928038299, alpha: 1)), Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.4234874403, blue: 0.1089703062, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing))
                             .cornerRadius(20)
                         }
                         .padding(.top, 20)
                         
-                        NavigationLink(destination: ViewPersonalSleepHistoryView(antiBlueLightMode: $antiBlueLightMode)) {
+                        NavigationLink(destination: ViewPersonalSleepHistoryView()) {
                             VStack {
                                 Text("Sleep History")
                                     .foregroundColor(.white)
@@ -66,13 +66,13 @@ struct SleepAnalysisView: View {
                                     .foregroundColor(.white)
                             }
                             .frame(maxWidth: .infinity, maxHeight: 100)
-                            .background(LinearGradient(gradient: Gradient(colors: [Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.1004742309, green: 0.2931964099, blue: 0.1928038299, alpha: 1)), Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.4234874403, blue: 0.1089703062, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                            .background(LinearGradient(gradient: Gradient(colors: [Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.1004742309, green: 0.2931964099, blue: 0.1928038299, alpha: 1)), Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.4234874403, blue: 0.1089703062, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing))
                             .cornerRadius(20)
                         }
                         .padding(.top, 20)
                     }
                     
-                    NavigationLink(destination: ViewOverallSleepDataView(antiBlueLightMode: $antiBlueLightMode)) {
+                    NavigationLink(destination: ViewOverallSleepDataView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode)) {
                         VStack {
                             Text("Overall Sleep Stats")
                                 .foregroundColor(.white)
@@ -87,7 +87,7 @@ struct SleepAnalysisView: View {
                                 .foregroundColor(.white)
                         }
                         .frame(maxWidth: .infinity, maxHeight: 100)
-                        .background(LinearGradient(gradient: Gradient(colors: [Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.1004742309, green: 0.2931964099, blue: 0.1928038299, alpha: 1)), Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.4234874403, blue: 0.1089703062, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .background(LinearGradient(gradient: Gradient(colors: [Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.1004742309, green: 0.2931964099, blue: 0.1928038299, alpha: 1)), Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.4234874403, blue: 0.1089703062, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing))
                         .cornerRadius(20)
                     }
                 }
@@ -95,41 +95,42 @@ struct SleepAnalysisView: View {
                 
                 Spacer()
             }
+            .onAppear(){
+                Task {
+                    await viewModel.fetchUser()
+                }
+            }
             .navigationBarHidden(true)
         }
-        .accentColor(Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
+        .accentColor(Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
     }
 }
 
 struct AddSingleDaySleepDataView: View {
-    @Binding var antiBlueLightMode: Bool
-    @State private var selectedDate = Date()
-    @State private var sleepTime = Date()
-    @State private var wakeUpTime = Date()
-    @State private var selectedSleepQuality = "Great"
-    let sleepQualityOptions = ["Great", "Good", "Okay", "Poor", "Awful"]
+    @StateObject var viewModel = SleepAnalysisViewModel()
+    
     
     var body: some View {
         VStack {
             Text("Record Sleep")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundColor(Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
+                .foregroundColor(Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
             
-            DatePicker("Date:", selection: $selectedDate, displayedComponents: .date)
+            DatePicker("Date:", selection: $viewModel.selectedDate, displayedComponents: .date)
                 .padding()
             
-            DatePicker("Sleep Time:", selection: $sleepTime, displayedComponents: .hourAndMinute)
+            DatePicker("Sleep Time:", selection: $viewModel.sleepTime, displayedComponents: .hourAndMinute)
                 .padding()
             
-            DatePicker("Wake Up Time:", selection: $wakeUpTime, displayedComponents: .hourAndMinute)
+            DatePicker("Wake Up Time:", selection: $viewModel.wakeUpTime, displayedComponents: .hourAndMinute)
                 .padding()
             
             HStack {
                 Text("Sleep Quality:")
                 Spacer()
-                Picker("", selection: $selectedSleepQuality) {
-                    ForEach(sleepQualityOptions, id: \.self) {
+                Picker("", selection: $viewModel.selectedSleepQuality) {
+                    ForEach(viewModel.sleepQualityOptions, id: \.self) {
                         Text($0)
                     }
                 }
@@ -137,34 +138,46 @@ struct AddSingleDaySleepDataView: View {
             .padding()
             
             Button(action: {
-                // Save action
+                Task {
+                    await viewModel.addUserSleepRecord()
+                }
             }) {
                 Text("Save")
                     .padding(EdgeInsets(top: 20, leading: 100, bottom: 20, trailing: 100))
                     .foregroundColor(.white)
-                    .background(LinearGradient(gradient: Gradient(colors: [Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.1004742309, green: 0.2931964099, blue: 0.1928038299, alpha: 1)), Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.4234874403, blue: 0.1089703062, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .background(LinearGradient(gradient: Gradient(colors: [Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.1004742309, green: 0.2931964099, blue: 0.1928038299, alpha: 1)), Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.4234874403, blue: 0.1089703062, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing))
                     .cornerRadius(8)
             }
             .padding()
             
             Spacer()
         }
+        .onAppear(){
+            Task {
+                await viewModel.fetchUser()
+            }
+        }
     }
 }
 
+// TODO: put this in new file and create its own view model
 struct ViewPersonalSleepHistoryView: View {
-    @Binding var antiBlueLightMode: Bool
+    @StateObject var viewModel = SleepAnalysisViewModel()
     var body: some View {
         VStack {
             Text("Sleep History")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundColor(Color(antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
+                .foregroundColor(Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
                 .padding()
+            ForEach(viewModel.sleepHistory, id: \.self) { record in
+                SleepRecordView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, date: "date placeholder", hoursSlept: record.hoursSlept, qualityRating: record.qualityRating)
+                
+            }
             
-            SleepRecordView(antiBlueLightMode: $antiBlueLightMode, date: "February 28, 2024", hoursSlept: 7, qualityRating: "Okay")
-            SleepRecordView(antiBlueLightMode: $antiBlueLightMode, date: "February 27, 2024", hoursSlept: 6.5, qualityRating: "Poor")
-            SleepRecordView(antiBlueLightMode: $antiBlueLightMode, date: "February 26, 2024", hoursSlept: 8, qualityRating: "Great")
+//            SleepRecordView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, date: "February 28, 2024", hoursSlept: 7, qualityRating: "Okay")
+//            SleepRecordView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, date: "February 27, 2024", hoursSlept: 6.5, qualityRating: "Poor")
+//            SleepRecordView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, date: "February 26, 2024", hoursSlept: 8, qualityRating: "Great")
             
             Spacer()
         }
