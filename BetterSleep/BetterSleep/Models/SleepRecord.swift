@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SleepRecord: Codable {
+struct SleepRecord: Codable, Hashable {
     var date: Date
     var hoursSlept: Double
     var qualityRating: String
