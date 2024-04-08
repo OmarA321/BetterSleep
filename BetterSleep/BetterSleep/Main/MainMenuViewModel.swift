@@ -11,29 +11,37 @@ import FirebaseAuth
 
 class MainMenuViewModel: ObservableObject {
     
-    @Published var user: User? = nil
+    //TODO: add publisher to avoid warnings updating these variables in function
+    @Published var preferences: UserPreferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
+    private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
     
     init() {
     }
     
-    func fetchUser() {
+    //TODO: move all database functions to FireDBHelper
+    func fetchUser() async {
+        
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
         
+        print(#function, "attempting to log in user id \(userId)")
+        
         let db = Firestore.firestore()
-        db.collection("users")
-            .document(userId)
-            .getDocument { (document, error) in
-                
-                if let document = document {
-                    let data = document.data()
-                    self.user = User(id: data?["id"] as? String ?? "", username: data?["username"] as? String ?? "", email: data?["email"] as? String ?? "", sleepHistory: data?["sleepHistory"] as? [SleepRecord] ?? [], recommendations: data?["recommendations"] as? [Recommendation] ?? [], preferences: data?["preferences"] as? UserPreferences ?? UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: data?["timeToSleep"] as? Date, timetoWake: data?["timeToWake"] as? Date)
-                    
-                }
-            }
-    } // fetchUser()
-    
-    
+        let docRef = db.collection("users").document(userId)
+        
+        do {
+            self.user = try await docRef.getDocument(as: User.self)
+            self.preferences = self.user.preferences
+            print("user: \(self.user)")
+        } catch {
+            print("error decoding user \(error)")
+        }
+    }
+        
+
 }
+    
+    
+
 
