@@ -6,6 +6,7 @@ struct Login: View {
     
     @Binding var showingLogin: Bool
     
+    //TODO: move all logic to viewmodel
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var shouldNavigateToContentView = false
@@ -105,6 +106,7 @@ struct Login: View {
     }
 }
 
+//TODO: move all star and animation structs+views to their own files to separate from main views
 struct SunView: View {
     @State private var opacityValues: [Double] = [0.1, 0.1, 0.25, 0.5, 0.75]
     let animationDuration: TimeInterval = 1.5
@@ -153,6 +155,7 @@ struct SunView: View {
     }
 }
 
+//TODO: move all star and animation structs+views to their own files to separate from main views
 struct WavyHills: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -174,6 +177,9 @@ struct WavyHills: Shape {
     }
 }
 
+// TODO: move all star and animation structs+views to their own files to separate from main views
+// this is repetitive
+// instead of diff struct for each color, pass color variable to a single struct that sets the color
 struct BlueStar: View {
     var body: some View {
         let size = CGFloat.random(in: 1...3)
