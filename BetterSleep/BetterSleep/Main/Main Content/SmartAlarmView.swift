@@ -215,6 +215,7 @@ struct SmartAlarmView: View {
                 }
             }
             
+// Inputted Sleep Time, Calculating Optimal Wake Up Times to display in squares //////////////////////////////////////////////////////
             if isCalculatingOptimalWakeTimes {
                 Color.black.opacity(0.8).ignoresSafeArea()
                 VStack(spacing: 20) {
@@ -239,17 +240,25 @@ struct SmartAlarmView: View {
                             .frame(width: 150, height: 150)
                             .overlay(
                                 VStack {
-                                    Text("\(suggestedWakeTimes[0], formatter: DateFormatter.timeOnly)")
+                                    Text("\(showLeftWakeTimes ? suggestedWakeTimes[0].addingTimeInterval(-4.5 * 3600) : (showRightWakeTimes ? suggestedWakeTimes[0].addingTimeInterval(4.5 * 3600) : suggestedWakeTimes[0]), formatter: DateFormatter.timeOnly)")
                                         .foregroundColor(.white)
                                         .font(.title)
                                         .bold()
-                                    Text("6 hours of sleep")
+                                    Text("\(showLeftWakeTimes ? "1.5" : (showRightWakeTimes ? "10.5" : "6")) hours of sleep")
                                         .foregroundColor(.white)
                                         .font(.headline)
                                 }
                             )
                             .onTapGesture {
-                                selectedTimeToWake = suggestedWakeTimes[0]
+                                if showLeftWakeTimes == true{
+                                    selectedTimeToWake = suggestedWakeTimes[0].addingTimeInterval(-4.5 * 3600)
+                                }
+                                else if showRightWakeTimes == true{
+                                    selectedTimeToWake = suggestedWakeTimes[0].addingTimeInterval(4.5 * 3600)
+                                }
+                                else {
+                                    selectedTimeToWake = suggestedWakeTimes[0]
+                                }
                                 showingPopup = true
                             }
                         
@@ -260,17 +269,25 @@ struct SmartAlarmView: View {
                             .frame(width: 150, height: 150)
                             .overlay(
                                 VStack {
-                                    Text("\(suggestedWakeTimes[1], formatter: DateFormatter.timeOnly)")
+                                    Text("\(showLeftWakeTimes ? suggestedWakeTimes[1].addingTimeInterval(-4.5 * 3600) : (showRightWakeTimes ? suggestedWakeTimes[1].addingTimeInterval(4.5 * 3600) : suggestedWakeTimes[1]), formatter: DateFormatter.timeOnly)")
                                         .foregroundColor(.white)
                                         .font(.title)
                                         .bold()
-                                    Text("7.5 hours of sleep")
+                                    Text("\(showLeftWakeTimes ? "3" : (showRightWakeTimes ? "12" : "7.5")) hours of sleep")
                                         .foregroundColor(.white)
                                         .font(.headline)
                                 }
                             )
                             .onTapGesture {
-                                selectedTimeToWake = suggestedWakeTimes[1]
+                                if showLeftWakeTimes == true{
+                                    selectedTimeToWake = suggestedWakeTimes[1].addingTimeInterval(-4.5 * 3600)
+                                }
+                                else if showRightWakeTimes == true{
+                                    selectedTimeToWake = suggestedWakeTimes[1].addingTimeInterval(4.5 * 3600)
+                                }
+                                else {
+                                    selectedTimeToWake = suggestedWakeTimes[1]
+                                }
                                 showingPopup = true
                             }
                     }
@@ -297,17 +314,25 @@ struct SmartAlarmView: View {
                                 .frame(width: 150, height: 150)
                                 .overlay(
                                     VStack {
-                                        Text("\(suggestedWakeTimes[2], formatter: DateFormatter.timeOnly)")
+                                        Text("\(showLeftWakeTimes ? suggestedWakeTimes[2].addingTimeInterval(-4.5 * 3600) : (showRightWakeTimes ? suggestedWakeTimes[2].addingTimeInterval(4.5 * 3600) : suggestedWakeTimes[2]), formatter: DateFormatter.timeOnly)")
                                             .foregroundColor(.white)
                                             .font(.title)
                                             .bold()
-                                        Text("9 hours of sleep")
+                                        Text("\(showLeftWakeTimes ? "4.5" : (showRightWakeTimes ? "13.5" : "9")) hours of sleep")
                                             .foregroundColor(.white)
                                             .font(.headline)
                                     }
                                 )
                                 .onTapGesture {
-                                    selectedTimeToWake = suggestedWakeTimes[2]
+                                    if showLeftWakeTimes == true{
+                                        selectedTimeToWake = suggestedWakeTimes[2].addingTimeInterval(-4.5 * 3600)
+                                    }
+                                    else if showRightWakeTimes == true{
+                                        selectedTimeToWake = suggestedWakeTimes[2].addingTimeInterval(4.5 * 3600)
+                                    }
+                                    else {
+                                        selectedTimeToWake = suggestedWakeTimes[2]
+                                    }
                                     showingPopup = true
                                 }
                             Image(systemName: "arrow.right")
@@ -341,6 +366,8 @@ struct SmartAlarmView: View {
                                     presentationMode.wrappedValue.dismiss()
                                  })
                 }
+                
+// Inputted Wake Time, Calculating Optimal Sleep Times to display in squares //////////////////////////////////////////////////////
             } else if isCalculatingOptimalSleepTimes {
                 Color.black.opacity(0.8).ignoresSafeArea()
                 VStack(spacing: 20) {
@@ -365,11 +392,11 @@ struct SmartAlarmView: View {
                             .frame(width: 150, height: 150)
                             .overlay(
                                 VStack {
-                                    Text("\(showLeftSleepTimes ? suggestedSleepTimes[0].addingTimeInterval(4.5 * 3600) : suggestedSleepTimes[0], formatter: DateFormatter.timeOnly)")
+                                    Text("\(showLeftSleepTimes ? suggestedSleepTimes[0].addingTimeInterval(4.5 * 3600) : (showRightSleepTimes ? suggestedSleepTimes[0].addingTimeInterval(-4.5 * 3600) : suggestedSleepTimes[0]), formatter: DateFormatter.timeOnly)")
                                         .foregroundColor(.white)
                                         .font(.title)
                                         .bold()
-                                    Text("\(showLeftSleepTimes ? "1.5" : "6") hours of sleep")
+                                    Text("\(showLeftSleepTimes ? "1.5" : (showRightSleepTimes ? "10.5" : "6")) hours of sleep")
                                         .foregroundColor(.white)
                                         .font(.headline)
                                 }
@@ -394,11 +421,11 @@ struct SmartAlarmView: View {
                             .frame(width: 150, height: 150)
                             .overlay(
                                 VStack {
-                                    Text("\(showLeftSleepTimes ? suggestedSleepTimes[1].addingTimeInterval(4.5 * 3600) : suggestedSleepTimes[1], formatter: DateFormatter.timeOnly)")
+                                    Text("\(showLeftSleepTimes ? suggestedSleepTimes[1].addingTimeInterval(4.5 * 3600) : (showRightSleepTimes ? suggestedSleepTimes[1].addingTimeInterval(-4.5 * 3600) : suggestedSleepTimes[1]), formatter: DateFormatter.timeOnly)")
                                         .foregroundColor(.white)
                                         .font(.title)
                                         .bold()
-                                    Text("\(showLeftSleepTimes ? "3" : "7.5") hours of sleep")
+                                    Text("\(showLeftSleepTimes ? "3" : (showRightSleepTimes ? "12" : "7.5")) hours of sleep")
                                         .foregroundColor(.white)
                                         .font(.headline)
                                 }
@@ -424,11 +451,13 @@ struct SmartAlarmView: View {
                                 .font(Font.system(size: 50))
                                 .bold()
                                 .onTapGesture {
-                                    if showLeftSleepTimes == false && showRightSleepTimes == false{
-                                        showLeftSleepTimes = true
-                                    }
-                                    else if showLeftSleepTimes == false && showRightSleepTimes == true{
-                                        showRightSleepTimes = false
+                                    withAnimation {
+                                        if showLeftSleepTimes == false && showRightSleepTimes == false{
+                                            showLeftSleepTimes = true
+                                        }
+                                        else if showLeftSleepTimes == false && showRightSleepTimes == true{
+                                            showRightSleepTimes = false
+                                        }
                                     }
                                 }
                             
@@ -439,11 +468,11 @@ struct SmartAlarmView: View {
                                 .frame(width: 150, height: 150)
                                 .overlay(
                                     VStack {
-                                        Text("\(showLeftSleepTimes ? suggestedSleepTimes[2].addingTimeInterval(4.5 * 3600) : suggestedSleepTimes[2], formatter: DateFormatter.timeOnly)")
+                                        Text("\(showLeftSleepTimes ? suggestedSleepTimes[2].addingTimeInterval(4.5 * 3600) : (showRightSleepTimes ? suggestedSleepTimes[2].addingTimeInterval(-4.5 * 3600) : suggestedSleepTimes[2]), formatter: DateFormatter.timeOnly)")
                                             .foregroundColor(.white)
                                             .font(.title)
                                             .bold()
-                                        Text("\(showLeftSleepTimes ? "4.5" : "9") hours of sleep")
+                                        Text("\(showLeftSleepTimes ? "4.5" : (showRightSleepTimes ? "13.5" : "9")) hours of sleep")
                                             .foregroundColor(.white)
                                             .font(.headline)
                                     }
@@ -466,11 +495,13 @@ struct SmartAlarmView: View {
                                 .font(Font.system(size: 50))
                                 .bold()
                                 .onTapGesture {
-                                    if showLeftSleepTimes == false && showRightSleepTimes == false{
-                                        showRightSleepTimes = true
-                                    }
-                                    else if showLeftSleepTimes == true && showRightSleepTimes == false{
-                                        showLeftSleepTimes = false
+                                    withAnimation {
+                                        if showLeftSleepTimes == false && showRightSleepTimes == false{
+                                            showRightSleepTimes = true
+                                        }
+                                        else if showLeftSleepTimes == true && showRightSleepTimes == false{
+                                            showLeftSleepTimes = false
+                                        }
                                     }
                                 }
                         }
@@ -497,6 +528,7 @@ struct SmartAlarmView: View {
     }
 }
 
+// Dynamic Alarm View /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct DynamicAlarmView: View {
     @Binding var antiBlueLightMode: Bool
     @Binding var selectedWakeUpTime: Date
@@ -552,6 +584,7 @@ struct DynamicAlarmView: View {
     }
 }
 
+// Manual Alarm View /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 struct ManualAlarmView: View {
     @Binding var antiBlueLightMode: Bool
     
