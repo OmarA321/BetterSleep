@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SleepRecommendationView: View {
-    @Binding var antiBlueLightMode: Bool
+    @StateObject var viewModel = SleepRecommendationViewModel()
     
     var body: some View {
         ScrollView {
@@ -18,7 +18,7 @@ struct SleepRecommendationView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(maxHeight: 100)
                     .foregroundColor(
-                        antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple
+                        viewModel.preferences.antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple
                     )
                     .padding()
                 
@@ -48,7 +48,7 @@ struct SleepRecommendationView: View {
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple)
+                            .fill(viewModel.preferences.antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple)
                     )
                     Spacer()
                     VStack {
@@ -62,7 +62,7 @@ struct SleepRecommendationView: View {
                     .padding()
                     .background(
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple)
+                            .fill(viewModel.preferences.antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple)
                     )
                 }
                 .padding(.horizontal, 20)
@@ -75,9 +75,12 @@ struct SleepRecommendationView: View {
                     .padding(.bottom, 10)
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Avoid Caffeine", description: "Try to avoid caffeine intake at least 6 hours before your recommended sleep time.")
-                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Create a Bedtime Routine", description: "Establish a relaxing bedtime routine to signal to your body that it's time to wind down.")
-                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Limit Screen Time", description: "Reduce exposure to screens and bright lights at least an hour before bedtime to promote better sleep.")
+                    ForEach(viewModel.recommendations, id: \.self) { recommendation in
+                        RecommendationRow(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, title: recommendation.title, description: recommendation.description)
+                    }
+//                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Avoid Caffeine", description: "Try to avoid caffeine intake at least 6 hours before your recommended sleep time.")
+//                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Create a Bedtime Routine", description: "Establish a relaxing bedtime routine to signal to your body that it's time to wind down.")
+//                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Limit Screen Time", description: "Reduce exposure to screens and bright lights at least an hour before bedtime to promote better sleep.")
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)

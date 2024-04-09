@@ -18,6 +18,7 @@ class LoginViewModel : ObservableObject {
         
     }
     
+    //TODO: move all database functions to FireDBHelper
     func login() {
         
         guard validate() else {
@@ -25,12 +26,13 @@ class LoginViewModel : ObservableObject {
             return
         }
         
-        // Try log in
-        
         Auth.auth().signIn(withEmail: email, password: password)
+        
+        //TODO: implement error if login fails
         
     }
     
+    //TODO: implement validation in view
     private func validate() -> Bool {
         
         errorMessage = ""   // reset error message

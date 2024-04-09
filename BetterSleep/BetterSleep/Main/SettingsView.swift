@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Binding private var disableStars: Bool
-    @Binding private var antiBlueLightMode: Bool
     
-    init(disableStars: Binding<Bool>, antiBlueLightMode: Binding<Bool>) {
-        self._disableStars = disableStars
-        self._antiBlueLightMode = antiBlueLightMode
+    @StateObject var viewModel = SettingsViewModel()
+
+    
+    init() {
+        
     }
     
     var body: some View {
@@ -29,7 +29,7 @@ struct SettingsView: View {
                     .foregroundColor(.white)
                     .padding()
                     .background(
-                        antiBlueLightMode ? LinearGradient(gradient: Gradient(colors: [.red, .yellow, .orange]), startPoint: .topLeading, endPoint: .bottomTrailing) : LinearGradient(gradient: Gradient(colors: [.purple, .blue, .green]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                        viewModel.preferences.antiBlueLightMode ? LinearGradient(gradient: Gradient(colors: [.red, .yellow, .orange]), startPoint: .topLeading, endPoint: .bottomTrailing) : LinearGradient(gradient: Gradient(colors: [.purple, .blue, .green]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     )
                     .clipShape(Circle())
                 
@@ -37,21 +37,32 @@ struct SettingsView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
-                Toggle("Disable Home Page Stars", isOn: $disableStars)
+                Toggle("Disable Home Page Stars", isOn: $viewModel.preferences.disableStars)
                     .padding()
                 
-                Toggle("Anti Blue Light Mode", isOn: $antiBlueLightMode)
+                Toggle("Anti Blue Light Mode", isOn: $viewModel.preferences.antiBlueLightMode)
                     .padding()
                 
                 Spacer()
+                
             }
             .padding()
+        }
+        .onAppear(){
+            Task {
+                await viewModel.fetchUser()
+            }
+        }
+        .onDisappear(){
+            Task {
+                await viewModel.updateUserPreferences()
+            }
         }
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(disableStars: .constant(false), antiBlueLightMode: .constant(false))
+        SettingsView()
     }
 }

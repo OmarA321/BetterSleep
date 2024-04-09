@@ -20,6 +20,7 @@ class SignUpViewModel : ObservableObject {
         
     }
     
+    //TODO: move all database functions to FireDBHelper
     func register() {
         
         guard validate() else {
@@ -34,27 +35,26 @@ class SignUpViewModel : ObservableObject {
                 return
             }
             self.addUserToFirestore(id: userId)
-            print(#function, "User \(self.username) added!")
+            print(#function, "User \(self.username) \(userId) added!")
         }
         
-    } // register()
+    }
     
+    //TODO: move all database functions to FireDBHelper
     private func addUserToFirestore(id: String) {
        
         var newUser = User(id: id, username: username, email: email, sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
         
         let db = Firestore.firestore()
         
-        let collectionRef = db.collection("users")
-          do {
-            let newDocReference = try collectionRef.addDocument(from: newUser)
-            print("user stored with new document reference: \(newDocReference)")
-          }
-          catch {
-            print(error)
-          }
-    } // addUserToFirestore
+        do {
+          try db.collection("users").document(id).setData(from: newUser)
+        } catch let error {
+          print("Error writing user to Firestore: \(error)")
+        }
+    }
     
+    //TODO: implement validation in view
     private func validate() -> Bool {
         
         guard !username.trimmingCharacters(in: .whitespaces).isEmpty,
@@ -77,6 +77,6 @@ class SignUpViewModel : ObservableObject {
         
         return true
         
-    } // validate()
+    }
     
-} // RegisterViewViewModel
+}

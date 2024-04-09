@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//TODO: create viewmodel and move all logic there
 struct SmartAlarmView: View {
     @Binding var antiBlueLightMode: Bool
     @Environment(\.presentationMode) var presentationMode

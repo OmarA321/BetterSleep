@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//TODO: move all star and animation structs+views to their own files to separate from main views
 struct Star {
     @Binding var antiBlueLightMode: Bool
     var offset: CGSize = CGSize(width: CGFloat.random(in: 0...500), height: CGFloat.random(in: -500...500))
@@ -26,6 +27,7 @@ struct Star {
     }
 }
 
+//TODO: move all star and animation structs+views to their own files to separate from main views
 struct ShootingStarsAnimation: View {
     @Binding var stars: [Star]
     @Binding var disableStars: Bool
@@ -79,11 +81,9 @@ struct MainMenuView: View {
     
     @StateObject var viewModel = MainMenuViewModel()
     
+    //TODO: move these to viewmodel
     @State private var stars: [Star] = []
     @State private var currentTime = Date()
-    @State private var disableStars = false
-    @State private var antiBlueLightMode = false
-    
     @State private var selectedTimeToSleep = Date()
     @State private var selectedTimeToWake = Date()
     @State private var alarmSet = false
@@ -103,7 +103,7 @@ struct MainMenuView: View {
             }
             
             VStack {
-                ShootingStarsAnimation(stars: $stars, disableStars: $disableStars, antiBlueLightMode: $antiBlueLightMode)
+                ShootingStarsAnimation(stars: $stars, disableStars: $viewModel.preferences.disableStars, antiBlueLightMode: $viewModel.preferences.antiBlueLightMode)
                 ZStack {
                     
                     Text("BetterSleep")
@@ -112,7 +112,7 @@ struct MainMenuView: View {
                     
                     HStack {
                         Spacer()
-                        NavigationLink(destination: SettingsView(disableStars: $disableStars, antiBlueLightMode: $antiBlueLightMode)) {
+                        NavigationLink(destination: SettingsView()) {
                             Image(systemName: "gear")
                                 .foregroundColor(.white)
                                 .font(.title)
@@ -142,7 +142,7 @@ struct MainMenuView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: SleepRecommendationView(antiBlueLightMode: $antiBlueLightMode)) {
+                NavigationLink(destination: SleepRecommendationView()) {
                     Text("SleepRecommendations")
                         .padding()
                         .foregroundColor(.white)
@@ -152,10 +152,10 @@ struct MainMenuView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 10)
-                .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .red : .purple, antiBlueLightMode ? .yellow : .blue]), startPoint: .leading, endPoint: .trailing))
+                .background(LinearGradient(gradient: Gradient(colors: [viewModel.preferences.antiBlueLightMode ? .red : .purple, viewModel.preferences.antiBlueLightMode ? .yellow : .blue]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(20)
                 .padding(.horizontal, 30)
-                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $antiBlueLightMode, selectedTimeToWake: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep, alarmSet: $alarmSet)) {
+                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, selectedTimeToWake: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep, alarmSet: $alarmSet)) {
                     Text("Smart Alarm")
                         .padding()
                         .foregroundColor(.white)
@@ -165,11 +165,11 @@ struct MainMenuView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 10)
-                .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .yellow : .blue, antiBlueLightMode ? .orange : .green]), startPoint: .leading, endPoint: .trailing))
+                .background(LinearGradient(gradient: Gradient(colors: [viewModel.preferences.antiBlueLightMode ? .yellow : .blue, viewModel.preferences.antiBlueLightMode ? .orange : .green]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(20)
                 .padding(.horizontal, 30)
                 
-                NavigationLink(destination: SleepAnalysisView(antiBlueLightMode: $antiBlueLightMode)) {
+                NavigationLink(destination: SleepAnalysisView()) {
                     Text("Sleep History & Analysis")
                         .padding()
                         .foregroundColor(.white)
@@ -179,7 +179,7 @@ struct MainMenuView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 10)
-                .background(LinearGradient(gradient: Gradient(colors: [antiBlueLightMode ? .orange : .green, antiBlueLightMode ? .red : .purple]), startPoint: .leading, endPoint: .trailing))
+                .background(LinearGradient(gradient: Gradient(colors: [viewModel.preferences.antiBlueLightMode ? .orange : .green, viewModel.preferences.antiBlueLightMode ? .red : .purple]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(20)
                 .padding(.horizontal, 30)
                 
@@ -189,11 +189,15 @@ struct MainMenuView: View {
                 if stars.isEmpty {
                     generateStars()
                 }
+                Task {
+                    await viewModel.fetchUser()
+                }
+                
             }
             .onReceive(timer) { _ in
                 self.currentTime = Date()
             }
-            .onChange(of: antiBlueLightMode) { _ in
+            .onChange(of: viewModel.preferences.antiBlueLightMode) { _ in
                 regenerateStars()
             }
             .navigationViewStyle(StackNavigationViewStyle())
@@ -202,14 +206,14 @@ struct MainMenuView: View {
     
     private func generateStars() {
         for _ in 0..<25 {
-            stars.append(Star(antiBlueLightMode: $antiBlueLightMode))
+            stars.append(Star(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode))
         }
     }
     
     private func regenerateStars() {
         stars.removeAll()
         for _ in 0..<25 {
-            stars.append(Star(antiBlueLightMode: $antiBlueLightMode))
+            stars.append(Star(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode))
         }
     }
 }

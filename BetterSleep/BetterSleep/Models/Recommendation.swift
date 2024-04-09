@@ -7,10 +7,12 @@
 
 import Foundation
 
-struct Recommendation: Codable {
+struct Recommendation: Codable, Hashable {
+    var title: String
     var description: String
     
     enum UserKeys: String, CodingKey {
+        case title
         case description
         
     }
