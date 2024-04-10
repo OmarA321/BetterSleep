@@ -30,6 +30,7 @@
 		642F17422BC24A0000B50342 /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17352BC2490C00B50342 /* Recommendation.swift */; };
 		642F17432BC24A0400B50342 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17372BC2491D00B50342 /* UserPreferences.swift */; };
 		6445AE3B2BAB743A00B423C6 /* LogInOrSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6445AE3A2BAB743A00B423C6 /* LogInOrSignUpView.swift */; };
+		64926B5A2BC62DDC0088D401 /* alarm_sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 64926B592BC62DDC0088D401 /* alarm_sound.mp3 */; };
 		64D21F8B2B9445AF00A063B4 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D21F8A2B9445AF00A063B4 /* SettingsView.swift */; };
 		DC08FFF22BA8A8B000DD5E0D /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08FFF12BA8A8B000DD5E0D /* SignUp.swift */; };
 		DC08FFF42BA8A8C000DD5E0D /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC08FFF32BA8A8C000DD5E0D /* Login.swift */; };
@@ -87,6 +88,7 @@
 		642F173B2BC2494C00B50342 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		642F173D2BC2496100B50342 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		6445AE3A2BAB743A00B423C6 /* LogInOrSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInOrSignUpView.swift; sourceTree = "<group>"; };
+		64926B592BC62DDC0088D401 /* alarm_sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = alarm_sound.mp3; sourceTree = "<group>"; };
 		64D21F8A2B9445AF00A063B4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		DC08FFF12BA8A8B000DD5E0D /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		DC08FFF32BA8A8C000DD5E0D /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				DC269BA22B93DB3E0014F526 /* SleepRecommendationView.swift */,
 				29F364BE2BC342C300DC2FD2 /* SleepAnalysisViewModel.swift */,
 				DC269BA52B93DB550014F526 /* SmartAlarmView.swift */,
+				64926B592BC62DDC0088D401 /* alarm_sound.mp3 */,
 				DC269BA82B93DB650014F526 /* SleepAnalysisView.swift */,
 				29F364BA2BC342AD00DC2FD2 /* SleepRecommendationViewModel.swift */,
 				29F364BC2BC342B700DC2FD2 /* SmartAlarmViewModel.swift */,
@@ -332,6 +335,7 @@
 			files = (
 				DC269B832B93CA5B0014F526 /* Preview Assets.xcassets in Resources */,
 				DC269B802B93CA5B0014F526 /* Assets.xcassets in Resources */,
+				64926B5A2BC62DDC0088D401 /* alarm_sound.mp3 in Resources */,
 				292DDDC32BB0A96A00E61452 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

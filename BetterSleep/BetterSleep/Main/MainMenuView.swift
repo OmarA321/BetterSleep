@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 //TODO: move all star and animation structs+views to their own files to separate from main views
 struct Star {
@@ -96,6 +97,12 @@ struct MainMenuView: View {
         return formatter
     }
     
+    private var alarmFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        return formatter
+    }
+    
     var body: some View {
         ZStack {
             ForEach(0..<30) { _ in
@@ -132,13 +139,31 @@ struct MainMenuView: View {
                 
                 Spacer()
                 
-                Text("Current Time:")
-                    .font(.headline)
-                    .foregroundColor(.gray)
-                    .padding(.bottom, 5)
-                
-                Text("\(currentTime, formatter: dateFormatter)")
-                    .font(.largeTitle)
+                HStack(spacing: 20){
+                    VStack{
+                        Text("Current Time:")
+                            .font(.headline)
+                            .foregroundColor(.gray)
+                            .padding(.bottom, 5)
+                        
+                        Text("\(currentTime, formatter: dateFormatter)")
+                            .font(.largeTitle)
+                    }
+
+                    if alarmSet{
+                        Spacer()
+                        VStack{
+                            Text("Alarm Set:")
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                                .padding(.bottom, 5)
+                            
+                            Text("\(selectedTimeToWake, formatter: alarmFormatter)")
+                                .font(.largeTitle)
+                                .foregroundColor(.blue)
+                        }
+                    }
+                }
                 
                 Spacer()
                 
@@ -196,6 +221,7 @@ struct MainMenuView: View {
             }
             .onReceive(timer) { _ in
                 self.currentTime = Date()
+                checkAlarm()
             }
             .onChange(of: viewModel.preferences.antiBlueLightMode) { _ in
                 regenerateStars()
@@ -203,7 +229,6 @@ struct MainMenuView: View {
             .navigationViewStyle(StackNavigationViewStyle())
         }
     }
-    
     private func generateStars() {
         for _ in 0..<25 {
             stars.append(Star(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode))
@@ -214,6 +239,32 @@ struct MainMenuView: View {
         stars.removeAll()
         for _ in 0..<25 {
             stars.append(Star(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode))
+        }
+    }
+    private func checkAlarm() {
+        let calendar = Calendar.current
+        let currentTime = Date()
+        let selectedTime = selectedTimeToWake
+        
+        if calendar.isDate(currentTime, equalTo: selectedTime, toGranularity: .minute) {
+            if alarmSet {
+                playAlarmSound()
+                alarmSet = false
+            }
+        }
+    }
+    
+    func playAlarmSound() {
+        guard let url = Bundle.main.url(forResource: "alarm_sound", withExtension: "mp3") else {
+            print("Sound file not found")
+            return
+        }
+        
+        do {
+            player = try AVAudioPlayer(contentsOf: url)
+            player?.play()
+        } catch {
+            print("Error playing sound: \(error.localizedDescription)")
         }
     }
 }

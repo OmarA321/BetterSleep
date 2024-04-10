@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 //TODO: create viewmodel and move all logic there
 struct SmartAlarmView: View {
@@ -526,6 +527,35 @@ struct SmartAlarmView: View {
                 }
             }
         }
+        .onReceive(Timer.publish(every: 2, on: .main, in: .default).autoconnect()) { _ in
+            let calendar = Calendar.current
+            let currentTime = Date()
+            let selectedTime = selectedTimeToWake
+            
+            if calendar.isDate(currentTime, equalTo: selectedTime, toGranularity: .minute) {
+                if alarmSet == true{
+                    playAlarmSound()
+                    alarmSet = false
+                }
+            }
+        }
+    }
+}
+
+// Alarm Sound Player  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var player: AVAudioPlayer?
+
+func playAlarmSound() {
+    guard let url = Bundle.main.url(forResource: "alarm_sound", withExtension: "mp3") else {
+        print("Sound file not found")
+        return
+    }
+    
+    do {
+        player = try AVAudioPlayer(contentsOf: url)
+        player?.play()
+    } catch {
+        print("Error playing sound: \(error.localizedDescription)")
     }
 }
 
