@@ -25,58 +25,38 @@ class SleepAnalysisViewModel: ObservableObject {
     // TODO: move this to new viewmodel for ViewPersonalSleepHistory
     @Published var sleepHistory: [SleepRecord] = []
     
+    private var fireDBHelper: FireDBHelper
+    
     
     private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
     
     init() {
+        self.fireDBHelper = FireDBHelper()
     }
     
-    //TODO: move all database functions to FireDBHelper
     func fetchUser() async {
         
-        guard let userId = Auth.auth().currentUser?.uid else {
-            return
-        }
+        await fireDBHelper.fetchUser()
         
-        print(#function, "attempting to log in user id \(userId)")
-        
-        let db = Firestore.firestore()
-        let docRef = db.collection("users").document(userId)
-        
-        do {
-            self.user = try await docRef.getDocument(as: User.self)
+        DispatchQueue.main.async {
+            self.user = self.fireDBHelper.user!
             self.preferences = self.user.preferences
             self.recommendations = self.user.recommendations
-            
-            // TODO: move this to new viewmodel for ViewPersonalSleepHistory
-            self.sleepHistory = self.user.sleepHistory
-            
-            print("user: \(self.user)")
-        } catch {
-            print("error decoding user \(error)")
         }
+        
+        print(#function, "user: \(String(describing: self.user))")
         
     }
     
-    //TODO: move all database functions to FireDBHelper
-    
     func addUserSleepRecord() async {
-        
-        let db = Firestore.firestore()
-        let docRef = db.collection("users").document(self.user.id!)
         
         let hoursSlept = self.wakeUpTime.timeIntervalSince(self.sleepTime)
         
         let newSleepRecord = SleepRecord(date: self.selectedDate, hoursSlept: hoursSlept, qualityRating: self.selectedSleepQuality)
+        
         self.user.sleepHistory.append(newSleepRecord)
         
-        do {
-            try docRef.setData(from: self.user)
-            print("Document successfully updated")
-        } catch {
-          print("Error updating document: \(error)")
-        }
-        
+        await fireDBHelper.addUserSleepRecord(sleepRecord: newSleepRecord)
     
     }
         

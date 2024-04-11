@@ -65,4 +65,20 @@ class FireDBHelper: ObservableObject {
     
     }
     
+    func addUserSleepRecord(sleepRecord: SleepRecord) async {
+        
+        let docRef = db.collection("users").document(self.user!.id!)
+        
+        self.user!.sleepHistory.append(sleepRecord)
+        
+        do {
+            try docRef.setData(from: self.user)
+            print("Document successfully updated")
+        } catch {
+          print("Error updating document: \(error)")
+        }
+        
+    
+    }
+    
 }
