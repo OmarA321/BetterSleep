@@ -8,36 +8,76 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import AVFoundation
 
 class MainMenuViewModel: ObservableObject {
     
-    //TODO: add publisher to avoid warnings updating these variables in function
     @Published var preferences: UserPreferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
+    
+    @Published var stars: [Star] = []
+    @Published var currentTime = Date()
+    @Published var selectedTimeToSleep = Date()
+    @Published var selectedTimeToWake = Date()
+    @Published var alarmSet = false
+    
+    @Published var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    
+    
     private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
     
+    private var fireDBHelper: FireDBHelper
+    
+    
     init() {
+        self.fireDBHelper = FireDBHelper()
     }
     
-    //TODO: move all database functions to FireDBHelper
     func fetchUser() async {
         
-        guard let userId = Auth.auth().currentUser?.uid else {
+        await fireDBHelper.fetchUser()
+        
+        DispatchQueue.main.async {
+            self.user = self.fireDBHelper.user!
+            self.preferences = self.user.preferences
+        }
+        
+        print(#function, "user: \(String(describing: self.user))")
+    }
+    
+    
+    
+    func checkAlarm() {
+        let calendar = Calendar.current
+        let currentTime = Date()
+        let selectedTime = selectedTimeToWake
+        
+        if calendar.isDate(currentTime, equalTo: selectedTime, toGranularity: .minute) {
+            if alarmSet {
+                playAlarmSound()
+                alarmSet = false
+            }
+        }
+    }
+    
+    func playAlarmSound() {
+        guard let url = Bundle.main.url(forResource: "alarm_sound", withExtension: "mp3") else {
+            print("Sound file not found")
             return
         }
         
-        print(#function, "attempting to log in user id \(userId)")
-        
-        let db = Firestore.firestore()
-        let docRef = db.collection("users").document(userId)
-        
         do {
-            self.user = try await docRef.getDocument(as: User.self)
-            self.preferences = self.user.preferences
-            print("user: \(self.user)")
+            player = try AVAudioPlayer(contentsOf: url)
+            player?.play()
         } catch {
-            print("error decoding user \(error)")
+            print("Error playing sound: \(error.localizedDescription)")
         }
     }
+    
+    
+    
+    
+    
         
 
 }

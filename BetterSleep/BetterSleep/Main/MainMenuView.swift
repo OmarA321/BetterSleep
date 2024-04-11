@@ -6,102 +6,13 @@
 //
 
 import SwiftUI
-import AVFoundation
 
-//TODO: move all star and animation structs+views to their own files to separate from main views
-struct Star {
-    @Binding var antiBlueLightMode: Bool
-    var offset: CGSize = CGSize(width: CGFloat.random(in: 0...500), height: CGFloat.random(in: -500...500))
-    var delay: Double = Double.random(in: 0...5)
-    var speed: Double = Double.random(in: 5...15)
-    var color: Color {
-        if antiBlueLightMode {
-            let colors: [Color] = [.yellow, .orange, .red]
-            return colors.randomElement() ?? .white
-        } else {
-            let colors: [Color] = [.blue, .green, .purple]
-            return colors.randomElement() ?? .white
-        }
-    }
-    init(antiBlueLightMode: Binding<Bool>) {
-        self._antiBlueLightMode = antiBlueLightMode
-    }
-}
-
-//TODO: move all star and animation structs+views to their own files to separate from main views
-struct ShootingStarsAnimation: View {
-    @Binding var stars: [Star]
-    @Binding var disableStars: Bool
-    @Binding var antiBlueLightMode: Bool
-    
-    var body: some View {
-        ZStack {
-            ForEach(stars.indices, id: \.self) { index in
-                if !disableStars {
-                    Image(systemName: "star.fill")
-                        .foregroundColor(stars[index].color)
-                        .offset(stars[index].offset)
-                        .onAppear {
-                            animateStar(index: index)
-                        }
-                }
-            }
-        }
-        .onChange(of: disableStars) { newValue in
-            if !newValue {
-                regenerateStars()
-            }
-        }
-    }
-
-    private func animateStar(index: Int) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + stars[index].delay) {
-            withAnimation(.easeInOut(duration: stars[index].speed)) {
-                stars[index].offset = CGSize(width: -500, height: CGFloat.random(in: -500...500))
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + stars[index].speed) {
-                resetStar(index: index)
-            }
-        }
-    }
-
-    private func resetStar(index: Int) {
-        stars[index].offset = CGSize(width: CGFloat.random(in: 0...500), height: CGFloat.random(in: -500...500))
-        animateStar(index: index)
-    }
-    
-    private func regenerateStars() {
-        stars.removeAll()
-        for _ in 0..<25 {
-            stars.append(Star(antiBlueLightMode: $antiBlueLightMode))
-        }
-    }
-}
 
 struct MainMenuView: View {
     
     @StateObject var viewModel = MainMenuViewModel()
     
-    //TODO: move these to viewmodel
-    @State private var stars: [Star] = []
-    @State private var currentTime = Date()
-    @State private var selectedTimeToSleep = Date()
-    @State private var selectedTimeToWake = Date()
-    @State private var alarmSet = false
     
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm:ss a"
-        return formatter
-    }
-    
-    private var alarmFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm a"
-        return formatter
-    }
     
     var body: some View {
         ZStack {
@@ -110,7 +21,7 @@ struct MainMenuView: View {
             }
             
             VStack {
-                ShootingStarsAnimation(stars: $stars, disableStars: $viewModel.preferences.disableStars, antiBlueLightMode: $viewModel.preferences.antiBlueLightMode)
+                ShootingStarsAnimation(stars: $viewModel.stars, disableStars: $viewModel.preferences.disableStars, antiBlueLightMode: $viewModel.preferences.antiBlueLightMode)
                 ZStack {
                     
                     Text("BetterSleep")
@@ -146,11 +57,11 @@ struct MainMenuView: View {
                             .foregroundColor(.gray)
                             .padding(.bottom, 5)
                         
-                        Text("\(currentTime, formatter: dateFormatter)")
+                        Text("\(viewModel.currentTime, formatter: dateFormatter)")
                             .font(.largeTitle)
                     }
 
-                    if alarmSet{
+                    if viewModel.alarmSet{
                         Spacer()
                         VStack{
                             Text("Alarm Set:")
@@ -158,7 +69,7 @@ struct MainMenuView: View {
                                 .foregroundColor(.gray)
                                 .padding(.bottom, 5)
                             
-                            Text("\(selectedTimeToWake, formatter: alarmFormatter)")
+                            Text("\(viewModel.selectedTimeToWake, formatter: alarmFormatter)")
                                 .font(.largeTitle)
                                 .foregroundColor(.blue)
                         }
@@ -180,7 +91,7 @@ struct MainMenuView: View {
                 .background(LinearGradient(gradient: Gradient(colors: [viewModel.preferences.antiBlueLightMode ? .red : .purple, viewModel.preferences.antiBlueLightMode ? .yellow : .blue]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(20)
                 .padding(.horizontal, 30)
-                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, selectedTimeToWake: $selectedTimeToWake, selectedTimeToSleep: $selectedTimeToSleep, alarmSet: $alarmSet)) {
+                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, selectedTimeToWake: $viewModel.selectedTimeToWake, selectedTimeToSleep: $viewModel.selectedTimeToSleep, alarmSet: $viewModel.alarmSet)) {
                     Text("Smart Alarm")
                         .padding()
                         .foregroundColor(.white)
@@ -211,7 +122,7 @@ struct MainMenuView: View {
                 Spacer()
             }
             .onAppear {
-                if stars.isEmpty {
+                if viewModel.stars.isEmpty {
                     generateStars()
                 }
                 Task {
@@ -219,9 +130,9 @@ struct MainMenuView: View {
                 }
                 
             }
-            .onReceive(timer) { _ in
-                self.currentTime = Date()
-                checkAlarm()
+            .onReceive(viewModel.timer) { _ in
+                viewModel.currentTime = Date()
+                viewModel.checkAlarm()
             }
             .onChange(of: viewModel.preferences.antiBlueLightMode) { _ in
                 regenerateStars()
@@ -229,42 +140,32 @@ struct MainMenuView: View {
             .navigationViewStyle(StackNavigationViewStyle())
         }
     }
-    private func generateStars() {
+    
+    
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm:ss a"
+        return formatter
+    }
+    
+    private var alarmFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        return formatter
+    }
+    
+    func generateStars() {
         for _ in 0..<25 {
-            stars.append(Star(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode))
+            viewModel.stars.append(Star(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode))
         }
     }
     
-    private func regenerateStars() {
-        stars.removeAll()
+    func regenerateStars() {
+        viewModel.stars.removeAll()
         for _ in 0..<25 {
-            stars.append(Star(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode))
-        }
-    }
-    private func checkAlarm() {
-        let calendar = Calendar.current
-        let currentTime = Date()
-        let selectedTime = selectedTimeToWake
-        
-        if calendar.isDate(currentTime, equalTo: selectedTime, toGranularity: .minute) {
-            if alarmSet {
-                playAlarmSound()
-                alarmSet = false
-            }
+            viewModel.stars.append(Star(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode))
         }
     }
     
-    func playAlarmSound() {
-        guard let url = Bundle.main.url(forResource: "alarm_sound", withExtension: "mp3") else {
-            print("Sound file not found")
-            return
-        }
-        
-        do {
-            player = try AVAudioPlayer(contentsOf: url)
-            player?.play()
-        } catch {
-            print("Error playing sound: \(error.localizedDescription)")
-        }
-    }
+    
 }
