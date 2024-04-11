@@ -11,59 +11,31 @@ import FirebaseAuth
 
 class SettingsViewModel: ObservableObject {
     
-    //TODO: add publisher to avoid warnings updating these variables in function
     @Published var preferences: UserPreferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
     
     private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
     
+    private var fireDBHelper: FireDBHelper
+    
+    
     init() {
+        self.fireDBHelper = FireDBHelper()
     }
     
-    //TODO: move all database functions to FireDBHelper
     func fetchUser() async {
         
-        guard let userId = Auth.auth().currentUser?.uid else {
-            return
-        }
+        await fireDBHelper.fetchUser()
         
-        print(#function, "attempting to log in user id \(userId)")
-        
-        let db = Firestore.firestore()
-        let docRef = db.collection("users").document(userId)
-        
-        do {
-            self.user = try await docRef.getDocument(as: User.self)
+        DispatchQueue.main.async {
+            self.user = self.fireDBHelper.user!
             self.preferences = self.user.preferences
-            print("user: \(self.user)")
-        } catch {
-            print("error decoding user \(error)")
-        }
-            
-            
-            
-            
         }
         
-        
+        print(#function, "user: \(String(describing: self.user))")
+    }
     
-    //TODO: move all database functions to FireDBHelper
     func updateUserPreferences() async {
-        
-        let db = Firestore.firestore()
-        let docRef = db.collection("users").document(self.user.id!)
-        
-        do {
-
-          try await docRef.updateData([
-            "preferences.antiBlueLightMode": self.preferences.antiBlueLightMode,
-            "preferences.disableStars": self.preferences.disableStars,
-          ])
-          print("Document successfully updated")
-        } catch {
-          print("Error updating document: \(error)")
-        }
-        
-    
+        await fireDBHelper.updateUserPreferences(preferences: self.preferences)
     }
     
 
