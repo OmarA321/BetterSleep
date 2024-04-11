@@ -19,7 +19,7 @@
 		29DF3BCF2BC8590800F6485E /* ShootingStarsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BCE2BC8590800F6485E /* ShootingStarsAnimation.swift */; };
 		29DF3BD12BC85B2700F6485E /* RecommendationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BD02BC85B2700F6485E /* RecommendationRow.swift */; };
 		29DF3BD32BC85B5A00F6485E /* AddSingleDaySleepDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BD22BC85B5A00F6485E /* AddSingleDaySleepDataView.swift */; };
-		29DF3BD52BC85B7800F6485E /* ViewPersonalSleepHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BD42BC85B7800F6485E /* ViewPersonalSleepHistoryView.swift */; };
+		29DF3BD52BC85B7800F6485E /* PersonalSleepHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BD42BC85B7800F6485E /* PersonalSleepHistoryView.swift */; };
 		29DF3BD72BC85B9300F6485E /* SleepRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BD62BC85B9300F6485E /* SleepRecordView.swift */; };
 		29DF3BD92BC85BCC00F6485E /* OverallSleepDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BD82BC85BCB00F6485E /* OverallSleepDataView.swift */; };
 		29DF3BDB2BC85BE000F6485E /* SleepSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BDA2BC85BE000F6485E /* SleepSummaryView.swift */; };
@@ -87,7 +87,7 @@
 		29DF3BCE2BC8590800F6485E /* ShootingStarsAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShootingStarsAnimation.swift; sourceTree = "<group>"; };
 		29DF3BD02BC85B2700F6485E /* RecommendationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationRow.swift; sourceTree = "<group>"; };
 		29DF3BD22BC85B5A00F6485E /* AddSingleDaySleepDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSingleDaySleepDataView.swift; sourceTree = "<group>"; };
-		29DF3BD42BC85B7800F6485E /* ViewPersonalSleepHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewPersonalSleepHistoryView.swift; sourceTree = "<group>"; };
+		29DF3BD42BC85B7800F6485E /* PersonalSleepHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSleepHistoryView.swift; sourceTree = "<group>"; };
 		29DF3BD62BC85B9300F6485E /* SleepRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecordView.swift; sourceTree = "<group>"; };
 		29DF3BD82BC85BCB00F6485E /* OverallSleepDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallSleepDataView.swift; sourceTree = "<group>"; };
 		29DF3BDA2BC85BE000F6485E /* SleepSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSummaryView.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 				29DF3BD62BC85B9300F6485E /* SleepRecordView.swift */,
 				29DF3BDA2BC85BE000F6485E /* SleepSummaryView.swift */,
 				29DF3BD82BC85BCB00F6485E /* OverallSleepDataView.swift */,
-				29DF3BD42BC85B7800F6485E /* ViewPersonalSleepHistoryView.swift */,
+				29DF3BD42BC85B7800F6485E /* PersonalSleepHistoryView.swift */,
 				DC269BA82B93DB650014F526 /* SleepAnalysisView.swift */,
 			);
 			path = SleepAnalysisViews;
@@ -414,7 +414,7 @@
 			files = (
 				642F173E2BC2496100B50342 /* SignUpViewModel.swift in Sources */,
 				642F173C2BC2494C00B50342 /* LoginViewModel.swift in Sources */,
-				29DF3BD52BC85B7800F6485E /* ViewPersonalSleepHistoryView.swift in Sources */,
+				29DF3BD52BC85B7800F6485E /* PersonalSleepHistoryView.swift in Sources */,
 				29DF3BCF2BC8590800F6485E /* ShootingStarsAnimation.swift in Sources */,
 				642F173A2BC2493600B50342 /* FireDBHelper.swift in Sources */,
 				642F17382BC2491D00B50342 /* UserPreferences.swift in Sources */,
