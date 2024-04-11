@@ -51,7 +51,7 @@ struct SleepAnalysisView: View {
                         }
                         .padding(.top, 20)
                         
-                        NavigationLink(destination: ViewPersonalSleepHistoryView()) {
+                        NavigationLink(destination: PersonalSleepHistoryView()) {
                             VStack {
                                 Text("Sleep History")
                                     .foregroundColor(.white)

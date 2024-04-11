@@ -75,7 +75,7 @@ class FireDBHelper: ObservableObject {
             try docRef.setData(from: self.user)
             print("Document successfully updated")
         } catch {
-          print("Error updating document: \(error)")
+            print("Error updating document: \(error)")
         }
         
     

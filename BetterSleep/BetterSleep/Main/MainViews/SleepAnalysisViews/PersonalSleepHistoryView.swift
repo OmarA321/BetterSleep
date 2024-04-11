@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ViewPersonalSleepHistoryView: View {
+struct PersonalSleepHistoryView: View {
     @StateObject var viewModel = SleepAnalysisViewModel()
     var body: some View {
         VStack {

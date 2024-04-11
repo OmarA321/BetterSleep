@@ -11,8 +11,6 @@ import FirebaseAuth
 
 class SleepAnalysisViewModel: ObservableObject {
     
-    //TODO: add publisher to avoid warnings updating these variables in function
-    
     @Published var preferences: UserPreferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
     @Published var recommendations: [Recommendation] = []
     @Published var selectedDate = Date()
@@ -26,7 +24,6 @@ class SleepAnalysisViewModel: ObservableObject {
     @Published var sleepHistory: [SleepRecord] = []
     
     private var fireDBHelper: FireDBHelper
-    
     
     private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
     
