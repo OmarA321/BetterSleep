@@ -23,6 +23,9 @@
 		29DF3BD72BC85B9300F6485E /* SleepRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BD62BC85B9300F6485E /* SleepRecordView.swift */; };
 		29DF3BD92BC85BCC00F6485E /* OverallSleepDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BD82BC85BCB00F6485E /* OverallSleepDataView.swift */; };
 		29DF3BDB2BC85BE000F6485E /* SleepSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BDA2BC85BE000F6485E /* SleepSummaryView.swift */; };
+		29DF3BE12BC861CF00F6485E /* SunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BE02BC861CF00F6485E /* SunView.swift */; };
+		29DF3BE32BC861E100F6485E /* WavyHills.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BE22BC861E100F6485E /* WavyHills.swift */; };
+		29DF3BE52BC8623700F6485E /* ColourStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BE42BC8623700F6485E /* ColourStar.swift */; };
 		29F364B92BC32D1C00DC2FD2 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F364B82BC32D1C00DC2FD2 /* SettingsViewModel.swift */; };
 		29F364BB2BC342AD00DC2FD2 /* SleepRecommendationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F364BA2BC342AD00DC2FD2 /* SleepRecommendationViewModel.swift */; };
 		29F364BD2BC342B700DC2FD2 /* SmartAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F364BC2BC342B700DC2FD2 /* SmartAlarmViewModel.swift */; };
@@ -91,6 +94,9 @@
 		29DF3BD62BC85B9300F6485E /* SleepRecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecordView.swift; sourceTree = "<group>"; };
 		29DF3BD82BC85BCB00F6485E /* OverallSleepDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverallSleepDataView.swift; sourceTree = "<group>"; };
 		29DF3BDA2BC85BE000F6485E /* SleepSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepSummaryView.swift; sourceTree = "<group>"; };
+		29DF3BE02BC861CF00F6485E /* SunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SunView.swift; sourceTree = "<group>"; };
+		29DF3BE22BC861E100F6485E /* WavyHills.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavyHills.swift; sourceTree = "<group>"; };
+		29DF3BE42BC8623700F6485E /* ColourStar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourStar.swift; sourceTree = "<group>"; };
 		29F364B82BC32D1C00DC2FD2 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		29F364BA2BC342AD00DC2FD2 /* SleepRecommendationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecommendationViewModel.swift; sourceTree = "<group>"; };
 		29F364BC2BC342B700DC2FD2 /* SmartAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartAlarmViewModel.swift; sourceTree = "<group>"; };
@@ -158,6 +164,9 @@
 			children = (
 				29DF3BCC2BC858D700F6485E /* Star.swift */,
 				29DF3BCE2BC8590800F6485E /* ShootingStarsAnimation.swift */,
+				29DF3BE02BC861CF00F6485E /* SunView.swift */,
+				29DF3BE22BC861E100F6485E /* WavyHills.swift */,
+				29DF3BE42BC8623700F6485E /* ColourStar.swift */,
 			);
 			path = AnimationViews;
 			sourceTree = "<group>";
@@ -415,6 +424,7 @@
 				642F173E2BC2496100B50342 /* SignUpViewModel.swift in Sources */,
 				642F173C2BC2494C00B50342 /* LoginViewModel.swift in Sources */,
 				29DF3BD52BC85B7800F6485E /* PersonalSleepHistoryView.swift in Sources */,
+				29DF3BE32BC861E100F6485E /* WavyHills.swift in Sources */,
 				29DF3BCF2BC8590800F6485E /* ShootingStarsAnimation.swift in Sources */,
 				642F173A2BC2493600B50342 /* FireDBHelper.swift in Sources */,
 				642F17382BC2491D00B50342 /* UserPreferences.swift in Sources */,
@@ -425,6 +435,7 @@
 				642F17332BC248D700B50342 /* MainMenuViewModel.swift in Sources */,
 				642F17342BC248D700B50342 /* MainMenuView.swift in Sources */,
 				6445AE3B2BAB743A00B423C6 /* LogInOrSignUpView.swift in Sources */,
+				29DF3BE12BC861CF00F6485E /* SunView.swift in Sources */,
 				29F364BD2BC342B700DC2FD2 /* SmartAlarmViewModel.swift in Sources */,
 				DC08FFF22BA8A8B000DD5E0D /* SignUp.swift in Sources */,
 				29DF3BDB2BC85BE000F6485E /* SleepSummaryView.swift in Sources */,
@@ -435,6 +446,7 @@
 				292DDDCF2BB0AF6E00E61452 /* SleepRecord.swift in Sources */,
 				29DF3BD92BC85BCC00F6485E /* OverallSleepDataView.swift in Sources */,
 				64D21F8B2B9445AF00A063B4 /* SettingsView.swift in Sources */,
+				29DF3BE52BC8623700F6485E /* ColourStar.swift in Sources */,
 				DC269BA62B93DB550014F526 /* SmartAlarmView.swift in Sources */,
 				DC269B7C2B93CA580014F526 /* BetterSleepApp.swift in Sources */,
 				292DDDCC2BB0AEDF00E61452 /* User.swift in Sources */,

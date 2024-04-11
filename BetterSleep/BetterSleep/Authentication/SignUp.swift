@@ -17,7 +17,7 @@ struct SignUp: View {
         NavigationView {
             ZStack {
                 ForEach(0..<30) { _ in
-                    PurpleStar()
+                    ColourStar(colour: .purple)
                 }
                 
                 SunView2()

@@ -28,6 +28,7 @@ class SleepRecommendationViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.user = self.fireDBHelper.user!
             self.preferences = self.user.preferences
+            self.recommendations = self.user.recommendations
         }
         
         print(#function, "user: \(String(describing: self.user))")

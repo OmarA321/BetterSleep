@@ -17,7 +17,7 @@ struct MainMenuView: View {
     var body: some View {
         ZStack {
             ForEach(0..<30) { _ in
-                BlueStar()
+                ColourStar(colour: .blue)
             }
             
             VStack {
