@@ -7,12 +7,21 @@
 
 import SwiftUI
 
-struct Star: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct Star {
+    @Binding var antiBlueLightMode: Bool
+    var offset: CGSize = CGSize(width: CGFloat.random(in: 0...500), height: CGFloat.random(in: -500...500))
+    var delay: Double = Double.random(in: 0...5)
+    var speed: Double = Double.random(in: 5...15)
+    var color: Color {
+        if antiBlueLightMode {
+            let colors: [Color] = [.yellow, .orange, .red]
+            return colors.randomElement() ?? .white
+        } else {
+            let colors: [Color] = [.blue, .green, .purple]
+            return colors.randomElement() ?? .white
+        }
     }
-}
-
-#Preview {
-    Star()
+    init(antiBlueLightMode: Binding<Bool>) {
+        self._antiBlueLightMode = antiBlueLightMode
+    }
 }
