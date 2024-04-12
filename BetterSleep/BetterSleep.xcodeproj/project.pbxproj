@@ -15,6 +15,8 @@
 		292DDDCD2BB0AEDF00E61452 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292DDDCB2BB0AEDF00E61452 /* User.swift */; };
 		292DDDCF2BB0AF6E00E61452 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292DDDCE2BB0AF6E00E61452 /* SleepRecord.swift */; };
 		292DDDD02BB0AF6E00E61452 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292DDDCE2BB0AF6E00E61452 /* SleepRecord.swift */; };
+		294F32D32BC97B8400FBE15D /* DynamicAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294F32D22BC97B8400FBE15D /* DynamicAlarmView.swift */; };
+		294F32D52BC97BA100FBE15D /* ManualAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294F32D42BC97BA100FBE15D /* ManualAlarmView.swift */; };
 		29DF3BCD2BC858D700F6485E /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BCC2BC858D700F6485E /* Star.swift */; };
 		29DF3BCF2BC8590800F6485E /* ShootingStarsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BCE2BC8590800F6485E /* ShootingStarsAnimation.swift */; };
 		29DF3BD12BC85B2700F6485E /* RecommendationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BD02BC85B2700F6485E /* RecommendationRow.swift */; };
@@ -87,6 +89,8 @@
 		292DDDC22BB0A96A00E61452 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		292DDDCB2BB0AEDF00E61452 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		292DDDCE2BB0AF6E00E61452 /* SleepRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecord.swift; sourceTree = "<group>"; };
+		294F32D22BC97B8400FBE15D /* DynamicAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicAlarmView.swift; sourceTree = "<group>"; };
+		294F32D42BC97BA100FBE15D /* ManualAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualAlarmView.swift; sourceTree = "<group>"; };
 		29DF3BCC2BC858D700F6485E /* Star.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Star.swift; sourceTree = "<group>"; };
 		29DF3BCE2BC8590800F6485E /* ShootingStarsAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShootingStarsAnimation.swift; sourceTree = "<group>"; };
 		29DF3BD02BC85B2700F6485E /* RecommendationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationRow.swift; sourceTree = "<group>"; };
@@ -161,6 +165,16 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		294F32D12BC97B7000FBE15D /* SmartAlarmViews */ = {
+			isa = PBXGroup;
+			children = (
+				DC269BA52B93DB550014F526 /* SmartAlarmView.swift */,
+				294F32D22BC97B8400FBE15D /* DynamicAlarmView.swift */,
+				294F32D42BC97BA100FBE15D /* ManualAlarmView.swift */,
+			);
+			path = SmartAlarmViews;
+			sourceTree = "<group>";
+		};
 		29DF3BC92BC8589D00F6485E /* AnimationViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,9 +204,9 @@
 		29DF3BDD2BC85E6900F6485E /* MainViews */ = {
 			isa = PBXGroup;
 			children = (
+				294F32D12BC97B7000FBE15D /* SmartAlarmViews */,
 				64D21F8A2B9445AF00A063B4 /* SettingsView.swift */,
 				29DF3BDF2BC85EDE00F6485E /* SleepRecommendationViews */,
-				DC269BA52B93DB550014F526 /* SmartAlarmView.swift */,
 				29DF3BDC2BC85D9D00F6485E /* SleepAnalysisViews */,
 				642F17322BC248D700B50342 /* MainMenuView.swift */,
 			);
@@ -427,6 +441,7 @@
 				642F173E2BC2496100B50342 /* SignUpViewModel.swift in Sources */,
 				642F173C2BC2494C00B50342 /* LoginViewModel.swift in Sources */,
 				29DF3BD52BC85B7800F6485E /* PersonalSleepHistoryView.swift in Sources */,
+				294F32D52BC97BA100FBE15D /* ManualAlarmView.swift in Sources */,
 				29DF3BE32BC861E100F6485E /* WavyHills.swift in Sources */,
 				29DF3BCF2BC8590800F6485E /* ShootingStarsAnimation.swift in Sources */,
 				29DF3BE72BC863E500F6485E /* SunView2.swift in Sources */,
@@ -436,6 +451,7 @@
 				29DF3BD32BC85B5A00F6485E /* AddSingleDaySleepDataView.swift in Sources */,
 				642F17362BC2490C00B50342 /* Recommendation.swift in Sources */,
 				29F364BF2BC342C300DC2FD2 /* SleepAnalysisViewModel.swift in Sources */,
+				294F32D32BC97B8400FBE15D /* DynamicAlarmView.swift in Sources */,
 				642F17332BC248D700B50342 /* MainMenuViewModel.swift in Sources */,
 				642F17342BC248D700B50342 /* MainMenuView.swift in Sources */,
 				6445AE3B2BAB743A00B423C6 /* LogInOrSignUpView.swift in Sources */,
