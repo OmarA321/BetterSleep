@@ -48,6 +48,7 @@ struct SignUp: View {
                                     .stroke(Color.gray, lineWidth: 1)
                                     .padding(.horizontal, 40)
                             )
+                            .autocapitalization(.none)
                         
                         TextField("Email", text: $viewModel.email)
                             .padding()
@@ -58,6 +59,8 @@ struct SignUp: View {
                                     .stroke(Color.gray, lineWidth: 1)
                                     .padding(.horizontal, 40)
                             )
+                            .keyboardType(.emailAddress)
+                            .autocapitalization(.none)
                         
                         SecureField("Password", text: $viewModel.password)
                             .padding()

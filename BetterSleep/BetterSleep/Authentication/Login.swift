@@ -50,6 +50,8 @@ struct Login: View {
                                 .padding(.horizontal, 40)
                         )
                         .shadow(color: Color.black, radius: 3, x: 2, y: 2)
+                        .keyboardType(.emailAddress)
+                        .autocapitalization(.none)
                     
                     SecureField("Password", text: $viewModel.password)
                         .padding()
@@ -61,6 +63,7 @@ struct Login: View {
                                 .padding(.horizontal, 40)
                         )
                         .shadow(color: Color.black, radius: 3, x: 2, y: 2)
+                        
                     
                     Button(action: {
                         self.shouldNavigateToContentView = true
