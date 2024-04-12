@@ -6,10 +6,10 @@ struct LogInOrSignUpView: View {
 
     var body: some View {
         if showingLogin {
-            Login(showingLogin: $showingLogin)
+            LoginView(showingLogin: $showingLogin)
                 .transition(.slide)
         } else {
-            SignUp(showingLogin: $showingLogin)
+            SignUpView(showingLogin: $showingLogin)
                 .transition(.slide)
         }
     }

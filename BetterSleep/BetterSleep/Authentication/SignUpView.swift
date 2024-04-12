@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SignUp: View {
+struct SignUpView: View {
     
     @StateObject var viewModel = SignUpViewModel()
     
