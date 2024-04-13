@@ -21,10 +21,10 @@ class MainMenuViewModel: ObservableObject {
     @Published var alarmSet = false
     
     @Published var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @Published var player: AVAudioPlayer?
     
     
-    
-    private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
+    private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timeToWake: nil)
     
     private var fireDBHelper: FireDBHelper
     

@@ -25,7 +25,7 @@ class SleepAnalysisViewModel: ObservableObject {
     
     private var fireDBHelper: FireDBHelper
     
-    private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
+    private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timeToWake: nil)
     
     init() {
         self.fireDBHelper = FireDBHelper()

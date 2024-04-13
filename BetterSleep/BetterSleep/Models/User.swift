@@ -15,7 +15,7 @@ struct User: Codable, Identifiable {
     var recommendations: [Recommendation]
     var preferences: UserPreferences
     var timeToSleep: Date?
-    var timetoWake: Date?
+    var timeToWake: Date?
     
     enum UserKeys: String, CodingKey {
         case username

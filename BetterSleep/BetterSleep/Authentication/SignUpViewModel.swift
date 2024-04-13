@@ -43,7 +43,7 @@ class SignUpViewModel : ObservableObject {
     //TODO: move all database functions to FireDBHelper
     private func addUserToFirestore(id: String) {
        
-        var newUser = User(id: id, username: username, email: email, sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
+        var newUser = User(id: id, username: username, email: email, sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timeToWake: nil)
         
         let db = Firestore.firestore()
         
