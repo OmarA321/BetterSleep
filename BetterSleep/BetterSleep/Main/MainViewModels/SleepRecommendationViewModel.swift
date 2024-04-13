@@ -11,14 +11,14 @@ class SleepRecommendationViewModel: ObservableObject {
     }
     
     var timeToWake: Date? {
-        user.timetoWake
+        user.timeToWake
     }
     
     init() {
         // Set initial values
         self.preferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
         self.recommendations = []
-        self.user = User(username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
+        self.user = User(username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timeToWake: nil)
         
         // Load user data
         Task {
