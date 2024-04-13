@@ -1,0 +1,87 @@
+//
+//  MainMenuViewModel.swift
+//  BetterSleep
+//
+//  Created by alyssa verasamy on 2024-04-06.
+//
+
+import Foundation
+import FirebaseFirestore
+import FirebaseAuth
+import AVFoundation
+
+class MainMenuViewModel: ObservableObject {
+    
+    @Published var preferences: UserPreferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
+    
+    @Published var stars: [Star] = []
+    @Published var currentTime = Date()
+    @Published var selectedTimeToSleep = Date()
+    @Published var selectedTimeToWake = Date()
+    @Published var alarmSet = false
+    
+    @Published var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    
+    
+    private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
+    
+    private var fireDBHelper: FireDBHelper
+    
+    
+    init() {
+        self.fireDBHelper = FireDBHelper()
+    }
+    
+    func fetchUser() async {
+        
+        await fireDBHelper.fetchUser()
+        
+        DispatchQueue.main.async {
+            self.user = self.fireDBHelper.user!
+            self.preferences = self.user.preferences
+        }
+        
+        print(#function, "user: \(String(describing: self.user))")
+    }
+    
+    
+    
+    func checkAlarm() {
+        let calendar = Calendar.current
+        let currentTime = Date()
+        let selectedTime = selectedTimeToWake
+        
+        if calendar.isDate(currentTime, equalTo: selectedTime, toGranularity: .minute) {
+            if alarmSet {
+                playAlarmSound()
+                alarmSet = false
+            }
+        }
+    }
+    
+    func playAlarmSound() {
+        guard let url = Bundle.main.url(forResource: "alarm_sound", withExtension: "mp3") else {
+            print("Sound file not found")
+            return
+        }
+        
+        do {
+            player = try AVAudioPlayer(contentsOf: url)
+            player?.play()
+        } catch {
+            print("Error playing sound: \(error.localizedDescription)")
+        }
+    }
+    
+    
+    
+    
+    
+        
+
+}
+    
+    
+
+
