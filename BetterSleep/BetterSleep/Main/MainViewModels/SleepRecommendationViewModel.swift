@@ -7,12 +7,12 @@ class SleepRecommendationViewModel: ObservableObject {
     @Published var recommendations: [Recommendation]
     private var user: User
     var timeToSleep: Date? {
-           user.timeToSleep
-       }
-       
-       var timeToWake: Date? {
-           user.timetoWake
-       }
+        user.timeToSleep
+    }
+    
+    var timeToWake: Date? {
+        user.timetoWake
+    }
     
     init() {
         // Set initial values
@@ -35,7 +35,6 @@ class SleepRecommendationViewModel: ObservableObject {
         let docRef = db.collection("users").document(userId)
         
         do {
-            // Attempt to decode the user data directly since data(as:) is not optional.
             let userData = try await docRef.getDocument(as: User.self)
             DispatchQueue.main.async {
                 self.user = userData
@@ -49,11 +48,9 @@ class SleepRecommendationViewModel: ObservableObject {
             print("Error decoding user: \(error)")
         }
     }
-
     
     private func updateRecommendationsBasedOnSleepHistory() {
         guard !user.sleepHistory.isEmpty else {
-            // If no sleep history is available, we might want to add a default message or recommendation.
             recommendations.append(Recommendation(title: "No Sleep Data", description: "No sleep data available to generate recommendations. Please track your sleep to get personalized recommendations."))
             return
         }
@@ -64,14 +61,16 @@ class SleepRecommendationViewModel: ObservableObject {
         var newRecommendations = [Recommendation]()
         
         if averageHoursSlept < 7 {
-            newRecommendations.append(Recommendation(title: "Increase Sleep Duration", description: "Aim for at least 7 hours of sleep per night to feel rested and rejuvenated."))
+            newRecommendations.append(Recommendation(title: "Bad Sleep Duration", description: "Aim for at least 7 hours of sleep per night to feel rested and rejuvenated."))
+        } else {
+            newRecommendations.append(Recommendation(title: "Great Sleep Duration", description: "You're consistently getting a good amount of sleep. Keep it up!"))
         }
         
         if poorSleepQualityDays > user.sleepHistory.count / 2 {
-            newRecommendations.append(Recommendation(title: "Improve Sleep Quality", description: "Consider relaxing activities before bed, such as reading or meditating, to improve sleep quality."))
+            newRecommendations.append(Recommendation(title: "Bad Sleep Quality", description: "Consider relaxing activities before bed, such as reading or meditating, to improve sleep quality."))
+        } else {
+            newRecommendations.append(Recommendation(title: "Great Sleep Quality", description: "Your sleep quality is consistently great. Excellent job maintaining good sleep habits!"))
         }
-        
-        // Add more conditions and recommendations based on your logic
         
         DispatchQueue.main.async {
             self.recommendations = newRecommendations

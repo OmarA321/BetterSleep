@@ -2,7 +2,21 @@ import SwiftUI
 
 struct SleepRecommendationView: View {
     @StateObject var viewModel = SleepRecommendationViewModel()
+    @State private var shownGeneralRecommendations: [Recommendation] = []
+
+    let allGeneralRecommendations: [Recommendation] = [
+           Recommendation(title: "Regular Sleep Schedule", description: "Try to go to bed and wake up at the same time every day, even on weekends."),
+           Recommendation(title: "Mindful Eating and Drinking", description: "Avoid heavy meals, caffeine, and alcohol close to bedtime."),
+           Recommendation(title: "Create a Restful Environment", description: "Keep your bedroom cool, dark, and quiet."),
+           Recommendation(title: "Limit Daytime Naps", description: "Long or irregular napping can negatively affect your sleep."),
+           Recommendation(title: "Physical Activity", description: "Regular physical activity can help you fall asleep faster and enjoy deeper sleep."),
+           Recommendation(title: "Manage Worries", description: "Try to resolve your worries or concerns before bedtime.")
+       ]
+    private func chooseRandomRecommendations() {
+            shownGeneralRecommendations = allGeneralRecommendations.shuffled().prefix(2).map { $0 }
+        }
     
+
     var body: some View {
         ScrollView {
             VStack {
@@ -31,12 +45,6 @@ struct SleepRecommendationView: View {
                             sleepTimesView(timeToSleep: timeToSleep, timeToWake: timeToWake)
                         }
                 
-                Text("Additional Recommendations:")
-                    .font(.headline)
-                    .padding(.top, 20)
-                    .padding(.bottom, 10)
-                
-                // Recommendations list updated by the ViewModel
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(viewModel.recommendations, id: \.self) { recommendation in
                         RecommendationRow(antiBlueLightMode: viewModel.preferences.antiBlueLightMode, title: recommendation.title, description: recommendation.description)
@@ -44,6 +52,26 @@ struct SleepRecommendationView: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
+                
+                Divider()
+                                  .padding(.horizontal, 20)
+                                  .padding(.vertical, 10)
+
+                              Text("General Sleep Tips")
+                                  .font(.headline)
+                                  .padding(.bottom, 10)
+
+                              // Randomly selected general recommendations
+                              VStack(alignment: .leading, spacing: 10) {
+                                  ForEach(shownGeneralRecommendations, id: \.self) { recommendation in
+                                      RecommendationRow(antiBlueLightMode: viewModel.preferences.antiBlueLightMode, title: recommendation.title, description: recommendation.description)
+                                  }
+                              }
+                              .padding(.horizontal, 20)
+                              .padding(.bottom, 20)
+                              .onAppear {
+                                  chooseRandomRecommendations()
+                              }
                 
                 Spacer()
                 
