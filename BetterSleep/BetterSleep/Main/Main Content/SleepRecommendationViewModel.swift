@@ -1,50 +1,86 @@
-//
-//  SleepRecommendationViewModel.swift
-//  BetterSleep
-//
-//  Created by alyssa verasamy on 2024-04-07.
-//
-
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 
 class SleepRecommendationViewModel: ObservableObject {
-    
-    //TODO: add publisher to avoid warnings updating these variables in function
-    @Published var preferences: UserPreferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
-    @Published var recommendations: [Recommendation] = []
-    private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
+    @Published var preferences: UserPreferences
+    @Published var recommendations: [Recommendation]
+    private var user: User
+    var timeToSleep: Date? {
+           user.timeToSleep
+       }
+       
+       var timeToWake: Date? {
+           user.timetoWake
+       }
     
     init() {
+        // Set initial values
+        self.preferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
+        self.recommendations = []
+        self.user = User(username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timetoWake: nil)
+        
+        // Load user data
+        Task {
+            await fetchUser()
+        }
     }
     
-    //TODO: move all database functions to FireDBHelper
     func fetchUser() async {
-        
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
-        
-        print(#function, "attempting to log in user id \(userId)")
         
         let db = Firestore.firestore()
         let docRef = db.collection("users").document(userId)
         
         do {
-            self.user = try await docRef.getDocument(as: User.self)
-            self.preferences = self.user.preferences
-            self.recommendations = self.user.recommendations
-            print("user: \(self.user)")
+            // Attempt to decode the user data directly since data(as:) is not optional.
+            let userData = try await docRef.getDocument(as: User.self)
+            DispatchQueue.main.async {
+                self.user = userData
+                self.preferences = self.user.preferences
+                self.recommendations = self.user.recommendations
+                
+                // Update recommendations based on sleep history
+                self.updateRecommendationsBasedOnSleepHistory()
+            }
         } catch {
-            print("error decoding user \(error)")
+            print("Error decoding user: \(error)")
+        }
+    }
+
+    
+    private func updateRecommendationsBasedOnSleepHistory() {
+        guard !user.sleepHistory.isEmpty else {
+            // If no sleep history is available, we might want to add a default message or recommendation.
+            recommendations.append(Recommendation(title: "No Sleep Data", description: "No sleep data available to generate recommendations. Please track your sleep to get personalized recommendations."))
+            return
         }
         
-    }
+        let averageHoursSlept = user.sleepHistory.map { $0.hoursSlept }.average()
+        let poorSleepQualityDays = user.sleepHistory.filter { $0.qualityRating.lowercased() != "great" }.count
         
-
+        var newRecommendations = [Recommendation]()
+        
+        if averageHoursSlept < 7 {
+            newRecommendations.append(Recommendation(title: "Increase Sleep Duration", description: "Aim for at least 7 hours of sleep per night to feel rested and rejuvenated."))
+        }
+        
+        if poorSleepQualityDays > user.sleepHistory.count / 2 {
+            newRecommendations.append(Recommendation(title: "Improve Sleep Quality", description: "Consider relaxing activities before bed, such as reading or meditating, to improve sleep quality."))
+        }
+        
+        // Add more conditions and recommendations based on your logic
+        
+        DispatchQueue.main.async {
+            self.recommendations = newRecommendations
+        }
+    }
 }
-    
-    
 
-
+extension Array where Element: BinaryFloatingPoint {
+    func average() -> Double {
+        isEmpty ? 0 : Double(reduce(0, +)) / Double(count)
+    }
+}

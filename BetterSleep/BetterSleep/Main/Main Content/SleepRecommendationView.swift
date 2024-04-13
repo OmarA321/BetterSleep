@@ -1,10 +1,3 @@
-//
-//  SleepRecommendationView.swift
-//  BetterSleep
-//
-//  Created by Elias Alissandratos
-//
-
 import SwiftUI
 
 struct SleepRecommendationView: View {
@@ -17,9 +10,7 @@ struct SleepRecommendationView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxHeight: 100)
-                    .foregroundColor(
-                        viewModel.preferences.antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple
-                    )
+                    .foregroundColor(viewModel.preferences.antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple)
                     .padding()
                 
                 Text("Sleep Recommendations")
@@ -34,53 +25,22 @@ struct SleepRecommendationView: View {
                     .padding(.bottom, 10)
                     .multilineTextAlignment(.center)
                 
-                Spacer()
-                
-                HStack {
-                    VStack {
-                        Text("Time to Sleep")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                        Text("10:00 PM")
-                            .font(.title)
-                            .fontWeight(.bold)
-                    }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(viewModel.preferences.antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple)
-                    )
-                    Spacer()
-                    VStack {
-                        Text("Time to Wake Up")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                        Text("6:00 AM")
-                            .font(.title)
-                            .fontWeight(.bold)
-                    }
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(viewModel.preferences.antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple)
-                    )
-                }
-                .padding(.horizontal, 20)
-                
-                Spacer()
+                // Use the user's times to sleep and wake up if available
+                if let timeToSleep = viewModel.timeToSleep,
+                           let timeToWake = viewModel.timeToWake {
+                            sleepTimesView(timeToSleep: timeToSleep, timeToWake: timeToWake)
+                        }
                 
                 Text("Additional Recommendations:")
                     .font(.headline)
                     .padding(.top, 20)
                     .padding(.bottom, 10)
                 
+                // Recommendations list updated by the ViewModel
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(viewModel.recommendations, id: \.self) { recommendation in
-                        RecommendationRow(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, title: recommendation.title, description: recommendation.description)
+                        RecommendationRow(antiBlueLightMode: viewModel.preferences.antiBlueLightMode, title: recommendation.title, description: recommendation.description)
                     }
-//                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Avoid Caffeine", description: "Try to avoid caffeine intake at least 6 hours before your recommended sleep time.")
-//                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Create a Bedtime Routine", description: "Establish a relaxing bedtime routine to signal to your body that it's time to wind down.")
-//                    RecommendationRow(antiBlueLightMode: $antiBlueLightMode, title: "Limit Screen Time", description: "Reduce exposure to screens and bright lights at least an hour before bedtime to promote better sleep.")
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 20)
@@ -99,10 +59,36 @@ struct SleepRecommendationView: View {
             }
         }
     }
+    
+    @ViewBuilder
+    private func sleepTimesView(timeToSleep: Date, timeToWake: Date) -> some View {
+        HStack {
+            timeView(title: "Time to Sleep", time: timeToSleep)
+            Spacer()
+            timeView(title: "Time to Wake Up", time: timeToWake)
+        }
+        .padding(.horizontal, 20)
+    }
+    
+    private func timeView(title: String, time: Date) -> some View {
+        VStack {
+            Text(title)
+                .font(.headline)
+                .foregroundColor(.white)
+            Text(time, style: .time)
+                .font(.title)
+                .fontWeight(.bold)
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(viewModel.preferences.antiBlueLightMode ? Color(red: 1.0, green: 0.4, blue: 0.4) : Color.purple)
+        )
+    }
 }
 
 struct RecommendationRow: View {
-    @Binding var antiBlueLightMode: Bool
+    var antiBlueLightMode: Bool // Changed to a regular var since we are not modifying it.
     var title: String
     var description: String
     

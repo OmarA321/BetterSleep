@@ -19,18 +19,22 @@ class LoginViewModel : ObservableObject {
     }
     
     //TODO: move all database functions to FireDBHelper
-    func login() {
-        
+    func login(completion: @escaping (Bool) -> Void) {
         guard validate() else {
-            
+            completion(false)
             return
         }
         
-        Auth.auth().signIn(withEmail: email, password: password)
-        
-        //TODO: implement error if login fails
-        
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+                completion(false)
+            } else {
+                completion(true)
+            }
+        }
     }
+
     
     //TODO: implement validation in view
     private func validate() -> Bool {

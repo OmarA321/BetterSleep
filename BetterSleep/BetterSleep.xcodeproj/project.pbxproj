@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		292DDDC32BB0A96A00E61452 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 292DDDC22BB0A96A00E61452 /* GoogleService-Info.plist */; };
 		292DDDC42BB0A96A00E61452 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 292DDDC22BB0A96A00E61452 /* GoogleService-Info.plist */; };
-		292DDDC72BB0AA3E00E61452 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 292DDDC62BB0AA3E00E61452 /* FirebaseAnalytics */; };
-		292DDDC92BB0AC2E00E61452 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 292DDDC82BB0AC2E00E61452 /* FirebaseFirestore */; };
 		292DDDCC2BB0AEDF00E61452 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292DDDCB2BB0AEDF00E61452 /* User.swift */; };
 		292DDDCD2BB0AEDF00E61452 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292DDDCB2BB0AEDF00E61452 /* User.swift */; };
 		292DDDCF2BB0AF6E00E61452 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292DDDCE2BB0AF6E00E61452 /* SleepRecord.swift */; };
@@ -26,7 +24,6 @@
 		642F173A2BC2493600B50342 /* FireDBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17392BC2493600B50342 /* FireDBHelper.swift */; };
 		642F173C2BC2494C00B50342 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F173B2BC2494C00B50342 /* LoginViewModel.swift */; };
 		642F173E2BC2496100B50342 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F173D2BC2496100B50342 /* SignUpViewModel.swift */; };
-		642F17412BC2499B00B50342 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 642F17402BC2499B00B50342 /* FirebaseAuth */; };
 		642F17422BC24A0000B50342 /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17352BC2490C00B50342 /* Recommendation.swift */; };
 		642F17432BC24A0400B50342 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642F17372BC2491D00B50342 /* UserPreferences.swift */; };
 		6445AE3B2BAB743A00B423C6 /* LogInOrSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6445AE3A2BAB743A00B423C6 /* LogInOrSignUpView.swift */; };
@@ -46,6 +43,13 @@
 		DC269BA62B93DB550014F526 /* SmartAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC269BA52B93DB550014F526 /* SmartAlarmView.swift */; };
 		DC269BA72B93DB550014F526 /* SmartAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC269BA52B93DB550014F526 /* SmartAlarmView.swift */; };
 		DC269BA92B93DB650014F526 /* SleepAnalysisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC269BA82B93DB650014F526 /* SleepAnalysisView.swift */; };
+		DCD0DB0D2BC741C80090E03A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = DCD0DB0C2BC741C80090E03A /* FirebaseAuth */; };
+		DCD0DB0F2BC741C80090E03A /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = DCD0DB0E2BC741C80090E03A /* FirebaseAuthCombine-Community */; };
+		DCD0DB112BC741C80090E03A /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = DCD0DB102BC741C80090E03A /* FirebaseDatabase */; };
+		DCD0DB132BC741C80090E03A /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DCD0DB122BC741C80090E03A /* FirebaseDatabaseSwift */; };
+		DCD0DB152BC741C80090E03A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = DCD0DB142BC741C80090E03A /* FirebaseFirestore */; };
+		DCD0DB172BC741C80090E03A /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DCD0DB162BC741C80090E03A /* FirebaseFirestoreSwift */; };
+		DCD0DB192BC741C80090E03A /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DCD0DB182BC741C80090E03A /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,9 +115,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				292DDDC72BB0AA3E00E61452 /* FirebaseAnalytics in Frameworks */,
-				642F17412BC2499B00B50342 /* FirebaseAuth in Frameworks */,
-				292DDDC92BB0AC2E00E61452 /* FirebaseFirestore in Frameworks */,
+				DCD0DB132BC741C80090E03A /* FirebaseDatabaseSwift in Frameworks */,
+				DCD0DB112BC741C80090E03A /* FirebaseDatabase in Frameworks */,
+				DCD0DB0D2BC741C80090E03A /* FirebaseAuth in Frameworks */,
+				DCD0DB152BC741C80090E03A /* FirebaseFirestore in Frameworks */,
+				DCD0DB192BC741C80090E03A /* FirebaseStorage in Frameworks */,
+				DCD0DB0F2BC741C80090E03A /* FirebaseAuthCombine-Community in Frameworks */,
+				DCD0DB172BC741C80090E03A /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,9 +271,13 @@
 			);
 			name = BetterSleep;
 			packageProductDependencies = (
-				292DDDC62BB0AA3E00E61452 /* FirebaseAnalytics */,
-				292DDDC82BB0AC2E00E61452 /* FirebaseFirestore */,
-				642F17402BC2499B00B50342 /* FirebaseAuth */,
+				DCD0DB0C2BC741C80090E03A /* FirebaseAuth */,
+				DCD0DB0E2BC741C80090E03A /* FirebaseAuthCombine-Community */,
+				DCD0DB102BC741C80090E03A /* FirebaseDatabase */,
+				DCD0DB122BC741C80090E03A /* FirebaseDatabaseSwift */,
+				DCD0DB142BC741C80090E03A /* FirebaseFirestore */,
+				DCD0DB162BC741C80090E03A /* FirebaseFirestoreSwift */,
+				DCD0DB182BC741C80090E03A /* FirebaseStorage */,
 			);
 			productName = BetterSleep;
 			productReference = DC269B782B93CA580014F526 /* BetterSleep.app */;
@@ -316,7 +328,7 @@
 			);
 			mainGroup = DC269B6F2B93CA580014F526;
 			packageReferences = (
-				292DDDC52BB0AA3D00E61452 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				DCD0DB0B2BC741C80090E03A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = DC269B792B93CA580014F526 /* Products */;
 			projectDirPath = "";
@@ -530,18 +542,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BetterSleep Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 9NL45XNN76;
+				DEVELOPMENT_TEAM = NW93ULW7FN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BetterSleep;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = AV.BetterSleep;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = OA.BetterSleep;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = AV.BetterSleep.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = OA.BetterSleep.watchkitapp1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -560,18 +572,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BetterSleep Watch App/Preview Content\"";
-				DEVELOPMENT_TEAM = 9NL45XNN76;
+				DEVELOPMENT_TEAM = NW93ULW7FN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BetterSleep;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = AV.BetterSleep;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = OA.BetterSleep;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = AV.BetterSleep.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = OA.BetterSleep.watchkitapp1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -593,7 +605,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BetterSleep/Preview Content\"";
-				DEVELOPMENT_TEAM = 9NL45XNN76;
+				DEVELOPMENT_TEAM = NW93ULW7FN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BetterSleep;
@@ -608,7 +620,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = AV.BetterSleep;
+				PRODUCT_BUNDLE_IDENTIFIER = OA.BetterSleep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -628,7 +640,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BetterSleep/Preview Content\"";
-				DEVELOPMENT_TEAM = 9NL45XNN76;
+				DEVELOPMENT_TEAM = NW93ULW7FN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = BetterSleep;
@@ -643,7 +655,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = AV.BetterSleep;
+				PRODUCT_BUNDLE_IDENTIFIER = OA.BetterSleep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -687,31 +699,51 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		292DDDC52BB0AA3D00E61452 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		DCD0DB0B2BC741C80090E03A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 10.23.0;
+				minimumVersion = 10.24.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		292DDDC62BB0AA3E00E61452 /* FirebaseAnalytics */ = {
+		DCD0DB0C2BC741C80090E03A /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 292DDDC52BB0AA3D00E61452 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
+			package = DCD0DB0B2BC741C80090E03A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
-		292DDDC82BB0AC2E00E61452 /* FirebaseFirestore */ = {
+		DCD0DB0E2BC741C80090E03A /* FirebaseAuthCombine-Community */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 292DDDC52BB0AA3D00E61452 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = DCD0DB0B2BC741C80090E03A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+		DCD0DB102BC741C80090E03A /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCD0DB0B2BC741C80090E03A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		DCD0DB122BC741C80090E03A /* FirebaseDatabaseSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCD0DB0B2BC741C80090E03A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabaseSwift;
+		};
+		DCD0DB142BC741C80090E03A /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCD0DB0B2BC741C80090E03A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
 		};
-		642F17402BC2499B00B50342 /* FirebaseAuth */ = {
+		DCD0DB162BC741C80090E03A /* FirebaseFirestoreSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 292DDDC52BB0AA3D00E61452 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAuth;
+			package = DCD0DB0B2BC741C80090E03A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestoreSwift;
+		};
+		DCD0DB182BC741C80090E03A /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DCD0DB0B2BC741C80090E03A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
