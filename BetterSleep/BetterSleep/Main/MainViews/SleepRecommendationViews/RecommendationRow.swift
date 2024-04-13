@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct RecommendationRow: View {
-    @Binding var antiBlueLightMode: Bool
+    var antiBlueLightMode: Bool // Changed to a regular var since we are not modifying it.
     var title: String
     var description: String
     
@@ -27,3 +27,5 @@ struct RecommendationRow: View {
         }
     }
 }
+
+

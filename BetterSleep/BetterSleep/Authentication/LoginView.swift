@@ -66,7 +66,13 @@ struct LoginView: View {
                         
                     
                     Button(action: {
-                        self.shouldNavigateToContentView = true
+                        viewModel.login { success in
+                            if success {
+                                self.shouldNavigateToContentView = true
+                            } else {
+                                // Optionally handle error, such as displaying a message
+                            }
+                        }
                     }) {
                         Text("Login")
                             .fontWeight(.bold)
@@ -78,6 +84,7 @@ struct LoginView: View {
                             .padding(.horizontal, 40)
                             .shadow(color: Color.black, radius: 3, x: 2, y: 2)
                     }
+
                     
                     NavigationLink(destination: MainMenuView()
                         .preferredColorScheme(.dark)
