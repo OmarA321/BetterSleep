@@ -62,7 +62,6 @@ class FireDBHelper: ObservableObject {
           print("Error updating document: \(error)")
         }
         
-    
     }
     
     func addUserSleepRecord(sleepRecord: SleepRecord) async {
@@ -78,7 +77,23 @@ class FireDBHelper: ObservableObject {
             print("Error updating document: \(error)")
         }
         
+    }
     
+    func updateUserAlarm(timeToSleep: Date, timeToWake: Date) async {
+        
+        let docRef = self.db.collection("users").document(self.user!.id!)
+        
+        do {
+
+          try await docRef.updateData([
+            "timeToSleep": timeToSleep,
+            "timeToWake": timeToWake,
+          ])
+          print("Document successfully updated")
+        } catch {
+          print("Error updating document: \(error)")
+        }
+        
     }
     
 }

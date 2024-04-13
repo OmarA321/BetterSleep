@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct DynamicAlarmView: View {
+    
     @Binding var antiBlueLightMode: Bool
     @Binding var selectedWakeUpTime: Date
     @State private var showingPopup = false
@@ -61,3 +62,4 @@ struct DynamicAlarmView: View {
         .padding()
     }
 }
+

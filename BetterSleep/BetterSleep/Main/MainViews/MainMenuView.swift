@@ -91,7 +91,7 @@ struct MainMenuView: View {
                 .background(LinearGradient(gradient: Gradient(colors: [viewModel.preferences.antiBlueLightMode ? .red : .purple, viewModel.preferences.antiBlueLightMode ? .yellow : .blue]), startPoint: .leading, endPoint: .trailing))
                 .cornerRadius(20)
                 .padding(.horizontal, 30)
-                NavigationLink(destination: SmartAlarmView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, selectedTimeToWake: $viewModel.selectedTimeToWake, selectedTimeToSleep: $viewModel.selectedTimeToSleep, alarmSet: $viewModel.alarmSet)) {
+                NavigationLink(destination: SmartAlarmView()) {
                     Text("Smart Alarm")
                         .padding()
                         .foregroundColor(.white)
