@@ -8,16 +8,7 @@
 import SwiftUI
 
 struct ManualAlarmView: View {
-    @Binding var antiBlueLightMode: Bool
-    
-    @Binding var selectedTimeToWakeUp: Date
-    @Binding var selectedTimeToSleep: Date
-    
-    @Binding var isCalculatingOptimalSleepTimes: Bool
-    @Binding var isCalculatingOptimalWakeTimes: Bool
-    
-    @Binding var suggestedSleepTimes: [Date]
-    @Binding var suggestedWakeTimes: [Date]
+    @StateObject var viewModel = SmartAlarmViewModel()
     
     @State private var isSelectingSleepTime = false
     @State private var isSelectingWakeTime = false
@@ -36,7 +27,7 @@ struct ManualAlarmView: View {
                             Group {
                                 if isSelectingSleepTime {
                                     Color.clear
-                                } else if antiBlueLightMode {
+                                } else if viewModel.preferences.antiBlueLightMode {
                                     LinearGradient(gradient: Gradient(colors: [
                                         Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
                                         Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
@@ -62,7 +53,7 @@ struct ManualAlarmView: View {
                             Group {
                                 if !isSelectingSleepTime {
                                     Color.clear
-                                } else if antiBlueLightMode {
+                                } else if viewModel.preferences.antiBlueLightMode {
                                     LinearGradient(gradient: Gradient(colors: [
                                         Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
                                         Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
@@ -86,19 +77,19 @@ struct ManualAlarmView: View {
                 Text("Select The Time You Wish To Sleep:")
                     .padding(.top, 10)
                     .padding(.bottom, -10)
-                DatePicker("Select Sleep Time", selection: $selectedTimeToSleep, displayedComponents: .hourAndMinute)
+                DatePicker("Select Sleep Time", selection: $viewModel.selectedTimeToSleep, displayedComponents: .hourAndMinute)
                     .labelsHidden()
                     .datePickerStyle(WheelDatePickerStyle())
                     .padding()
                 Button("Calculate Optimal Times To Wake Up") {
-                    isCalculatingOptimalWakeTimes = true
-                    suggestedWakeTimes = calculateOptimalWakeTimes()
+                    viewModel.isCalculatingOptimalWakeTimes = true
+                    viewModel.suggestedWakeTimes = calculateOptimalWakeTimes()
                 }
                 .padding()
                 .foregroundColor(Color.white)
                 .background(
                     Group {
-                        if antiBlueLightMode {
+                        if viewModel.preferences.antiBlueLightMode {
                             LinearGradient(gradient: Gradient(colors: [
                                 Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
                                 Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
@@ -116,19 +107,19 @@ struct ManualAlarmView: View {
                Text("Select The Time You Wish To Wake Up:")
                    .padding(.top, 10)
                    .padding(.bottom, -10)
-               DatePicker("Select Wake Up Time", selection: $selectedTimeToWakeUp, displayedComponents: .hourAndMinute)
+                DatePicker("Select Wake Up Time", selection: $viewModel.selectedTimeToWake, displayedComponents: .hourAndMinute)
                    .labelsHidden()
                    .datePickerStyle(WheelDatePickerStyle())
                    .padding()
                Button("Calculate Optimal Times To Sleep") {
-                   isCalculatingOptimalSleepTimes = true
-                   suggestedSleepTimes = calculateOptimalSleepTimes()
+                   viewModel.isCalculatingOptimalSleepTimes = true
+                   viewModel.suggestedSleepTimes = calculateOptimalSleepTimes()
                }
                .padding()
                .foregroundColor(Color.white)
                .background(
                    Group {
-                       if antiBlueLightMode {
+                       if viewModel.preferences.antiBlueLightMode {
                            LinearGradient(gradient: Gradient(colors: [
                                Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
                                Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
@@ -145,10 +136,15 @@ struct ManualAlarmView: View {
            }
        }
        .padding()
+       .onAppear(){
+           Task {
+               await viewModel.fetchUser()
+           }
+       }
    }
     private func calculateOptimalWakeTimes() -> [Date] {
         var suggestedTimes: [Date] = []
-        let selectedTime = selectedTimeToSleep
+        let selectedTime = viewModel.selectedTimeToSleep
         
         let calendar = Calendar.current
         let decrements: [TimeInterval] = [6 * 3600, 7.5 * 3600, 9 * 3600]
@@ -163,7 +159,7 @@ struct ManualAlarmView: View {
     
     private func calculateOptimalSleepTimes() -> [Date] {
         var suggestedTimes: [Date] = []
-        let selectedTime = selectedTimeToWakeUp
+        let selectedTime = viewModel.selectedTimeToWake
         
         let calendar = Calendar.current
         let increments: [TimeInterval] = [-6 * 3600, -7.5 * 3600, -9 * 3600]

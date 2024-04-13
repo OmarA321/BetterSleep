@@ -197,9 +197,9 @@ struct SmartAlarmView: View {
                     }
                     
                     if viewModel.isDynamicAlarmSelected {
-                        DynamicAlarmView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, selectedWakeUpTime: $viewModel.selectedTimeToWake)
+                        DynamicAlarmView()
                     } else if viewModel.isManualAlarmSelected {
-                        ManualAlarmView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, selectedTimeToWakeUp: $viewModel.selectedTimeToWake, selectedTimeToSleep: $viewModel.selectedTimeToSleep, isCalculatingOptimalSleepTimes: $viewModel.isCalculatingOptimalSleepTimes, isCalculatingOptimalWakeTimes: $viewModel.isCalculatingOptimalWakeTimes, suggestedSleepTimes: $viewModel.suggestedSleepTimes, suggestedWakeTimes: $viewModel.suggestedWakeTimes)
+                        ManualAlarmView()
                     }
                     
                     Spacer()
@@ -517,6 +517,11 @@ struct SmartAlarmView: View {
                             presentationMode.wrappedValue.dismiss()
                          })
                 }
+            }
+        }
+        .onAppear(){
+            Task {
+                await viewModel.fetchUser()
             }
         }
         .onReceive(Timer.publish(every: 2, on: .main, in: .default).autoconnect()) { _ in

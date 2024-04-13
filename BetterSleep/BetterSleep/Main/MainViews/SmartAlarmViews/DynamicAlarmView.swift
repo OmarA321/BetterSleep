@@ -8,28 +8,28 @@
 import SwiftUI
 
 struct DynamicAlarmView: View {
-    
-    @Binding var antiBlueLightMode: Bool
-    @Binding var selectedWakeUpTime: Date
-    @State private var showingPopup = false
+    @StateObject var viewModel = SmartAlarmViewModel()
     @State private var optimalAlarmDate: Date?
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
             Text("Select The Time You Wish To Wake Up:")
-            DatePicker("Wake up time", selection: $selectedWakeUpTime, displayedComponents: .hourAndMinute)
+            DatePicker("Wake up time", selection: $viewModel.selectedTimeToWake, displayedComponents: .hourAndMinute)
                 .labelsHidden()
                 .datePickerStyle(WheelDatePickerStyle())
             
             Button("Set Dynamic Alarm") {
-                showingPopup = true
+                Task {
+                    await viewModel.updateUserAlarm()
+                }
+                viewModel.showingPopup = true
             }
             .padding()
             .foregroundColor(Color.white)
             .background(
                 Group {
-                    if antiBlueLightMode {
+                    if viewModel.preferences.antiBlueLightMode {
                         LinearGradient(gradient: Gradient(colors: [
                             Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
                             Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
@@ -43,10 +43,10 @@ struct DynamicAlarmView: View {
                 }
             )
             .cornerRadius(8)
-            .alert(isPresented: $showingPopup) {
+            .alert(isPresented: $viewModel.showingPopup) {
                 let formatter = DateFormatter()
                 formatter.timeStyle = .short
-                let selectedTime = formatter.string(from: selectedWakeUpTime)
+                let selectedTime = formatter.string(from: viewModel.selectedTimeToWake)
                 return Alert(title: Text("Dynamic Alarm - \(selectedTime)"),
                      message: Text("""
                                     We'll wake you up as close to \(selectedTime) as possible, while accounting for your sleep cycles.
@@ -60,6 +60,11 @@ struct DynamicAlarmView: View {
             Spacer()
         }
         .padding()
+        .onAppear(){
+            Task {
+                await viewModel.fetchUser()
+            }
+        }
     }
 }
 
