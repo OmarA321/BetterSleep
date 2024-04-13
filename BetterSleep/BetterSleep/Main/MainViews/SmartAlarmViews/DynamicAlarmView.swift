@@ -23,6 +23,7 @@ struct DynamicAlarmView: View {
                 Task {
                     await viewModel.updateUserAlarm()
                 }
+                viewModel.dynamicAlarm = true
                 viewModel.showingPopup = true
             }
             .padding()

@@ -11,7 +11,6 @@ import AVFoundation
 struct SmartAlarmView: View {
     @StateObject var viewModel = SmartAlarmViewModel()
     @Environment(\.presentationMode) var presentationMode
-
     
     var body: some View {
         ZStack {
@@ -534,6 +533,21 @@ struct SmartAlarmView: View {
                 if viewModel.alarmSet == true{
                     viewModel.playAlarmSound()
                     viewModel.alarmSet = false
+                }
+            }
+        }
+        .onReceive(Timer.publish(every: 600, on: .main, in: .default).autoconnect()) { _ in
+            let calendar = Calendar.current
+            
+            let currentTime = Date()
+            let selectedTime = viewModel.selectedTimeToWake
+            
+            let targetTime = calendar.date(byAdding: .minute, value: -90, to: selectedTime) ?? selectedTime
+            
+            if currentTime >= targetTime {
+                if viewModel.dynamicAlarm {
+                    viewModel.requestSleepAuthorization()
+                    viewModel.dynamicAlarm = false
                 }
             }
         }
