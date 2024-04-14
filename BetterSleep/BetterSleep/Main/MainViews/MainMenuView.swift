@@ -132,7 +132,19 @@ struct MainMenuView: View {
             }
             .onReceive(viewModel.timer) { _ in
                 viewModel.currentTime = Date()
-                viewModel.checkAlarm()
+            }
+            .onReceive(Timer.publish(every: 2, on: .main, in: .default).autoconnect()) { _ in
+                let calendar = Calendar.current
+                
+                let currentTime = Date()
+                let selectedTime = viewModel.selectedTimeToWake
+                
+                if calendar.isDate(currentTime, equalTo: selectedTime, toGranularity: .minute) {
+                    if viewModel.alarmSet == true{
+                        viewModel.playAlarmSound()
+                        viewModel.alarmSet = false
+                    }
+                }
             }
             .onChange(of: viewModel.preferences.antiBlueLightMode) { _ in
                 regenerateStars()
