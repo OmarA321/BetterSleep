@@ -18,13 +18,10 @@ struct AddSingleDaySleepDataView: View {
                 .fontWeight(.bold)
                 .foregroundColor(Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
             
-            DatePicker("Date:", selection: $viewModel.selectedDate, displayedComponents: .date)
+            DatePicker("Sleep Time:", selection: $viewModel.sleepTime, displayedComponents: [.date, .hourAndMinute])
                 .padding()
             
-            DatePicker("Sleep Time:", selection: $viewModel.sleepTime, displayedComponents: .hourAndMinute)
-                .padding()
-            
-            DatePicker("Wake Up Time:", selection: $viewModel.wakeUpTime, displayedComponents: .hourAndMinute)
+            DatePicker("Wake Up Time:", selection: $viewModel.wakeUpTime, displayedComponents: [.date, .hourAndMinute])
                 .padding()
             
             HStack {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PersonalSleepHistoryView: View {
-    @StateObject var viewModel = SleepAnalysisViewModel()
+    @StateObject var viewModel = PersonalSleepHistoryViewModel()
     var body: some View {
         VStack {
             Text("Sleep History")
@@ -17,7 +17,7 @@ struct PersonalSleepHistoryView: View {
                 .foregroundColor(Color(viewModel.preferences.antiBlueLightMode ? #colorLiteral(red: 1, green: 0.5843137503, blue: 0, alpha: 1) : #colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
                 .padding()
             ForEach(viewModel.sleepHistory, id: \.self) { record in
-                SleepRecordView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, date: "date placeholder", hoursSlept: record.hoursSlept, qualityRating: record.qualityRating)
+                SleepRecordView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, date: record.date, hoursSlept: record.hoursSlept, qualityRating: record.qualityRating)
                 
             }
             
@@ -26,6 +26,11 @@ struct PersonalSleepHistoryView: View {
 //            SleepRecordView(antiBlueLightMode: $viewModel.preferences.antiBlueLightMode, date: "February 26, 2024", hoursSlept: 8, qualityRating: "Great")
             
             Spacer()
+        }
+        .onAppear {
+            Task {
+                await viewModel.fetchUser()
+            }
         }
     }
 }

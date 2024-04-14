@@ -17,17 +17,6 @@ struct SleepAnalysisView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
-                ZStack{
-                    Text("Placeholder for Graphics")
-                        .foregroundColor(.white)
-                        .font(.headline)
-                }
-                .frame(maxWidth: .infinity, maxHeight: 300)
-                .background(viewModel.preferences.antiBlueLightMode ? Color.orange : Color(#colorLiteral(red: 0.2588235438, green: 0.7725490332, blue: 0.5725490451, alpha: 1)))
-                .cornerRadius(20)
-                .padding(.vertical, 20)
-                .padding(.horizontal, 35)
-                
                 
                 VStack {
                     HStack {

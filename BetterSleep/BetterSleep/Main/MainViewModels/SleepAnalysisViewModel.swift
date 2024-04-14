@@ -13,15 +13,19 @@ class SleepAnalysisViewModel: ObservableObject {
     
     @Published var preferences: UserPreferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
     @Published var recommendations: [Recommendation] = []
-    @Published var selectedDate = Date()
+    @Published var selectedSleepDate = Date()
+    @Published var selectedWakeDate = Date()
     @Published var sleepTime = Date()
     @Published var wakeUpTime = Date()
     @Published var selectedSleepQuality = "Great"
+    @Published var totalSleepRecords: Int = 0
+    @Published var averageSleepDuration: Double = 0
+    @Published var averageSleepQuality = ""
     
     let sleepQualityOptions = ["Great", "Good", "Okay", "Poor", "Awful"]
     
-    // TODO: move this to new viewmodel for ViewPersonalSleepHistory
-    @Published var sleepHistory: [SleepRecord] = []
+    private var totalSleepQualitySum: Int = 0
+    private var totalHoursSlept: Double = 0
     
     private var fireDBHelper: FireDBHelper
     
@@ -35,10 +39,20 @@ class SleepAnalysisViewModel: ObservableObject {
         
         await fireDBHelper.fetchUser()
         
+        
+        
         DispatchQueue.main.async {
             self.user = self.fireDBHelper.user!
             self.preferences = self.user.preferences
             self.recommendations = self.user.recommendations
+            self.totalSleepRecords = self.user.sleepHistory.count
+            for record in self.user.sleepHistory {
+                self.totalHoursSlept += record.hoursSlept
+                self.totalSleepQualitySum += (self.sleepQualityOptions.firstIndex(of: record.qualityRating) ?? 0)
+            }
+            self.averageSleepDuration = self.totalHoursSlept / Double(self.totalSleepRecords)
+            self.averageSleepQuality = self.sleepQualityOptions[Int(self.totalSleepQualitySum / self.totalSleepRecords)]
+            
         }
         
         print(#function, "user: \(String(describing: self.user))")
@@ -47,9 +61,9 @@ class SleepAnalysisViewModel: ObservableObject {
     
     func addUserSleepRecord() async {
         
-        let hoursSlept = self.wakeUpTime.timeIntervalSince(self.sleepTime)
+        let hoursSlept = self.sleepTime.distance(to: self.wakeUpTime) / 3600
         
-        let newSleepRecord = SleepRecord(date: self.selectedDate, hoursSlept: hoursSlept, qualityRating: self.selectedSleepQuality)
+        let newSleepRecord = SleepRecord(date: self.sleepTime, hoursSlept: hoursSlept, qualityRating: self.selectedSleepQuality)
         
         self.user.sleepHistory.append(newSleepRecord)
         
