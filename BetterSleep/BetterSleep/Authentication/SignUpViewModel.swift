@@ -15,15 +15,16 @@ class SignUpViewModel : ObservableObject {
     @Published var email = ""
     @Published var password =  ""
     @Published var errorMessage = ""
+    @Published var isShowingError = false
     
     init() {
         
     }
     
-    //TODO: move all database functions to FireDBHelper
     func register() {
         
         guard validate() else {
+            isShowingError = true
             print(#function, "yikes?")
             return
         }
@@ -40,7 +41,6 @@ class SignUpViewModel : ObservableObject {
         
     }
     
-    //TODO: move all database functions to FireDBHelper
     private func addUserToFirestore(id: String) {
        
         var newUser = User(id: id, username: username, email: email, sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timeToWake: nil)
@@ -54,7 +54,6 @@ class SignUpViewModel : ObservableObject {
         }
     }
     
-    //TODO: implement validation in view
     private func validate() -> Bool {
         
         guard !username.trimmingCharacters(in: .whitespaces).isEmpty,

@@ -13,21 +13,22 @@ class LoginViewModel : ObservableObject {
     @Published var email = ""
     @Published var password = ""
     @Published var errorMessage = ""
-    
+    @Published var isShowingError = false
     init() {
         
     }
     
-    //TODO: move all database functions to FireDBHelper
     func login(completion: @escaping (Bool) -> Void) {
         guard validate() else {
+            self.isShowingError = true
             completion(false)
             return
         }
         
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             if let error = error {
-                self.errorMessage = error.localizedDescription
+                self.errorMessage = "Could not find user. Are you sure you have the correct email and password?"
+                self.isShowingError = true
                 completion(false)
             } else {
                 completion(true)
@@ -36,7 +37,6 @@ class LoginViewModel : ObservableObject {
     }
 
     
-    //TODO: implement validation in view
     private func validate() -> Bool {
         
         errorMessage = ""   // reset error message

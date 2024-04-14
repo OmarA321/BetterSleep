@@ -112,6 +112,12 @@ struct LoginView: View {
                     }
                 }
             }
+            .alert(isPresented: $viewModel.isShowingError){
+                return Alert(title: Text("Error"),
+                             message: Text(viewModel.errorMessage),
+                             dismissButton: .default(Text("OK"))
+                             )
+            }
         }
     }
 }

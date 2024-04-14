@@ -84,7 +84,7 @@ struct SignUpView: View {
                     }
                     
                     Button(action: {
-                        //self.shouldNavigateToContentView = true
+                        
                         viewModel.register()
                     }) {
                         Text("Sign Up")
@@ -119,6 +119,12 @@ struct SignUpView: View {
                         .foregroundColor(Color.purple)
                     }
                 }
+            }
+            .alert(isPresented: $viewModel.isShowingError){
+                return Alert(title: Text("Error"),
+                             message: Text(viewModel.errorMessage),
+                             dismissButton: .default(Text("OK"))
+                             )
             }
         }
     }

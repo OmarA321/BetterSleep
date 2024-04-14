@@ -541,6 +541,9 @@ struct SmartAlarmView: View {
                 if viewModel.alarmSet == true{
                     viewModel.playAlarmSound()
                     viewModel.alarmSet = false
+                    Task {
+                        await viewModel.deleteUserAlarm()
+                    }
                 }
             }
         }
