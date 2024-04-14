@@ -29,28 +29,23 @@ struct SmartAlarmView: View {
                 
                 Spacer()
                 
-                
-                // default, viewing current alarm settings
-                
-                if !viewModel.settingAlarm {
-                    
-                    // if no alarm is set
-                    if !viewModel.alarmSet {
-                        VStack {
-                            Text("No Alarm Set")
-                                .foregroundColor(Color.white)
-                                .font(.title3)
-                                .padding()
-                            
-                            
-                            //TODO: make these buttons look nice
-                            NavigationLink(destination: DynamicAlarmView()) {
-                                Text("set dynamic alarm")
-                            }
-                            NavigationLink(destination: ManualAlarmView()) {
-                                Text("set manual alarm")
-                            }
-                            
+                // if no alarm is set
+                if !viewModel.alarmSet {
+                    VStack {
+                        Text("No Alarm Set")
+                            .foregroundColor(Color.white)
+                            .font(.title3)
+                            .padding()
+                        
+                        
+                        //TODO: make these buttons look nice
+                        NavigationLink(destination: DynamicAlarmView()) {
+                            Text("set dynamic alarm")
+                        }
+                        NavigationLink(destination: ManualAlarmView()) {
+                            Text("set manual alarm")
+                        }
+                        
 //                            Button(action: {
 //                                withAnimation{
 //                                    viewModel.settingAlarm = true
@@ -60,7 +55,7 @@ struct SmartAlarmView: View {
 //                                    Rectangle()
 //                                        .fill(Color.clear)
 //                                        .frame(width: 150, height: 150)
-//                                    
+//
 //                                    Text("Set Alarm")
 //                                        .foregroundColor(.white)
 //                                        .bold()
@@ -83,63 +78,63 @@ struct SmartAlarmView: View {
 //                                }
 //                            )
 //                            .cornerRadius(8)
-                            
-                            Spacer()
-                        }
                         
+                        Spacer()
                     }
                     
-                    // if alarm is set
-                    else {
-                        VStack {
-                            Text("Alarm Set For \(viewModel.selectedTimeToWake, formatter: DateFormatter.timeOnly)")
-                                .foregroundColor(Color.white)
-                                .font(.title3)
-                                .padding()
-                            
-                            Button(action: {
-                                withAnimation {
-                                    viewModel.selectedTimeToWake = Date()
-                                    viewModel.selectedTimeToSleep = Date()
-                                    viewModel.alarmSet = false
-                                    Task {
-                                        await viewModel.deleteUserAlarm()
-                                    }
-                                }
-                            }) {
-                                ZStack {
-                                    Rectangle()
-                                        .fill(Color.clear)
-                                        .frame(width: 150, height: 150)
-                                    
-                                    Text("Delete Alarm")
-                                        .foregroundColor(.white)
-                                        .bold()
+                }
+                
+                // if alarm is set
+                else {
+                    VStack {
+                        Text("Alarm Set For \(viewModel.selectedTimeToWake, formatter: DateFormatter.timeOnly)")
+                            .foregroundColor(Color.white)
+                            .font(.title3)
+                            .padding()
+                        
+                        Button(action: {
+                            withAnimation {
+                                viewModel.selectedTimeToWake = Date()
+                                viewModel.selectedTimeToSleep = Date()
+                                viewModel.alarmSet = false
+                                Task {
+                                    await viewModel.deleteUserAlarm()
                                 }
                             }
-                            .foregroundColor(.white)
-                            .background(
-                                Group {
-                                    if viewModel.preferences.antiBlueLightMode {
-                                        LinearGradient(gradient: Gradient(colors: [
-                                            Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
-                                            Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
-                                        ]), startPoint: .top, endPoint: .bottom)
-                                    } else {
-                                        LinearGradient(gradient: Gradient(colors: [
-                                            Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
-                                            Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
-                                        ]), startPoint: .top, endPoint: .bottom)
-                                    }
-                                }
-                            )
-                            .cornerRadius(8)
-                            
-                            Spacer()
+                        }) {
+                            ZStack {
+                                Rectangle()
+                                    .fill(Color.clear)
+                                    .frame(width: 150, height: 150)
+                                
+                                Text("Delete Alarm")
+                                    .foregroundColor(.white)
+                                    .bold()
+                            }
                         }
+                        .foregroundColor(.white)
+                        .background(
+                            Group {
+                                if viewModel.preferences.antiBlueLightMode {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                        Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                } else {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                        Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                }
+                            }
+                        )
+                        .cornerRadius(8)
                         
+                        Spacer()
                     }
+                    
                 }
+            }
                 
                 // setting alarm
                 
@@ -216,12 +211,12 @@ struct SmartAlarmView: View {
 //                    
 //                    Spacer()
 //                }
-            }
+            
                     
                 
                     
             
-// Inputted Sleep Time, Calculating Optimal Wake Up Times to display in squares //////////////////////////////////////////////////////
+ //Inputted Sleep Time, Calculating Optimal Wake Up Times to display in squares //////////////////////////////////////////////////////
 //            if viewModel.isCalculatingOptimalWakeTimes {
 //                Color.black.opacity(0.8).ignoresSafeArea()
 //                VStack(spacing: 20) {
@@ -529,7 +524,7 @@ struct SmartAlarmView: View {
 //                            presentationMode.wrappedValue.dismiss()
 //                         })
 //                }
-            //}
+//            }
         }
         .onAppear(){
             Task {

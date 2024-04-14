@@ -8,15 +8,33 @@
 import SwiftUI
 
 struct ManualAlarmView: View {
-    @StateObject var viewModel = SmartAlarmViewModel()
+    @ObservedObject var viewModel = ManualAlarmViewModel()
     
     @State private var isSelectingSleepTime = false
     @State private var isSelectingWakeTime = false
+    
+    @State var isShowingSuggestedTimes = false
+    
+    
     
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
+            Image(systemName: "alarm.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 100)
+                .foregroundColor(viewModel.preferences.antiBlueLightMode ? Color.yellow : Color.blue)
+                .padding()
+            
+            Text("Manual Alarm")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.top, 20)
+            
+            Spacer()
+            
             HStack {
                 Button(action: {
                     isSelectingSleepTime = false
@@ -82,8 +100,11 @@ struct ManualAlarmView: View {
                     .datePickerStyle(WheelDatePickerStyle())
                     .padding()
                 Button("Calculate Optimal Times To Wake Up") {
-                    viewModel.isCalculatingOptimalWakeTimes = true
-                    viewModel.suggestedWakeTimes = calculateOptimalWakeTimes()
+                    viewModel.calculateOptimalWakeTimes()
+                    isShowingSuggestedTimes = true
+                }
+                .sheet(isPresented: $isShowingSuggestedTimes) {
+                    ManualAlarmSuggestionMenu(viewModel: viewModel, isShowingSuggestedTimes: $isShowingSuggestedTimes, isSettingSleepTime: false)
                 }
                 .padding()
                 .foregroundColor(Color.white)
@@ -112,8 +133,11 @@ struct ManualAlarmView: View {
                    .datePickerStyle(WheelDatePickerStyle())
                    .padding()
                Button("Calculate Optimal Times To Sleep") {
-                   viewModel.isCalculatingOptimalSleepTimes = true
-                   viewModel.suggestedSleepTimes = calculateOptimalSleepTimes()
+                   viewModel.calculateOptimalSleepTimes()
+                   isShowingSuggestedTimes = true
+               }
+               .sheet(isPresented: $isShowingSuggestedTimes) {
+                   ManualAlarmSuggestionMenu(viewModel: viewModel, isShowingSuggestedTimes: $isShowingSuggestedTimes, isSettingSleepTime: true)
                }
                .padding()
                .foregroundColor(Color.white)
@@ -141,34 +165,19 @@ struct ManualAlarmView: View {
                await viewModel.fetchUser()
            }
        }
+       .alert(isPresented: $viewModel.showingPopup) {
+           let formatter = DateFormatter()
+           formatter.timeStyle = .short
+           return Alert(title: Text("Manual Alarm Set"),
+                message: Text("""
+                             Sleep Time - \(formatter.string(from: viewModel.selectedTimeToSleep))
+                             Wake Time - \(formatter.string(from: viewModel.selectedTimeToWake))
+
+                             Have a good night!
+                             """),
+                dismissButton: .default(Text("OK")) {
+                   presentationMode.wrappedValue.dismiss()
+                })
+       }
    }
-    private func calculateOptimalWakeTimes() -> [Date] {
-        var suggestedTimes: [Date] = []
-        let selectedTime = viewModel.selectedTimeToSleep
-        
-        let calendar = Calendar.current
-        let decrements: [TimeInterval] = [6 * 3600, 7.5 * 3600, 9 * 3600]
-        
-        for decrement in decrements {
-            let suggestedTime = calendar.date(byAdding: .second, value: Int(decrement), to: selectedTime)!
-            suggestedTimes.append(suggestedTime)
-        }
-        
-        return suggestedTimes
-    }
-    
-    private func calculateOptimalSleepTimes() -> [Date] {
-        var suggestedTimes: [Date] = []
-        let selectedTime = viewModel.selectedTimeToWake
-        
-        let calendar = Calendar.current
-        let increments: [TimeInterval] = [-6 * 3600, -7.5 * 3600, -9 * 3600]
-        
-        for increment in increments {
-            let suggestedTime = calendar.date(byAdding: .second, value: Int(increment), to: selectedTime)!
-            suggestedTimes.append(suggestedTime)
-        }
-        
-        return suggestedTimes
-    }
 }
