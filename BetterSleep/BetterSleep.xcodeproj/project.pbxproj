@@ -15,6 +15,7 @@
 		292DDDD02BB0AF6E00E61452 /* SleepRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292DDDCE2BB0AF6E00E61452 /* SleepRecord.swift */; };
 		294F32D32BC97B8400FBE15D /* DynamicAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294F32D22BC97B8400FBE15D /* DynamicAlarmView.swift */; };
 		294F32D52BC97BA100FBE15D /* ManualAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294F32D42BC97BA100FBE15D /* ManualAlarmView.swift */; };
+		294F32D92BCC290200FBE15D /* DynamicAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294F32D82BCC290200FBE15D /* DynamicAlarmViewModel.swift */; };
 		29DF3BCD2BC858D700F6485E /* Star.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BCC2BC858D700F6485E /* Star.swift */; };
 		29DF3BCF2BC8590800F6485E /* ShootingStarsAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BCE2BC8590800F6485E /* ShootingStarsAnimation.swift */; };
 		29DF3BD12BC85B2700F6485E /* RecommendationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DF3BD02BC85B2700F6485E /* RecommendationRow.swift */; };
@@ -95,6 +96,7 @@
 		292DDDCE2BB0AF6E00E61452 /* SleepRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SleepRecord.swift; sourceTree = "<group>"; };
 		294F32D22BC97B8400FBE15D /* DynamicAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicAlarmView.swift; sourceTree = "<group>"; };
 		294F32D42BC97BA100FBE15D /* ManualAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManualAlarmView.swift; sourceTree = "<group>"; };
+		294F32D82BCC290200FBE15D /* DynamicAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicAlarmViewModel.swift; sourceTree = "<group>"; };
 		29DF3BCC2BC858D700F6485E /* Star.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Star.swift; sourceTree = "<group>"; };
 		29DF3BCE2BC8590800F6485E /* ShootingStarsAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShootingStarsAnimation.swift; sourceTree = "<group>"; };
 		29DF3BD02BC85B2700F6485E /* RecommendationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationRow.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				29F364BC2BC342B700DC2FD2 /* SmartAlarmViewModel.swift */,
 				29F364BA2BC342AD00DC2FD2 /* SleepRecommendationViewModel.swift */,
 				29F364B82BC32D1C00DC2FD2 /* SettingsViewModel.swift */,
+				294F32D82BCC290200FBE15D /* DynamicAlarmViewModel.swift */,
 			);
 			path = MainViewModels;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				29DF3BE12BC861CF00F6485E /* SunView.swift in Sources */,
 				29F364BD2BC342B700DC2FD2 /* SmartAlarmViewModel.swift in Sources */,
 				DC08FFF22BA8A8B000DD5E0D /* SignUpView.swift in Sources */,
+				294F32D92BCC290200FBE15D /* DynamicAlarmViewModel.swift in Sources */,
 				29DF3BDB2BC85BE000F6485E /* SleepSummaryView.swift in Sources */,
 				DC269BA92B93DB650014F526 /* SleepAnalysisView.swift in Sources */,
 				DC269BA32B93DB3E0014F526 /* SleepRecommendationView.swift in Sources */,

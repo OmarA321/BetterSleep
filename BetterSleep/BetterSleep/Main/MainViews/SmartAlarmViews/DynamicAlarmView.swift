@@ -8,14 +8,28 @@
 import SwiftUI
 
 struct DynamicAlarmView: View {
-    @StateObject var viewModel = SmartAlarmViewModel()
-    @State private var optimalAlarmDate: Date?
+    @StateObject var viewModel = DynamicAlarmViewModel()
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
+        
         VStack {
+            Image(systemName: "alarm.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 100)
+                .foregroundColor(viewModel.preferences.antiBlueLightMode ? Color.yellow : Color.blue)
+                .padding()
+            
+            Text("Dynamic Alarm")
+                .font(.title)
+                .fontWeight(.bold)
+                .padding(.top, 20)
+            
+            Spacer()
+            
             Text("Select The Time You Wish To Wake Up:")
-            DatePicker("Wake up time", selection: $viewModel.selectedTimeToWake, displayedComponents: .hourAndMinute)
+            DatePicker("Wake Up Time", selection: $viewModel.selectedTimeToWake, displayedComponents: .hourAndMinute)
                 .labelsHidden()
                 .datePickerStyle(WheelDatePickerStyle())
             
@@ -23,7 +37,6 @@ struct DynamicAlarmView: View {
                 Task {
                     await viewModel.updateUserAlarm()
                 }
-                viewModel.dynamicAlarm = true
                 viewModel.showingPopup = true
             }
             .padding()
@@ -68,4 +81,3 @@ struct DynamicAlarmView: View {
         }
     }
 }
-

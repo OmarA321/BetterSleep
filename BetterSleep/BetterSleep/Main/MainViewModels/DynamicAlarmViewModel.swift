@@ -1,46 +1,26 @@
 //
-//  SmartAlarmViewModel.swift
+//  DynamicAlarmViewModel.swift
 //  BetterSleep
 //
-//  Created by alyssa verasamy on 2024-04-07.
+//  Created by alyssa verasamy on 2024-04-14.
 //
 
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
-import AVFoundation
 import HealthKit
 
-class SmartAlarmViewModel: ObservableObject {
+class DynamicAlarmViewModel: ObservableObject {
     
     @Published var preferences: UserPreferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
-    
-    @Published var isDynamicAlarmSelected = true
-    @Published var isManualAlarmSelected = false
-    
-    @Published var isSetTimeToWakeUp = false
-    @Published var isSetTimeToSleep = false
-    
+
     @Published var selectedTimeToWake: Date = Date()
     @Published var selectedTimeToSleep: Date = Date()
-    @Published var alarmSet: Bool = false
-    
-    @Published var isCalculatingOptimalSleepTimes = false
-    @Published var suggestedSleepTimes: [Date] = []
-    
-    @Published var isCalculatingOptimalWakeTimes = false
-    @Published var suggestedWakeTimes: [Date] = []
     
     @Published var showingPopup = false
-    @Published var settingAlarm = false
     
-    @Published var showLeftWakeTimes = false
-    @Published var showRightWakeTimes = false
-    @Published var showLeftSleepTimes = false
-    @Published var showRightSleepTimes = false
-    @Published var player: AVAudioPlayer?
     
-    @Published var dynamicAlarm: Bool = false
+    //@Published var dynamicAlarm: Bool = false
     
     private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timeToWake: nil)
     
@@ -58,50 +38,16 @@ class SmartAlarmViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.user = self.fireDBHelper.user!
             self.preferences = self.user.preferences
-            if self.user.timeToSleep != nil || self.user.timeToWake != nil {
-                self.alarmSet = true
-                self.selectedTimeToSleep = self.user.timeToSleep ?? Date()
-                self.selectedTimeToWake = self.user.timeToWake ?? Date()
-            }
-            
         }
         
         print(#function, "user: \(String(describing: self.user))")
     }
     
     func updateUserAlarm() async {
-        
-        self.user.timeToSleep = self.selectedTimeToSleep
         self.user.timeToWake = self.selectedTimeToWake
         
-        await fireDBHelper.updateUserAlarm(timeToSleep: self.selectedTimeToSleep, timeToWake: self.selectedTimeToWake)
-    }
-    
-    func deleteUserAlarm() async {
-        self.user.timeToSleep = nil
-        self.user.timeToWake = nil
-        await fireDBHelper.updateUserAlarm(timeToSleep: nil, timeToWake: nil)
-    }
-    
-    
-    
-
-    func playAlarmSound() {
-        guard let url = Bundle.main.url(forResource: "alarm_sound", withExtension: "mp3") else {
-            print("Sound file not found")
-            return
-        }
-        
-        do {
-            player = try AVAudioPlayer(contentsOf: url)
-            player?.play()
-        } catch {
-            print("Error playing sound: \(error.localizedDescription)")
-        }
-    }
-    
-    func calculateOptimalSleepTimes() {
-        
+        await fireDBHelper.updateUserAlarm(timeToSleep: nil, timeToWake: self.selectedTimeToWake)
+        print(#function, "user: \(String(describing: self.user))")
     }
     
     let healthStore = HKHealthStore()
@@ -151,3 +97,4 @@ class SmartAlarmViewModel: ObservableObject {
     }
 }
     
+
