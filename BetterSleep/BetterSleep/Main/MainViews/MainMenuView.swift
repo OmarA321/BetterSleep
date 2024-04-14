@@ -69,7 +69,7 @@ struct MainMenuView: View {
                                 .foregroundColor(.gray)
                                 .padding(.bottom, 5)
                             
-                            Text("\(viewModel.selectedTimeToWake, formatter: alarmFormatter)")
+                            Text("\(viewModel.userAlarmTime!, formatter: alarmFormatter)")
                                 .font(.largeTitle)
                                 .foregroundColor(.blue)
                         }

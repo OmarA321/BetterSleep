@@ -18,6 +18,7 @@ class MainMenuViewModel: ObservableObject {
     @Published var currentTime = Date()
     @Published var selectedTimeToSleep = Date()
     @Published var selectedTimeToWake = Date()
+    @Published var userAlarmTime: Date?
     @Published var alarmSet = false
     
     @Published var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -41,6 +42,7 @@ class MainMenuViewModel: ObservableObject {
             self.user = self.fireDBHelper.user!
             self.preferences = self.user.preferences
             self.alarmSet = self.user.timeToWake != nil
+            self.userAlarmTime = self.user.timeToWake
         }
         
         print(#function, "user: \(String(describing: self.user))")
