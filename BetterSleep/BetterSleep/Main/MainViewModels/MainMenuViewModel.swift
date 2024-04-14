@@ -40,6 +40,7 @@ class MainMenuViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.user = self.fireDBHelper.user!
             self.preferences = self.user.preferences
+            self.alarmSet = self.user.timeToWake != nil
         }
         
         print(#function, "user: \(String(describing: self.user))")
