@@ -47,6 +47,12 @@ struct ManualAlarmSuggestionMenu: View {
             ScrollView(.horizontal){
                 HStack(spacing: 20) {
                     ForEach(viewModel.suggestedTimes.sorted(by: <), id: \.key) { hours, suggestedTime in
+                        
+                        if hours == 4.5 || hours == 9 {
+                            Divider()
+                                .frame(width: 2, height: 170)
+                                .overlay(viewModel.preferences.antiBlueLightMode ? Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)) : Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)))
+                        }
                         RoundedRectangle(cornerRadius: 10)
                             .fill(
                                 LinearGradient(gradient: Gradient(colors: viewModel.preferences.antiBlueLightMode ? [Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)), Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))] : [Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)), Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))]), startPoint: .top, endPoint: .bottom)
@@ -81,6 +87,7 @@ struct ManualAlarmSuggestionMenu: View {
                     }
                 }
             }
+            .defaultScrollAnchor(.center)
             Spacer()
         }
         .frame(height: 400)
