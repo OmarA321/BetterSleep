@@ -2,7 +2,7 @@
 //  DynamicAlarmViewModel.swift
 //  BetterSleep
 //
-//  Created by alyssa verasamy on 2024-04-14.
+//  Created by Elias Alissandratos
 //
 
 import Foundation
@@ -18,9 +18,6 @@ class DynamicAlarmViewModel: ObservableObject {
     @Published var selectedTimeToSleep: Date = Date()
     
     @Published var showingPopup = false
-    
-    
-    //@Published var dynamicAlarm: Bool = false
     
     private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timeToWake: nil)
     

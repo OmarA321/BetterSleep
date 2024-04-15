@@ -2,7 +2,7 @@
 //  DynamicAlarmView.swift
 //  BetterSleep
 //
-//  Created by alyssa verasamy on 2024-04-12.
+//  Created by Elias Alissandratos
 //
 
 import SwiftUI

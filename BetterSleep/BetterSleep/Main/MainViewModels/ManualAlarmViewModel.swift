@@ -2,7 +2,7 @@
 //  ManualAlarmViewModel.swift
 //  BetterSleep
 //
-//  Created by alyssa verasamy on 2024-04-14.
+//  Created by Elias Alissandratos
 //
 
 import Foundation
@@ -10,8 +10,6 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class ManualAlarmViewModel: ObservableObject {
-    
-    
     
     @Published var isDynamicAlarmSelected = true
     @Published var isManualAlarmSelected = false
@@ -24,11 +22,7 @@ class ManualAlarmViewModel: ObservableObject {
     @Published var alarmSet: Bool = false
     
     @Published var isCalculatingOptimalSleepTimes = false
-    //@Published var suggestedSleepTimes: [Date] = []
-    
     @Published var isCalculatingOptimalWakeTimes = false
-    //@Published var suggestedWakeTimes: [Date] = []
-    
     
     @Published var settingAlarm = false
     
@@ -37,7 +31,6 @@ class ManualAlarmViewModel: ObservableObject {
     @Published var showLeftSleepTimes = false
     @Published var showRightSleepTimes = false
     
-    //definitely keep
     @Published var preferences: UserPreferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
     @Published var suggestedTimes: [Double: Date] = [:]
     @Published var showingPopup = false
@@ -47,8 +40,7 @@ class ManualAlarmViewModel: ObservableObject {
     
     private var fireDBHelper: FireDBHelper
     
-    //private var increments: [TimeInterval] = [1.5 * 3600, 3 * 3600, 4.5 * 3600, 6 * 3600, 7.5 * 3600, 9 * 3600, 10.5 * 3600, 12 * 2600, 13.5 * 3600]
-    private var increments: [TimeInterval] = [1.5 * 3600, 3 * 3600, 4.5 * 3600, 6 * 3600, 7.5 * 3600, 9 * 3600, 10.5 * 3600, 12 * 2600, 13.5 * 3600]
+    private var increments: [TimeInterval] = [1.5 * 3600, 3 * 3600, 4.5 * 3600, 6 * 3600, 7.5 * 3600, 9 * 3600, 10.5 * 3600, 12 * 3600, 13.5 * 3600]
     
     init() {
         self.fireDBHelper = FireDBHelper()

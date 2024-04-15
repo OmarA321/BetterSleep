@@ -2,7 +2,7 @@
 //  ManualAlarmSuggestionMenu.swift
 //  BetterSleep
 //
-//  Created by alyssa verasamy on 2024-04-14.
+//  Created by Elias Alissandratos
 //
 
 import SwiftUI
@@ -14,9 +14,6 @@ struct ManualAlarmSuggestionMenu: View {
     var isSettingSleepTime: Bool
     
     var body: some View {
-        
-        Spacer()
-        Color.black.opacity(0.8).ignoresSafeArea()
         VStack(spacing: 20) {
             VStack {
                 if isSettingSleepTime {
@@ -48,7 +45,7 @@ struct ManualAlarmSuggestionMenu: View {
                 HStack(spacing: 20) {
                     ForEach(viewModel.suggestedTimes.sorted(by: <), id: \.key) { hours, suggestedTime in
                         
-                        if hours == 4.5 || hours == 9 {
+                        if hours == 6 || hours == 10.5 {
                             Divider()
                                 .frame(width: 2, height: 170)
                                 .overlay(viewModel.preferences.antiBlueLightMode ? Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)) : Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)))

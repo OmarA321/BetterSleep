@@ -2,7 +2,7 @@
 //  SmartAlarmViewModel.swift
 //  BetterSleep
 //
-//  Created by alyssa verasamy on 2024-04-07.
+//  Created by Elias Alissandratos
 //
 
 import Foundation
