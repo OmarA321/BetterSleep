@@ -6,7 +6,6 @@ struct SignUpView: View {
     
     @Binding var showingLogin: Bool
     
-    //TODO: move all logic to viewmodel
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
@@ -84,9 +83,13 @@ struct SignUpView: View {
                     }
                     
                     Button(action: {
-                        
-                        viewModel.register()
-                        self.shouldNavigateToContentView = true
+                        viewModel.register { success in
+                            if success {
+                                self.shouldNavigateToContentView = true
+                            } else {
+                                viewModel.isShowingError = true
+                            }
+                        }
                         
                     }) {
                         Text("Sign Up")

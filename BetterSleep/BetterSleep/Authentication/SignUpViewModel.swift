@@ -21,29 +21,36 @@ class SignUpViewModel : ObservableObject {
         
     }
     
-    func register() {
+    func register(completion: @escaping (Bool) -> Void) {
         
         guard validate() else {
-            isShowingError = true
-            print(#function, "yikes?")
+            self.isShowingError = true
+            completion(false)
             return
         }
+        
     
         Auth.auth().createUser(withEmail: email, password: password) {
             result, error in
+            
             guard let userId = result?.user.uid else {
-                print(#function, error)
+                print(#function, error as Any)
+                self.errorMessage = "user with this email already exists!"
+                self.isShowingError = true
+                completion(false)
+                
                 return
             }
             self.addUserToFirestore(id: userId)
             print(#function, "User \(self.username) \(userId) added!")
+            completion(true)
         }
         
     }
     
     private func addUserToFirestore(id: String) {
        
-        var newUser = User(id: id, username: username, email: email, sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timeToWake: nil)
+        let newUser = User(id: id, username: username, email: email, sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timeToWake: nil)
         
         let db = Firestore.firestore()
         
