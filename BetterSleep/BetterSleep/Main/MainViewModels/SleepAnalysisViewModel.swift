@@ -50,8 +50,11 @@ class SleepAnalysisViewModel: ObservableObject {
                 self.totalHoursSlept += record.hoursSlept
                 self.totalSleepQualitySum += (self.sleepQualityOptions.firstIndex(of: record.qualityRating) ?? 0)
             }
-            self.averageSleepDuration = self.totalHoursSlept / Double(self.totalSleepRecords)
-            self.averageSleepQuality = self.sleepQualityOptions[Int(self.totalSleepQualitySum / self.totalSleepRecords)]
+            
+            if self.totalSleepRecords > 0 {
+                self.averageSleepDuration = self.totalHoursSlept / Double(self.totalSleepRecords)
+                self.averageSleepQuality = self.sleepQualityOptions[Int(self.totalSleepQualitySum / self.totalSleepRecords)]
+            }
             
         }
         
@@ -64,6 +67,8 @@ class SleepAnalysisViewModel: ObservableObject {
         let hoursSlept = self.sleepTime.distance(to: self.wakeUpTime) / 3600
         
         let newSleepRecord = SleepRecord(date: self.sleepTime, hoursSlept: hoursSlept, qualityRating: self.selectedSleepQuality)
+        
+        self.totalSleepRecords += 1;
         
         self.user.sleepHistory.append(newSleepRecord)
         
