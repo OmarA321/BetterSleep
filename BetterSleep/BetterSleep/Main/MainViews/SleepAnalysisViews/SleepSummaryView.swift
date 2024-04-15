@@ -45,5 +45,6 @@ struct SleepSummaryView: View {
                 await viewModel.fetchUser()
             }
         }
+        .navigationBarBackButtonHidden()
     }
 }

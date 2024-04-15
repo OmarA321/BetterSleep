@@ -22,5 +22,6 @@ struct OverallSleepDataView: View {
             Spacer()
         }
         .padding(.horizontal, 30)
+        .navigationBarBackButtonHidden()
     }
 }

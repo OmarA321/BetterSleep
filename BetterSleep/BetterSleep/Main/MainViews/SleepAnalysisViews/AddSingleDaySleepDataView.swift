@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddSingleDaySleepDataView: View {
     @StateObject var viewModel = SleepAnalysisViewModel()
+    @Environment(\.presentationMode) var presentationMode
     
     
     var body: some View {
@@ -39,6 +40,8 @@ struct AddSingleDaySleepDataView: View {
                 Task {
                     await viewModel.addUserSleepRecord()
                 }
+                presentationMode.wrappedValue.dismiss()
+                
             }) {
                 Text("Save")
                     .padding(EdgeInsets(top: 20, leading: 100, bottom: 20, trailing: 100))
@@ -48,6 +51,7 @@ struct AddSingleDaySleepDataView: View {
             }
             .padding()
             
+            
             Spacer()
         }
         .onAppear(){
@@ -55,5 +59,6 @@ struct AddSingleDaySleepDataView: View {
                 await viewModel.fetchUser()
             }
         }
+        .navigationBarBackButtonHidden()
     }
 }

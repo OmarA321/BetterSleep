@@ -32,5 +32,6 @@ struct PersonalSleepHistoryView: View {
                 await viewModel.fetchUser()
             }
         }
+        .navigationBarBackButtonHidden()
     }
 }
