@@ -53,14 +53,15 @@ class MainMenuViewModel: ObservableObject {
     func checkAlarm() {
         let calendar = Calendar.current
         let currentTime = Date()
-        let selectedTime = selectedTimeToWake
         
-        if calendar.isDate(currentTime, equalTo: selectedTime, toGranularity: .minute) {
-            if alarmSet {
+        if self.alarmSet {
+            if calendar.isDate(currentTime, equalTo: self.userAlarmTime!, toGranularity: .minute) {
                 playAlarmSound()
-                alarmSet = false
+                self.alarmSet = false
+                
             }
         }
+        
     }
     
     func playAlarmSound() {

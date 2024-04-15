@@ -42,6 +42,8 @@ class SmartAlarmViewModel: ObservableObject {
     
     @Published var dynamicAlarm: Bool = false
     
+    @Published var userAlarmTime: Date?
+    
     private var user: User = User(id: "", username: "", email: "", sleepHistory: [], recommendations: [], preferences: UserPreferences(antiBlueLightMode: false, disableStars: false), timeToSleep: nil, timeToWake: nil)
     
     private var fireDBHelper: FireDBHelper
@@ -62,6 +64,7 @@ class SmartAlarmViewModel: ObservableObject {
                 self.alarmSet = true
                 self.selectedTimeToSleep = self.user.timeToSleep ?? Date()
                 self.selectedTimeToWake = self.user.timeToWake ?? Date()
+                self.userAlarmTime = self.user.timeToWake
             }
             
         }
@@ -73,6 +76,7 @@ class SmartAlarmViewModel: ObservableObject {
         
         self.user.timeToSleep = self.selectedTimeToSleep
         self.user.timeToWake = self.selectedTimeToWake
+        self.userAlarmTime = self.selectedTimeToWake
         
         await fireDBHelper.updateUserAlarm(timeToSleep: self.selectedTimeToSleep, timeToWake: self.selectedTimeToWake)
     }
@@ -80,6 +84,7 @@ class SmartAlarmViewModel: ObservableObject {
     func deleteUserAlarm() async {
         self.user.timeToSleep = nil
         self.user.timeToWake = nil
+        self.userAlarmTime = nil
         await fireDBHelper.updateUserAlarm(timeToSleep: nil, timeToWake: nil)
     }
     

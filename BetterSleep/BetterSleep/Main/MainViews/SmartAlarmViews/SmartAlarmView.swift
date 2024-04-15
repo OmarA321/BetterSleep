@@ -38,13 +38,54 @@ struct SmartAlarmView: View {
                             .padding()
                         
                         
-                        //TODO: make these buttons look nice
+                        
+                        
                         NavigationLink(destination: DynamicAlarmView()) {
-                            Text("set dynamic alarm")
+                            Text("Set Dynamic Alarm")
                         }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 20)
+                        .foregroundColor(.white)
+                        .background(
+                            Group {
+                                if viewModel.preferences.antiBlueLightMode {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                        Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                } else {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                        Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                }
+                            }
+                        )
+                        .cornerRadius(20)
+                        .padding(.horizontal, 30)
                         NavigationLink(destination: ManualAlarmView()) {
-                            Text("set manual alarm")
+                            Text("Set Manual Alarm")
                         }
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 20)
+                        .background(
+                            Group {
+                                if viewModel.preferences.antiBlueLightMode {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0.8527789558, green: 0.7426737457, blue: 0, alpha: 1)),
+                                        Color(#colorLiteral(red: 0.8688587307, green: 0.5466106903, blue: 0, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                } else {
+                                    LinearGradient(gradient: Gradient(colors: [
+                                        Color(#colorLiteral(red: 0, green: 0.7542739527, blue: 1, alpha: 1)),
+                                        Color(#colorLiteral(red: 0, green: 0.1558200947, blue: 0.502416709, alpha: 1))
+                                    ]), startPoint: .top, endPoint: .bottom)
+                                }
+                            }
+                        )
+                        .cornerRadius(20)
+                        .padding(.horizontal, 30)
                         
 //                            Button(action: {
 //                                withAnimation{
@@ -537,8 +578,8 @@ struct SmartAlarmView: View {
             let currentTime = Date()
             let selectedTime = viewModel.selectedTimeToWake
             
-            if calendar.isDate(currentTime, equalTo: selectedTime, toGranularity: .minute) {
-                if viewModel.alarmSet == true{
+            if viewModel.alarmSet {
+                if calendar.isDate(currentTime, equalTo: selectedTime, toGranularity: .minute){
                     viewModel.playAlarmSound()
                     viewModel.alarmSet = false
                     Task {
