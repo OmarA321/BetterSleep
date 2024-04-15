@@ -11,25 +11,13 @@ import FirebaseAuth
 
 class ManualAlarmViewModel: ObservableObject {
     
-    @Published var isDynamicAlarmSelected = true
-    @Published var isManualAlarmSelected = false
-    
-    @Published var isSetTimeToWakeUp = false
-    @Published var isSetTimeToSleep = false
-    
     @Published var selectedTimeToWake: Date = Date()
     @Published var selectedTimeToSleep: Date = Date()
     @Published var alarmSet: Bool = false
     
-    @Published var isCalculatingOptimalSleepTimes = false
-    @Published var isCalculatingOptimalWakeTimes = false
     
     @Published var settingAlarm = false
     
-    @Published var showLeftWakeTimes = false
-    @Published var showRightWakeTimes = false
-    @Published var showLeftSleepTimes = false
-    @Published var showRightSleepTimes = false
     
     @Published var preferences: UserPreferences = UserPreferences(antiBlueLightMode: false, disableStars: false)
     @Published var suggestedTimes: [Double: Date] = [:]

@@ -39,8 +39,6 @@ class SleepAnalysisViewModel: ObservableObject {
         
         await fireDBHelper.fetchUser()
         
-        
-        
         DispatchQueue.main.async {
             self.user = self.fireDBHelper.user!
             self.preferences = self.user.preferences
