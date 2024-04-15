@@ -70,7 +70,7 @@ struct LoginView: View {
                             if success {
                                 self.shouldNavigateToContentView = true
                             } else {
-                                // Optionally handle error, such as displaying a message
+                                viewModel.isShowingError = true
                             }
                         }
                     }) {

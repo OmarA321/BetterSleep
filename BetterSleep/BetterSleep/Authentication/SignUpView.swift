@@ -86,6 +86,8 @@ struct SignUpView: View {
                     Button(action: {
                         
                         viewModel.register()
+                        self.shouldNavigateToContentView = true
+                        
                     }) {
                         Text("Sign Up")
                             .fontWeight(.bold)
